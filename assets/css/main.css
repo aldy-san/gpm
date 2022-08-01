@@ -1,0 +1,12 @@
+.h-full {
+	min-height: 100%;
+}
+.h-screen {
+	min-height: 100vh;
+}
+.auth-form {
+	margin-top: 75px;
+}
+p {
+	margin: 0 !important;
+}
