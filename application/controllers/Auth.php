@@ -3,9 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Auth extends CI_Controller {
 
+	public $globalData;
+    public function __construct() {
+        parent::__construct();
+        $this->globalData = [
+            'withNavbar' => true,
+            'withSidebar' => false
+        ];
+    }
 	public function index()
 	{
-		$this->load->view('layouts/header');
+        $data = $this->globalData;
+		$this->load->view('layouts/header', $data);
 		$this->load->view('pages/home');
 		$this->load->view('layouts/footer');
 	}
@@ -36,7 +45,8 @@ class Auth extends CI_Controller {
 				}
 			}
 		}
-		$this->load->view('layouts/header');
+		$data = $this->globalData;
+		$this->load->view('layouts/header', $data);
 		$this->load->view('auth/login');
 		$this->load->view('layouts/footer');
 	}
@@ -58,7 +68,8 @@ class Auth extends CI_Controller {
 				redirect('/');
 			}
 		}
-		$this->load->view('layouts/header');
+		$data = $this->globalData;
+		$this->load->view('layouts/header', $data);
 		$this->load->view('auth/register');
 		$this->load->view('layouts/footer');
 	}

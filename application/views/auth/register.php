@@ -1,6 +1,6 @@
 <form action="<?=base_url('register')?>" method="POST" class="row justify-content-center align-items-center auth-form">
     <h2 class="text-center">REGISTER</h2>
-    <div class="row col-11 col-md-8 col-lg-6 col-xl-4 rounded-2 border p-4">
+    <div class="row col-11 col-md-8 col-lg-6 col-xl-4 rounded-2 border p-4 bg-light">
         <?php if ($this->session->flashdata('alertForm')): ?>
         <div class="alert alert-danger" role="alert">
             <p class="text-center"><?= $this->session->flashdata('alertForm'); ?></p>
