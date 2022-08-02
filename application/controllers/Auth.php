@@ -6,6 +6,9 @@ class Auth extends CI_Controller {
 	public $globalData;
     public function __construct() {
         parent::__construct();
+		if ($this->session->userdata('user')) {
+			redirect('/dashboard');
+		}
         $this->globalData = [
             'withNavbar' => true,
             'withSidebar' => false
@@ -36,7 +39,7 @@ class Auth extends CI_Controller {
 							'email' => $email
 						];
 						$this->session->set_userdata('user',$sessionUser);
-						redirect('/');
+						redirect('/dashboard');
 					} else {
 						$this->session->set_flashdata('alertForm', 'Password Salah');
 					}
@@ -73,4 +76,5 @@ class Auth extends CI_Controller {
 		$this->load->view('auth/register');
 		$this->load->view('layouts/footer');
 	}
+	
 }

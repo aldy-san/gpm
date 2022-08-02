@@ -75,7 +75,7 @@
                                 </a>
                             </li>
                             <li class="sidebar-item">
-                                <a href="<?= base_url('login'); ?>" class='sidebar-link'>
+                                <a href="<?= base_url('logout'); ?>" class='sidebar-link'>
                                     <i class="bi bi-door-open-fill"></i>
                                     <span>Logout</span>
                                 </a>

@@ -27,7 +27,7 @@
                         <div class="form-group col-6">
                             <label for="email">Email</label>
                             <input type="text" class="form-control <?= form_error('email') ? 'is-invalid': ''; ?>"
-                                name="email" id="email" placeholder="email@mail.com"
+                                name="email" id="email" placeholder="email@mail.com" autocomplete="off"
                                 value="<?= $user ?  (set_value('email') ?  set_value('email') : $user['email']) : set_value('email'); ?>">
                             <div class="invalid-feedback">
                                 <?= form_error('email'); ?>
@@ -37,7 +37,7 @@
                             <label for="username">Username</label>
                             <input type="text" id="username"
                                 class="form-control <?= form_error('username') ? 'is-invalid': ''; ?>" name="username"
-                                placeholder="username"
+                                placeholder="username" autocomplete="off"
                                 value="<?= $user ?  (set_value('username') ?  set_value('username') : $user['username']) : set_value('username'); ?>">
                             <div class="invalid-feedback">
                                 <?= form_error('username'); ?>
