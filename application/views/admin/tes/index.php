@@ -36,12 +36,47 @@
                             <td><?= $u->username; ?></td>
                             <td>
                                 <a href="<?= base_url('/tes/edit/'.$u->id); ?>" class="btn btn-warning">Edit</a>
-                                <a href="<?= base_url('/tes/delete/'.$u->id); ?>" class="btn btn-danger">Delete</a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    onclick="$('#btn-delete').attr('href','/tes/delete/<?= $u->id; ?>')">
+                                    Delete
+                                </button>
+                                <!--<a href="<?= base_url('/tes/delete/'.$u->id); ?>" class="btn btn-danger">Delete</a>-->
                             </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
+
+
+                <!--Basic Modal -->
+                <div class="modal fade text-left" id="deleteModal" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel1">Hapus Data</h5>
+                                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <i data-feather="x"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Apakah anda yakin ingin menghapus data?
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-bs-dismiss="modal">
+                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Close</span>
+                                </button>
+                                <a href="<?= base_url('/tes/delete/'.$u->id);?>" id="btn-delete"
+                                    class="btn btn-danger">Delete</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
