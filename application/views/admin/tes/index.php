@@ -38,17 +38,15 @@
                                 <a href="<?= base_url('/tes/edit/'.$u->id); ?>" class="btn btn-warning">Edit</a>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal"
-                                    onclick="$('#btn-delete').attr('href','/tes/delete/<?= $u->id; ?>')">
+                                    onclick="$('#form-delete').attr('action','<?= base_url('/tes/delete/'.$u->id); ?>')">
                                     Delete
                                 </button>
-                                <!--<a href="<?= base_url('/tes/delete/'.$u->id); ?>" class="btn btn-danger">Delete</a>-->
                             </td>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-
-
+                <?= $this->pagination->create_links(); ?>
                 <!--Basic Modal -->
                 <div class="modal fade text-left" id="deleteModal" tabindex="-1" role="dialog"
                     aria-labelledby="myModalLabel1" aria-hidden="true">
@@ -71,8 +69,9 @@
                                     <i class="bx bx-x d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">Close</span>
                                 </button>
-                                <a href="<?= base_url('/tes/delete/'.$u->id);?>" id="btn-delete"
-                                    class="btn btn-danger">Delete</a>
+                                <form id="form-delete" action="" method="POST">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
                             </div>
                         </div>
                     </div>

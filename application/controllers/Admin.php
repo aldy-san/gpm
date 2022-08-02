@@ -22,8 +22,15 @@ class Admin extends CI_Controller {
     }
     public function tes()
     {
+        //PAGINATION
+		$config['base_url'] = base_url('/tes/');
+		$config['total_rows'] = $this->db->get('users')->num_rows();;
+		$config['per_page'] = 2;
+		$config['start'] = $this->uri->segment(2);
+		$this->pagination->initialize($config);
+
         $data = $this->globalData;
-        $data['users'] = $this->db->get('users')->result();
+        $data['users'] = $this->db->limit($config['per_page'], $config['start'])->get('users')->result();
         $this->load->view('layouts/header', $data);
         $this->load->view('admin/tes/index',$data);
         $this->load->view('layouts/footer', $data);
