@@ -50,7 +50,8 @@
                     <div class="sidebar-header">
                         <div class="d-flex justify-content-between">
                             <div class="logo">
-                                <a href="index.html"><img src="assets/images/logo/logo.png" alt="Logo" srcset=""></a>
+                                <a href="index.html"><img src="<?= base_url('assets/images/logo/logo.png'); ?>"
+                                        alt="Logo" srcset=""></a>
                             </div>
                             <div class="toggler">
                                 <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -61,10 +62,16 @@
                         <ul class="menu">
                             <li class="sidebar-title">Menu</li>
 
-                            <li class="sidebar-item active ">
-                                <a href="index.html" class='sidebar-link'>
+                            <li class="sidebar-item <?= $this->uri->segment(1) === 'dashboard' ? 'active' : ''; ?> ">
+                                <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(1) === 'tes' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('tes'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>tes</span>
                                 </a>
                             </li>
                             <li class="sidebar-item">
@@ -411,4 +418,10 @@
                     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
                 </div>
             </div>
-            <?php endif ?>
+            <div id="main">
+                <header class="mb-3">
+                    <a href="#" class="burger-btn d-block d-xl-none">
+                        <i class="bi bi-justify fs-3"></i>
+                    </a>
+                </header>
+                <?php endif ?>

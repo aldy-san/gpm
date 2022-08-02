@@ -1,3 +1,6 @@
+<?php if ($withSidebar): ?>
+</div>
+<?php endif ?>
 </main>
 <script src="<?= base_url('assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') ?>"></script>
 <script src="<?= base_url('assets/js/bootstrap.bundle.min.js') ?>"></script>

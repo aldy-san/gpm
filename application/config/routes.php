@@ -58,3 +58,7 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login'] = 'Auth/login';
 $route['register'] = 'Auth/register';
 $route['dashboard'] = 'Admin/index';
+$route['tes'] = 'Admin/tes';
+$route['tes/create'] = 'Admin/createTes';
+$route['tes/edit/(:num)'] = 'Admin/editTes/$1';
+$route['tes/delete/(:num)'] = 'Admin/deleteTes/$1';
