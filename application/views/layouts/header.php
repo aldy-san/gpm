@@ -419,9 +419,24 @@
                 </div>
             </div>
             <div id="main">
-                <header class="mb-3">
-                    <a href="#" class="burger-btn d-block d-xl-none">
+                <header class="mb-3 d-flex">
+                    <a href="#" class="burger-btn d-block">
                         <i class="bi bi-justify fs-3"></i>
                     </a>
+                    <div class="d-flex align-items-center dropdown ms-auto">
+                        <span class="me-3 mt-2">Halo, <?= $this_user['username']; ?></span>
+                        <button class="btn " type="button" id="profileButton" data-bs-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <div class="avatar">
+                                <img src="<?= base_url('assets/images/faces/1.jpg'); ?>" alt="Face 1">
+                            </div>
+                        </button>
+                        <div class="dropdown-menu mt-2 shadow" aria-labelledby="profileButton">
+                            <a class="dropdown-item d-flex align-items-center" href="#"><i
+                                    class="bi bi-person-fill me-2"></i>My Profile</a>
+                            <a class="dropdown-item d-flex align-items-center" href="<?= base_url('logout'); ?>"><i
+                                    class="bi bi-door-open-fill me-2"></i>Logout</a>
+                        </div>
+                    </div>
                 </header>
                 <?php endif ?>

@@ -12,7 +12,7 @@ class Auth extends CI_Controller {
         $this->globalData = [
             'withNavbar' => true,
             'withSidebar' => false,
-            'title' => 'Title'
+            'title' => 'Title',
         ];
     }
 	public function index()
@@ -37,7 +37,8 @@ class Auth extends CI_Controller {
 					if (password_verify($password, $user['password'])){
 						$this->session->set_flashdata('alertForm', 'Anda login');
 						$sessionUser = [
-							'email' => $email
+							'email' => $email,
+							'username' => $user['username']
 						];
 						$this->session->set_userdata('user',$sessionUser);
 						redirect('/dashboard');
@@ -65,6 +66,7 @@ class Auth extends CI_Controller {
 			} else {
 				$form = [
 					'email' => $this->input->post('email'),
+					'username' => 'username',
 					'password' => password_hash($this->input->post('password'),PASSWORD_DEFAULT),
 					'is_active' => 1
 				];
