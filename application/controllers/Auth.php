@@ -37,8 +37,8 @@ class Auth extends CI_Controller {
 					if (password_verify($password, $user['password'])){
 						$this->session->set_flashdata('alertForm', 'Anda login');
 						$sessionUser = [
-							'email' => $email,
-							'username' => $user['username']
+							'id' => $user['id'],
+							'email' => $email
 						];
 						$this->session->set_userdata('user',$sessionUser);
 						redirect('/dashboard');

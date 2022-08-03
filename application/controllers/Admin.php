@@ -12,7 +12,7 @@ class Admin extends CI_Controller {
             'withNavbar' => false,
             'withSidebar' => true,
             'title' => false,
-            'this_user' => $this->session->userdata('user')
+            'this_user' => $this->db->where(['id' => $this->session->userdata('user')['id']])->get('users')->row_array()
         ];
     }
     public function index()
