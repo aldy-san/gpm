@@ -22,21 +22,25 @@ class Admin extends CI_Controller {
     }
     public function tes()
     {
-        //PAGINATION
+        $data = $this->globalData;
+        
+        // Config Pagination
 		$config['base_url'] = base_url('/tes/');
 		$config['total_rows'] = $this->db->get('users')->num_rows();;
 		$config['per_page'] = 2;
 		$config['start'] = $this->uri->segment(2);
 		$this->pagination->initialize($config);
+        $data['users'] = $this->db->limit($config['per_page'], $config['start'])->get('users')->result_array();
 
-        $data = $this->globalData;
+        // Config Template Table Page
         $data['title'] = 'Test Template Table';
         $data['desc'] = 'Reusable template for table page';
         $data['create_url'] = '/tes/create/';
         $data['edit_url'] = '/tes/edit/';
+        $data['detail_url'] = false;
         $data['delete_url'] = '/tes/delete/';
         $data['column_table'] = ['email', 'username'];
-        $data['users'] = $this->db->limit($config['per_page'], $config['start'])->get('users')->result_array();
+
         $this->load->view('layouts/header', $data);
         $this->load->view('template/table_page',$data);
         $this->load->view('layouts/footer', $data);

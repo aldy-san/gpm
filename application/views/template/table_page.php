@@ -29,12 +29,19 @@
                             <td><?= $u[$col]; ?></td>
                             <?php endforeach; ?>
                             <td>
+                                <?php if($detail_url): ?>
+                                <a href="<?= base_url($detail_url.$u['id']); ?>" class="btn btn-info">Detail</a>
+                                <?php endif ?>
+                                <?php if($edit_url): ?>
                                 <a href="<?= base_url($edit_url.$u['id']); ?>" class="btn btn-warning">Edit</a>
+                                <?php endif ?>
+                                <?php if($delete_url): ?>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal"
                                     onclick="$('#form-delete').attr('action','<?= base_url($delete_url.$u['id']); ?>')">
                                     Delete
                                 </button>
+                                <?php endif ?>
                             </td>
                         </tr>
                         <?php endforeach; ?>
