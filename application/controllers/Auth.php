@@ -38,7 +38,6 @@ class Auth extends CI_Controller {
 						$this->session->set_flashdata('alertForm', 'Anda login');
 						$sessionUser = [
 							'id' => $user['id'],
-							'email' => $email
 						];
 						$this->session->set_userdata('user',$sessionUser);
 						redirect('/dashboard');

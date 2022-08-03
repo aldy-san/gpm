@@ -13,21 +13,24 @@
                 <a href="<?= base_url($create_url); ?>" class="btn btn-success">Add item</a>
             </div>
             <div class="card-body">
-                <table class="table table-striped" id="table1">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <?php foreach ($column_table as $col): ?>
-                            <th><?= $col; ?></th>
+                            <th class="text-capitalize"><?= $col; ?></th>
                             <?php endforeach; ?>
+                            <?php if($detail_url || $edit_url || $delete_url): ?>
                             <th>Action</th>
+                            <?php endif; ?>
                         </tr>
                     </thead>
                     <tbody>
                         <?php foreach($users as $u): ?>
                         <tr>
                             <?php foreach ($column_table as $col): ?>
-                            <td><?= $u[$col]; ?></td>
+                            <td><?= $u[$col] ?></td>
                             <?php endforeach; ?>
+                            <?php if($detail_url || $edit_url || $delete_url): ?>
                             <td>
                                 <?php if($detail_url): ?>
                                 <a href="<?= base_url($detail_url.$u['id']); ?>" class="btn btn-info">Detail</a>
@@ -43,6 +46,7 @@
                                 </button>
                                 <?php endif ?>
                             </td>
+                            <?php endif ?>
                         </tr>
                         <?php endforeach; ?>
                     </tbody>
