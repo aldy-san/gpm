@@ -15,6 +15,14 @@
             </div>
         </div>
         <div class="mb-3 col-12">
+            <label for="username" class="form-label">username</label>
+            <input type="text" class="form-control <?= form_error('username') ? 'is-invalid': ''; ?>" name="username"
+                id="username" placeholder="name@example.com" autocomplete="off" value="<?= set_value('username'); ?>">
+            <div class="invalid-feedback">
+                <?= form_error('username'); ?>
+            </div>
+        </div>
+        <div class="mb-3 col-12">
             <label for="password" class="form-label">password</label>
             <input type="password" class="form-control <?= form_error('password') ? 'is-invalid': ''; ?>"
                 name="password" id="password" placeholder="password">

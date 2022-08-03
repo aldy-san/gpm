@@ -11,7 +11,7 @@ class Admin extends CI_Controller {
         $this->globalData = [
             'withNavbar' => false,
             'withSidebar' => true,
-            'title' => 'Title',
+            'title' => false,
             'this_user' => $this->session->userdata('user')
         ];
     }

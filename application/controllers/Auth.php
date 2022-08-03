@@ -12,7 +12,7 @@ class Auth extends CI_Controller {
         $this->globalData = [
             'withNavbar' => true,
             'withSidebar' => false,
-            'title' => 'Title',
+            'title' => false
         ];
     }
 	public function index()
@@ -59,6 +59,7 @@ class Auth extends CI_Controller {
 	{
 		if ($this->input->post()){
 			$this->form_validation->set_rules('email','email','trim|required|valid_email|is_unique[users.email]');
+			$this->form_validation->set_rules('username','username','trim|required|is_unique[users.username]');
 			$this->form_validation->set_rules('password','password','min_length[3]|trim|required|matches[confirm-password]');
 			$this->form_validation->set_rules('confirm-password','confirm password','trim|required|matches[password]');
 			if(!$this->form_validation->run()){
@@ -66,12 +67,12 @@ class Auth extends CI_Controller {
 			} else {
 				$form = [
 					'email' => $this->input->post('email'),
-					'username' => 'username',
+					'username' => $this->input->post('username'),
 					'password' => password_hash($this->input->post('password'),PASSWORD_DEFAULT),
 					'is_active' => 1
 				];
 				$this->db->insert('users', $form);
-				redirect('/');
+				redirect('/login');
 			}
 		}
 		$data = $this->globalData;

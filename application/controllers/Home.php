@@ -9,7 +9,7 @@ class Home extends CI_Controller {
         $this->globalData = [
             'withNavbar' => true,
             'withSidebar' => false,
-            'title' => 'Title'
+            'title' => false
         ];
     }
 	public function index()

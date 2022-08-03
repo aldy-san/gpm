@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title><?= $title; ?></title>
+        <title><?= $title ? $title : 'Gugus Penjamin Mutu'; ?></title>
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap"
             rel="stylesheet">
         <link rel="stylesheet" href="<?= base_url('assets/css/bootstrap.css'); ?>">
@@ -420,7 +420,7 @@
             </div>
             <div id="main">
                 <header class="mb-3 d-flex">
-                    <a href="#" class="burger-btn d-block">
+                    <a href="#" class="burger-btn d-block d-xl-none">
                         <i class="bi bi-justify fs-3"></i>
                     </a>
                     <div class="d-flex align-items-center dropdown ms-auto">
