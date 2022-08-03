@@ -38,7 +38,7 @@ class Admin extends CI_Controller {
         $data['desc'] = 'Reusable template for table page';
         $data['create_url'] = '/tes/create/';
         $data['edit_url'] = '/tes/edit/';
-        $data['detail_url'] = false;
+        $data['detail_url'] = 'tes/detail/';
         $data['delete_url'] = '/tes/delete/';
         $data['column_table'] = ['email', 'username'];
 
@@ -64,6 +64,16 @@ class Admin extends CI_Controller {
         }
         $data = $this->globalData;
         $data['user'] = false;
+        $data['title'] = 'Create Test';
+        $this->load->view('layouts/header', $data);
+        $this->load->view('admin/tes/form',$data);
+        $this->load->view('layouts/footer', $data);
+    }
+    public function detailTes($id)
+    {
+        $data = $this->globalData;
+        $data['user'] = $this->db->where(['id' => $id])->get('users')->row_array();
+        $data['title'] = 'Detail Test';
         $this->load->view('layouts/header', $data);
         $this->load->view('admin/tes/form',$data);
         $this->load->view('layouts/footer', $data);
@@ -85,6 +95,7 @@ class Admin extends CI_Controller {
             }
         }
         $data = $this->globalData;
+        $data['title'] = 'Edit Test';
         $data['user'] = $this->db->where(['id' => $id])->get('users')->row_array();
         $this->load->view('layouts/header', $data);
         $this->load->view('admin/tes/form',$data);
