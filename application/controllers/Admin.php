@@ -30,9 +30,15 @@ class Admin extends CI_Controller {
 		$this->pagination->initialize($config);
 
         $data = $this->globalData;
-        $data['users'] = $this->db->limit($config['per_page'], $config['start'])->get('users')->result();
+        $data['title'] = 'Test Template Table';
+        $data['desc'] = 'Reusable template for table page';
+        $data['create_url'] = '/tes/create/';
+        $data['edit_url'] = '/tes/edit/';
+        $data['delete_url'] = '/tes/delete/';
+        $data['column_table'] = ['email', 'username'];
+        $data['users'] = $this->db->limit($config['per_page'], $config['start'])->get('users')->result_array();
         $this->load->view('layouts/header', $data);
-        $this->load->view('admin/tes/index',$data);
+        $this->load->view('template/table_page',$data);
         $this->load->view('layouts/footer', $data);
     }
     public function createTes()

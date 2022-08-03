@@ -1,0 +1,76 @@
+<div class="page-heading">
+    <div class="page-title">
+        <div class="row">
+            <div class="col-12 col-md-6 order-md-1 order-last">
+                <h3><?= $title ?></h3>
+                <p class="text-subtitle text-muted"><?= $desc?></p>
+            </div>
+        </div>
+    </div>
+    <section class="section mt-4">
+        <div class="card">
+            <div class="card-header">
+                <a href="<?= base_url($create_url); ?>" class="btn btn-success">Add item</a>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped" id="table1">
+                    <thead>
+                        <tr>
+                            <?php foreach ($column_table as $col): ?>
+                            <th><?= $col; ?></th>
+                            <?php endforeach; ?>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($users as $u): ?>
+                        <tr>
+                            <?php foreach ($column_table as $col): ?>
+                            <td><?= $u[$col]; ?></td>
+                            <?php endforeach; ?>
+                            <td>
+                                <a href="<?= base_url($edit_url.$u['id']); ?>" class="btn btn-warning">Edit</a>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    onclick="$('#form-delete').attr('action','<?= base_url($delete_url.$u['id']); ?>')">
+                                    Delete
+                                </button>
+                            </td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+                <?= $this->pagination->create_links(); ?>
+                <!--Basic Modal -->
+                <div class="modal fade text-left" id="deleteModal" tabindex="-1" role="dialog"
+                    aria-labelledby="myModalLabel1" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-scrollable" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="myModalLabel1">Hapus Data</h5>
+                                <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                    <i data-feather="x"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>
+                                    Apakah anda yakin ingin menghapus data?
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn" data-bs-dismiss="modal">
+                                    <i class="bx bx-x d-block d-sm-none"></i>
+                                    <span class="d-none d-sm-block">Close</span>
+                                </button>
+                                <form id="form-delete" action="" method="POST">
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
