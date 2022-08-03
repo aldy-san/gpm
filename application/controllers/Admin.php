@@ -10,7 +10,8 @@ class Admin extends CI_Controller {
 		}
         $this->globalData = [
             'withNavbar' => false,
-            'withSidebar' => true
+            'withSidebar' => true,
+            'title' => 'Title'
         ];
     }
     public function index()

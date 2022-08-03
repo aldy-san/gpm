@@ -8,7 +8,8 @@ class Home extends CI_Controller {
         parent::__construct();
         $this->globalData = [
             'withNavbar' => true,
-            'withSidebar' => false
+            'withSidebar' => false,
+            'title' => 'Title'
         ];
     }
 	public function index()

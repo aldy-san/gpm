@@ -11,7 +11,8 @@ class Auth extends CI_Controller {
 		}
         $this->globalData = [
             'withNavbar' => true,
-            'withSidebar' => false
+            'withSidebar' => false,
+            'title' => 'Title'
         ];
     }
 	public function index()
