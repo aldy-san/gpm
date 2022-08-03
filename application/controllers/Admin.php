@@ -23,7 +23,7 @@ class Admin extends CI_Controller {
     public function tes()
     {
         $data = $this->globalData;
-        
+
         // Config Pagination
 		$config['base_url'] = base_url('/tes/');
 		$config['total_rows'] = $this->db->get('users')->num_rows();;
@@ -89,9 +89,9 @@ class Admin extends CI_Controller {
         $this->load->view('admin/tes/form',$data);
         $this->load->view('layouts/footer', $data);
     }
-    public function deleteTes($id)
+    public function deleteTes()
     {
-        $this->db->where(['id' => $id])->delete('users');
+        $this->db->where(['id' => $this->input->post('id')])->delete('users');
         redirect('/tes');
     }
 }

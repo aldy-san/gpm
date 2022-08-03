@@ -64,4 +64,4 @@ $route['tes'] = 'Admin/tes';
 $route['tes/(:num)'] = 'Admin/tes';
 $route['tes/create'] = 'Admin/createTes';
 $route['tes/edit/(:num)'] = 'Admin/editTes/$1';
-$route['tes/delete/(:num)'] = 'Admin/deleteTes/$1';
+$route['tes/delete'] = 'Admin/deleteTes';

@@ -38,7 +38,7 @@
                                 <?php if($delete_url): ?>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal"
-                                    onclick="$('#form-delete').attr('action','<?= base_url($delete_url.$u['id']); ?>')">
+                                    onclick="$('#form-delete input').attr('value','<?= $u['id']; ?>')">
                                     Delete
                                 </button>
                                 <?php endif ?>
@@ -70,7 +70,8 @@
                                     <i class="bx bx-x d-block d-sm-none"></i>
                                     <span class="d-none d-sm-block">Close</span>
                                 </button>
-                                <form id="form-delete" action="" method="POST">
+                                <form id="form-delete" action="<?= base_url($delete_url); ?>" method="POST">
+                                    <input type="hidden" name="id" value="">
                                     <button type="submit" class="btn btn-danger">Delete</button>
                                 </form>
                             </div>
