@@ -10,7 +10,7 @@
         <div class="card">
             <div class="card-body">
                 <form
-                    action="<?= $data_slug ? base_url('/survei-mahasiswa/'.$slug.'/edit/'.$this->uri->segment(4)) : base_url('/survei-mahasiswa/'.$slug.'/create'); ?>"
+                    action="<?= $data_slug ? base_url('/survei/'.$slug.($sub_slug ? '-'.$sub_slug : '').'/edit/'.$this->uri->segment(4)) : base_url('/survei/'.$slug.($sub_slug ? '-'.$sub_slug : '').'/create'); ?>"
                     method="POST">
                     <div class="row">
                         <div class="form-group col-12">

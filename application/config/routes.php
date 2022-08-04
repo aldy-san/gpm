@@ -67,9 +67,9 @@ $route['tes/edit/(:num)'] = 'Admin/editTes/$1';
 $route['tes/detail/(:num)'] = 'Admin/detailTes/$1';
 $route['tes/delete'] = 'Admin/deleteTes';
 
-$route['survei-mahasiswa/(:any)'] = 'Superadmin/survei_mahasiswa/$1';
-$route['survei-mahasiswa/(:any)/(:num)'] = 'Superadmin/survei_mahasiswa/$1';
-$route['survei-mahasiswa/(:any)/create'] = 'Superadmin/create_survei_mahasiswa/$1';
-$route['survei-mahasiswa/(:any)/edit/(:num)'] = 'Superadmin/edit_survei_mahasiswa/$1/$2';
-$route['survei-mahasiswa/(:any)/detail/(:num)'] = 'Superadmin/detail_survei_mahasiswa/$1/$2';
-$route['survei-mahasiswa/(:any)/delete'] = 'Superadmin/delete_survei_mahasiswa/$1';
+$route['survei/(:any)'] = 'Superadmin/survei/$1';
+$route['survei/(:any)/(:num)'] = 'Superadmin/survei/$1';
+$route['survei/(:any)/create'] = 'Superadmin/create_survei/$1';
+$route['survei/(:any)/edit/(:num)'] = 'Superadmin/edit_survei/$1/$2';
+$route['survei/(:any)/detail/(:num)'] = 'Superadmin/detail_survei/$1/$2';
+$route['survei/(:any)/delete'] = 'Superadmin/delete_survei/$1';
