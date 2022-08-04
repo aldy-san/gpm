@@ -8,36 +8,51 @@ class Migration_Tb_users extends CI_Migration{
     }
     public function up()
     {
-        $this->dbforge->drop_table('users');
+        $this->dbforge->drop_table('survei_mahasiswa');
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
                 'constraint' => 5,
-                'unsigned' => TRUE,
                 'auto_increment' => TRUE
             ),
-            'username' => array(
+            'level' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '3',
+            ),
+            'question' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
             ),
-            'email' => array(
+            'type' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
             ),
-            'password' => array(
+            'selections' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
+                'default' => 'null'
             ),
-            'role' => array(
+            'bar_from' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
+                'default' => 'null'
+            ),
+            'bar_to' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => 'null'
+            ),
+            'bar_length' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '255',
+                'default' => 'null'
             )
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('users');
+        $this->dbforge->create_table('survei_mahasiswa');
     }
     public function down()
     {
-        $this->dbforge->drop_table('users');
+        $this->dbforge->drop_table('survei_mahasiswa');
     }
 }

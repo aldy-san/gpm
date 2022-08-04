@@ -66,3 +66,10 @@ $route['tes/create'] = 'Admin/createTes';
 $route['tes/edit/(:num)'] = 'Admin/editTes/$1';
 $route['tes/detail/(:num)'] = 'Admin/detailTes/$1';
 $route['tes/delete'] = 'Admin/deleteTes';
+
+$route['survei-mahasiswa/(:any)'] = 'Superadmin/survei_mahasiswa/$1';
+$route['survei-mahasiswa/(:any)/(:num)'] = 'Superadmin/survei_mahasiswa/$1';
+$route['survei-mahasiswa/(:any)/create'] = 'Superadmin/create_survei_mahasiswa/$1';
+$route['survei-mahasiswa/(:any)/edit/(:num)'] = 'Superadmin/edit_survei_mahasiswa/$1/$2';
+$route['survei-mahasiswa/(:any)/detail/(:num)'] = 'Superadmin/detail_survei_mahasiswa/$1/$2';
+$route['survei-mahasiswa/(:any)/delete'] = 'Superadmin/delete_survei_mahasiswa/$1';

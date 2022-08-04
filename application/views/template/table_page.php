@@ -17,7 +17,7 @@
                     <thead>
                         <tr>
                             <?php foreach ($column_table as $col): ?>
-                            <th class="text-capitalize"><?= $col; ?></th>
+                            <th class="text-capitalize"><?= join(' ', explode('_', $col,)); ?></th>
                             <?php endforeach; ?>
                             <?php if($detail_url || $edit_url || $delete_url): ?>
                             <th>Action</th>
@@ -25,23 +25,23 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($users as $u): ?>
+                        <?php foreach($data_table as $item): ?>
                         <tr>
                             <?php foreach ($column_table as $col): ?>
-                            <td><?= $u[$col] ?></td>
+                            <td><?= $item[$col] ?></td>
                             <?php endforeach; ?>
                             <?php if($detail_url || $edit_url || $delete_url): ?>
                             <td>
                                 <?php if($detail_url): ?>
-                                <a href="<?= base_url($detail_url.$u['id']); ?>" class="btn btn-info">Detail</a>
+                                <a href="<?= base_url($detail_url.$item['id']); ?>" class="btn btn-info">Detail</a>
                                 <?php endif ?>
                                 <?php if($edit_url): ?>
-                                <a href="<?= base_url($edit_url.$u['id']); ?>" class="btn btn-warning">Edit</a>
+                                <a href="<?= base_url($edit_url.$item['id']); ?>" class="btn btn-warning">Edit</a>
                                 <?php endif ?>
                                 <?php if($delete_url): ?>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal"
-                                    onclick="$('#form-delete input').attr('value','<?= $u['id']; ?>')">
+                                    onclick="$('#form-delete input').attr('value','<?= $item['id']; ?>')">
                                     Delete
                                 </button>
                                 <?php endif ?>

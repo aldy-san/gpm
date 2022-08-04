@@ -32,14 +32,14 @@ class Admin extends CI_Controller {
 		$config['per_page'] = 2;
 		$config['start'] = $this->uri->segment(2);
 		$this->pagination->initialize($config);
-        $data['users'] = $this->db->limit($config['per_page'], $config['start'])->get('users')->result_array();
+        $data['data_table'] = $this->db->limit($config['per_page'], $config['start'])->get('users')->result_array();
 
         // Config Template Table Page
         $data['title'] = 'Test Template Table';
         $data['desc'] = 'Reusable template for table page';
         $data['create_url'] = '/tes/create/';
         $data['edit_url'] = '/tes/edit/';
-        $data['detail_url'] = 'tes/detail/';
+        $data['detail_url'] = '/tes/detail/';
         $data['delete_url'] = '/tes/delete/';
         $data['column_table'] = ['email', 'username'];
 
