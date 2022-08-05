@@ -14,27 +14,33 @@
         <link rel="stylesheet" href="<?= base_url('assets/vendors/perfect-scrollbar/perfect-scrollbar.css'); ?>">
         <link rel="stylesheet" href="<?= base_url('assets/vendors/bootstrap-icons/bootstrap-icons.css'); ?>">
         <link rel="stylesheet" href="<?= base_url('assets/css/app.css'); ?>">
-        <link rel="shortcut icon" href="<?= base_url('assets/images/favicon.svg'); ?>" type="image/x-icon">
+        <link rel="shortcut icon" href="<?= base_url('assets/images/logo/logo.png'); ?>" type="image/x-icon">
         <link rel="stylesheet" href="<?= base_url('assets/css/main.css'); ?> ">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     </head>
 
     <body>
         <?php if ($withNavbar): ?>
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container">
-                <a class="navbar-brand" href="<?= base_url(); ?>">Navbar</a>
+                <a class="navbar-brand" href="<?= base_url(); ?>">
+                    <img src="<?= base_url('assets/images/logo/logo.png'); ?>" alt="logo"
+                        style="height:40px; width:40px;">
+                    <span>Survei GPM</span>
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <!--<div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page"
                                 href="<?= base_url('dashboard'); ?>">Dashboard</a>
                         </li>
                     </ul>
-                </div>
+                </div>-->
                 <div class="d-flex" role="search">
                     <a class="btn btn-primary me-2" aria-current="page" href="<?= base_url('login'); ?>">Login</a>
                     <a class="btn btn-outline-primary " aria-current="page"

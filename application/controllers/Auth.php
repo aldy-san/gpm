@@ -16,6 +16,13 @@ class Auth extends CI_Controller {
             'title' => false
         ];
     }
+	public function index()
+	{
+		$data = $this->globalData;
+		$this->load->view('layouts/header', $data);
+		$this->load->view('pages/home');
+		$this->load->view('layouts/footer');
+	}
 	public function login()
 	{
 		if ($this->input->post()){

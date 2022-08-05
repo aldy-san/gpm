@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+use Dompdf\dompdf;
 class Dosen extends CI_Controller {
 
 	public $globalData;

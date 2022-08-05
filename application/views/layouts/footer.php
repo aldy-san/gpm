@@ -11,6 +11,11 @@
 
 <script src="<?= base_url('assets/js/custom.js') ?>"></script>
 <script src="<?= base_url('assets/js/main.js') ?>"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"
+    integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 var radialGradientOptions = {
     series: [<?= $this_user['id']; ?>],
@@ -96,8 +101,6 @@ var radialGradient = new ApexCharts(
     radialGradientOptions
 );
 radialGradient.render();
-</script>
-<script>
 var barOptions = {
     series: [{
             name: "S1 Teknik Informatika",
@@ -124,7 +127,7 @@ var barOptions = {
         },
     },
     dataLabels: {
-        enabled: false,
+        enabled: true,
     },
     stroke: {
         show: true,
@@ -136,7 +139,7 @@ var barOptions = {
     },
     yaxis: {
         title: {
-            text: "$ (thousands)",
+            text: "Capaian",
         },
     },
     fill: {
@@ -145,16 +148,61 @@ var barOptions = {
     tooltip: {
         y: {
             formatter: function(val) {
-                return "$ " + val + " thousands";
+                return val + "%";
             },
         },
     },
 };
 var bar = new ApexCharts(document.querySelector("#tes-bar"), barOptions);
 bar.render();
+
+function tes2() {
+    html2canvas($('.page-content')[0]).then(function(canvas) {
+        var imgData = canvas.toDataURL('image/png');
+        const {
+            jsPDF
+        } = window.jspdf
+        const pdf = new jsPDF({
+            orientation: "landscape"
+        });
+        var width = pdf.internal.pageSize.getWidth();
+        var height = pdf.internal.pageSize.getHeight();
+        console.log(width, height)
+        pdf.addImage(imgData, 'PNG', 2, 2, width, height);
+        pdf.addImage(imgData, 'PNG', 2, 100, width, height);
+        pdf.save('sample-file.pdf');
+    });
+}
+
+function tes() {
+    const {
+        jsPDF
+    } = window.jspdf
+    const pdf = new jsPDF({
+        orientation: "landscape"
+    });
+    var dataURL = radialGradient.dataURI().then(({
+        imgURI,
+        blob
+    }) => {
+        pdf.addImage(imgURI, 'PNG', 0, 0);
+    })
+    var save = dataURL.then(() => {
+        bar.dataURI().then(({
+            imgURI,
+            blob
+        }) => {
+            pdf.addImage(imgURI, 'PNG', 100, 100);
+            pdf.save('yosh.pdf');
+        })
+    })
+}
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+
+<script>
+// Default export is a4 paper, portrait, using millimeters for units
+</script>
 </body>
 
 </html>
