@@ -11,9 +11,22 @@ class Superadmin extends CI_Controller {
             'withSidebar' => true,
             'title' => false,
             'this_user' => $this->db->where(['id' => $this->session->userdata('user')['id']])->get('users')->row_array(),
-            'survei_levels' => ['d4', 's1', 's2', 's3', false]
+            'survei_levels' => ['d4', 's1', 's2', 's3', false],
+            'survei_roles' => ['mahasiswa', 'dosen', 'tendik', 'alumni', 'mitra', 'pengguna']
         ];
+        if ($this->globalData['this_user']['role'] !== 'superadmin') {
+            $this->session->set_flashdata('alertForm', 'Role anda tidak memiliki akses untuk halaman tersebut');
+            $this->session->set_flashdata('alertType', 'danger');
+            redirect('auth');
+        }
     }
+    public function index()
+	{
+        $data = $this->globalData;
+		$this->load->view('layouts/header', $data);
+		$this->load->view('admin/index');
+		$this->load->view('layouts/footer');
+	}
     public function survei($slug)
     {
         //get slug
@@ -21,7 +34,7 @@ class Superadmin extends CI_Controller {
         $data['slug'] = explode('-', $slug)[0];
         $data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
         $table = 'survei';
-        if(!in_array($data['sub_slug'], $this->globalData['survei_levels'])) redirect('/dashboard');
+        if(!in_array($data['sub_slug'], $this->globalData['survei_levels']) || !in_array($data['slug'], $this->globalData['survei_roles']) ) redirect('/dashboard');
         // Config Pagination
 		$config['base_url'] = base_url('/survei/'.$slug);
 		$config['total_rows'] = $this->db->where(['level' => $slug])->get($table)->num_rows();;

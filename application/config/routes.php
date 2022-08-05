@@ -53,23 +53,27 @@ $route['default_controller'] = 'home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-# -------------------------------------------------------------------------
-
-$route['login'] = 'Auth/login';
-$route['register'] = 'Auth/register';
-$route['logout'] = 'Home/logout';
-
-$route['dashboard'] = 'Admin/index';
+# ----------------------------------TES------------------------------------
 $route['tes'] = 'Admin/tes';
 $route['tes/(:num)'] = 'Admin/tes';
 $route['tes/create'] = 'Admin/createTes';
 $route['tes/edit/(:num)'] = 'Admin/editTes/$1';
 $route['tes/detail/(:num)'] = 'Admin/detailTes/$1';
 $route['tes/delete'] = 'Admin/deleteTes';
+# ----------------------------------ALL------------------------------------
 
+$route['login'] = 'Auth/login';
+$route['register'] = 'Auth/register';
+$route['logout'] = 'Home/logout';
+
+# -------------------------------SUPERADMIN--------------------------------
+$route['dashboard'] = 'Superadmin/index';
 $route['survei/(:any)'] = 'Superadmin/survei/$1';
 $route['survei/(:any)/(:num)'] = 'Superadmin/survei/$1';
 $route['survei/(:any)/create'] = 'Superadmin/create_survei/$1';
 $route['survei/(:any)/edit/(:num)'] = 'Superadmin/edit_survei/$1/$2';
 $route['survei/(:any)/detail/(:num)'] = 'Superadmin/detail_survei/$1/$2';
 $route['survei/(:any)/delete'] = 'Superadmin/delete_survei/$1';
+
+# -----------------------------------DOSEN---------------------------------
+$route['dosen/dashboard'] = 'Dosen/index';

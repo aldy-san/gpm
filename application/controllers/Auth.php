@@ -7,7 +7,8 @@ class Auth extends CI_Controller {
     public function __construct() {
         parent::__construct();
 		if ($this->session->userdata('user')) {
-			redirect('/dashboard');
+			$user = $this->db->where(['id' => $this->session->userdata('user')['id']])->get('users')->row_array();
+			$this->_redirect($user['role']);
 		}
         $this->globalData = [
             'withNavbar' => true,
@@ -15,13 +16,6 @@ class Auth extends CI_Controller {
             'title' => false
         ];
     }
-	public function index()
-	{
-        $data = $this->globalData;
-		$this->load->view('layouts/header', $data);
-		$this->load->view('pages/home');
-		$this->load->view('layouts/footer');
-	}
 	public function login()
 	{
 		if ($this->input->post()){
@@ -35,12 +29,13 @@ class Auth extends CI_Controller {
 				$user = $this->db->get_where('users', ['email' => $email])->row_array();
 				if ($user){
 					if (password_verify($password, $user['password'])){
-						$this->session->set_flashdata('alertForm', 'Anda login');
+						$this->session->set_flashdata('alertForm', 'Anda berhasil login');
+						$this->session->set_flashdata('alertType', 'Success');
 						$sessionUser = [
 							'id' => $user['id'],
 						];
 						$this->session->set_userdata('user',$sessionUser);
-						redirect('/dashboard');
+						$this->_redirect($user['role']);
 					} else {
 						$this->session->set_flashdata('alertForm', 'Password Salah');
 					}
@@ -78,5 +73,11 @@ class Auth extends CI_Controller {
 		$this->load->view('auth/register');
 		$this->load->view('layouts/footer');
 	}
-	
+	private function _redirect($role){
+		if($role === 'superadmin'){
+			redirect('dashboard');
+		} else {
+			redirect($role.'/dashboard');
+		}
+	}
 }

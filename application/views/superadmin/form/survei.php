@@ -34,6 +34,9 @@
                                     <option value="selection"
                                         <?= $data_slug && ($data_slug['type'] === 'selection')? 'selected' : ''; ?>>
                                         Selection</option>
+                                    <option value="description"
+                                        <?= $data_slug && ($data_slug['type'] === 'description')? 'selected' : ''; ?>>
+                                        Description</option>
                                 </select>
                             </fieldset>
                         </div>
