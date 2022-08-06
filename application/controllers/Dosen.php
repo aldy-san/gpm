@@ -25,4 +25,12 @@ class Dosen extends CI_Controller {
 		$this->load->view('dosen/index');
 		$this->load->view('layouts/footer');
 	}
+	public function result()
+	{
+        $data = $this->globalData;
+        $data['survei'] = $this->db->get_where('survei', ['role' => 'mahasiswa'])->result_array();
+		$this->load->view('layouts/header', $data);
+		$this->load->view('dosen/result', $data);
+		$this->load->view('layouts/footer');
+	}
 }

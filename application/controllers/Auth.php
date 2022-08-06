@@ -18,10 +18,7 @@ class Auth extends CI_Controller {
     }
 	public function index()
 	{
-		$data = $this->globalData;
-		$this->load->view('layouts/header', $data);
-		$this->load->view('pages/home');
-		$this->load->view('layouts/footer');
+		redirect('/login');
 	}
 	public function login()
 	{
@@ -37,7 +34,7 @@ class Auth extends CI_Controller {
 				if ($user){
 					if (password_verify($password, $user['password'])){
 						$this->session->set_flashdata('alertForm', 'Anda berhasil login');
-						$this->session->set_flashdata('alertType', 'Success');
+						$this->session->set_flashdata('alertType', 'success');
 						$sessionUser = [
 							'id' => $user['id'],
 						];

@@ -12,13 +12,6 @@ class Home extends CI_Controller {
             'title' => false
         ];
     }
-	public function index()
-	{
-        $data = $this->globalData;
-		$this->load->view('layouts/header', $data);
-		$this->load->view('pages/home');
-		$this->load->view('layouts/footer');
-	}
 	public function logout()
 	{
 		$this->session->unset_userdata('user');

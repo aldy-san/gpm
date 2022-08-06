@@ -17,7 +17,8 @@
         <link rel="shortcut icon" href="<?= base_url('assets/images/logo/logo.png'); ?>" type="image/x-icon">
         <link rel="stylesheet" href="<?= base_url('assets/css/main.css'); ?> ">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     </head>
 
     <body>
@@ -33,14 +34,6 @@
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <!--<div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"
-                                href="<?= base_url('dashboard'); ?>">Dashboard</a>
-                        </li>
-                    </ul>
-                </div>-->
                 <div class="d-flex" role="search">
                     <a class="btn btn-primary me-2" aria-current="page" href="<?= base_url('login'); ?>">Login</a>
                     <a class="btn btn-outline-primary " aria-current="page"
@@ -54,15 +47,16 @@
             <div id="sidebar" class="active">
                 <div class="sidebar-wrapper active">
                     <div class="sidebar-header">
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block ms-auto"><i
+                                    class="bi bi-x bi-middle"></i></a>
+                        </div>
                         <div class="d-flex justify-content-center pt-2">
                             <div class="logo">
                                 <a href="<?= base_url('auth'); ?>">
                                     <img src="<?= base_url('assets/images/logo/logo.png'); ?>"
                                         style="height:75px; width:75px;" alt="Logo" srcset="">
                                 </a>
-                            </div>
-                            <div class="toggler">
-                                <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
                             </div>
                         </div>
                     </div>
@@ -76,6 +70,27 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
+                            <?php if($this_user['role'] === 'dosen') :?>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'result' ?'active' :''?>">
+                                <a href="<?= base_url('dosen/result'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Hasil Survei</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-title">Isi Survei</li>
+                            <li class="sidebar-item <?= $this->uri->segment(1) === 'dashboard' ?> ">
+                                <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Survei Kepuasan Dosen</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(1) === 'survei-pembelajaran-dosen' ?> ">
+                                <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Survei pembelajaran dosen</span>
+                                </a>
+                            </li>
+                            <?php endif ?>
                             <?php if($this_user['role'] === 'superadmin') :?>
                             <li class="sidebar-item  has-sub">
                                 <a href="#" class='sidebar-link'>

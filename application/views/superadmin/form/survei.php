@@ -41,6 +41,20 @@
                             </fieldset>
                         </div>
                         <div class="form-group col-6">
+                            <label for="chart">Chart</label>
+                            <fieldset>
+                                <select class="form-select" name="chart"
+                                    <?= $title === 'Detail Survei Mahasiswa'? 'disabled' : ''; ?>>
+                                    <option value="bar"
+                                        <?= $data_slug && ($data_slug['chart'] === 'bar')? 'selected' : ''; ?>>Bar
+                                    </option>
+                                    <option value="pie"
+                                        <?= $data_slug && ($data_slug['chart'] === 'pie')? 'selected' : ''; ?>>
+                                        Pie</option>
+                                </select>
+                            </fieldset>
+                        </div>
+                        <div class="form-group col-12">
                             <label for="selections">selections</label>
                             <small class="text-muted">split with comma. ex: <i>cool,excellent,yoma</i> </small>
                             <input type="text" class="form-control <?= form_error('selections') ? 'is-invalid': ''; ?>"

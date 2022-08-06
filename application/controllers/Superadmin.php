@@ -54,7 +54,7 @@ class Superadmin extends CI_Controller {
         $data['edit_url'] = '/survei/'.$slug.'/edit/';
         $data['detail_url'] = '/survei/'.$slug.'/detail/';
         $data['delete_url'] = '/survei/'.$slug.'/delete/';
-        $data['column_table'] = ['question', 'type', 'selections', 'bar_from', 'bar_to', 'bar_length'];
+        $data['column_table'] = ['id','question', 'type', 'selections', 'bar_from', 'bar_to', 'bar_length', 'chart'];
 
         $this->load->view('layouts/header', $data);
         $this->load->view('template/table_page',$data);
@@ -83,6 +83,7 @@ class Superadmin extends CI_Controller {
                     'bar_from' => $this->input->post('bar_from'),
                     'bar_to' => $this->input->post('bar_to'),
                     'bar_length' => $this->input->post('bar_length'),
+                    'chart' => $this->input->post('chart'),
                 ];
                 $this->db->insert('survei', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
@@ -126,6 +127,7 @@ class Superadmin extends CI_Controller {
                     'bar_from' => $this->input->post('bar_from'),
                     'bar_to' => $this->input->post('bar_to'),
                     'bar_length' => $this->input->post('bar_length'),
+                    'chart' => $this->input->post('chart'),
                 ];
                 $this->db->where(['id' => $id])->update('survei', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');

@@ -6,7 +6,7 @@ class Db_migration extends CI_Controller {
 	public function index()
     {
         $this->load->library('migration');
-        if($this->migration->latest()===false){
+        if($this->migration->version(3)===false){
             show_error($this->migration->error_string());
         } else {
             echo 'success';

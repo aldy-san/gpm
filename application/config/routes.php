@@ -60,6 +60,10 @@ $route['tes/create'] = 'Admin/createTes';
 $route['tes/edit/(:num)'] = 'Admin/editTes/$1';
 $route['tes/detail/(:num)'] = 'Admin/detailTes/$1';
 $route['tes/delete'] = 'Admin/deleteTes';
+# ----------------------------------API------------------------------------
+$route['api/getDataSurvei/(:any)'] = 'Api/getDataSurvei/$1';
+$route['api/getChartDataByIdSurvei/(:num)'] = 'Api/getChartDataByIdSurvei/$1';
+
 # ----------------------------------ALL------------------------------------
 
 $route['login'] = 'Auth/login';

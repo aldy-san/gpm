@@ -12,7 +12,7 @@ class Migration_Tb_survei extends CI_Migration{
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
-                'constraint' => 5,
+                'constraint' => 10,
                 'auto_increment' => TRUE
             ),
             'level' => array(
@@ -34,22 +34,27 @@ class Migration_Tb_survei extends CI_Migration{
             'selections' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-                'default' => 'null'
+                'default' => 'NULL'
             ),
             'bar_from' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-                'default' => 'null'
+                'default' => 'NULL'
             ),
             'bar_to' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-                'default' => 'null'
+                'default' => 'NULL'
             ),
             'bar_length' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-                'default' => 'null'
+                'default' => 'NULL'
+            ),
+            'chart' => array(
+                'type' => 'VARCHAR',
+                'constraint' => '100',
+                'default' => 'bar'
             )
         ));
         $this->dbforge->add_key('id', TRUE);
