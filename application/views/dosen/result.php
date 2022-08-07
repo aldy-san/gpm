@@ -40,40 +40,82 @@
 <script type="text/javascript">
 var dataSurvei = []
 var dataChart = []
-$.get('<?=base_url('api/getDataSurvei/mahasiswa')?>', function(res) {
+$.get('<?=base_url('api/getDataSurvei/'.$this->uri->segment(3))?>', (res) => {
     var dataSurvei = JSON.parse(res);
-    dataSurvei.forEach(function(item) {
-        console.log(item);
-        $.get('<?=base_url('api/getChartDataByIdSurvei/')?>' + item.id, function(res2) {
+    dataSurvei.forEach((item) => {
+        $.get('<?=base_url('api/getChartDataByIdSurvei/')?>' + item.id, (res2) => {
             var temp = JSON.parse(res2)
-            const sum = temp.reduce((accumulator, object) => {
-                return accumulator + object.total;
-            }, 0);
+            let selections = item.selections.split(',')
+            let series = selections.map(selection => {
+                var obj = temp.find(item2 => item2.answer === selection)
+                return Number(obj?.total) || 0
+            })
+            var options = {
+                series: [1],
+                labels: ['No Data'],
+                colors: ['#f0f0f0'],
+                chart: {
+                    width: 350,
+                    type: "pie",
+                },
+                stroke: {
+                    width: 0
+                },
+                dataLabels: {
+                    enable: false
+                }
+            };
             if (temp.length > 0) {
-                var options = {
-                    series: temp.map(item => {
-                        return (item.total / sum) * 100
-                    }),
-                    chart: {
-                        width: 380,
-                        type: "pie",
-                    },
-                    labels: temp.map(item => item.answer),
-                    responsive: [{
-                        breakpoint: 480,
-                        options: {
-                            chart: {
-                                width: 200,
-                            },
-                            legend: {
-                                position: "bottom",
-                            },
+                if (item.chart === 'pie') {
+                    options = {
+                        series: series,
+                        chart: {
+                            height: 350,
+                            type: "pie",
                         },
-                    }, ],
-                };
-                var pie = new ApexCharts(document.querySelector("#chart-" + item.id), options);
-                pie.render();
+                        labels: selections,
+                        responsive: [{
+                            breakpoint: 480,
+                            options: {
+                                chart: {
+                                    width: 200,
+                                },
+                                legend: {
+                                    position: "bottom",
+                                },
+                            },
+                        }, ],
+                    };
+                } else if (item.chart === 'bar') {
+                    let barSeries = selections.map(selection => {
+                        var obj = temp.find(item2 => item2.answer === selection)
+                        if (obj) {
+                            return {
+                                x: selection,
+                                y: obj.total
+                            }
+                        } else {
+                            return {
+                                x: selection,
+                                y: 0
+                            }
+                        }
+                    })
+                    options = {
+                        chart: {
+                            height: 338,
+                            type: 'bar'
+                        },
+                        series: [{
+                            data: barSeries
+                        }]
+                    }
+                }
             }
+            console.log(item.type)
+            var chart = new ApexCharts(document.querySelector("#chart-" + item.id),
+                options);
+            chart.render();
         });
     })
     console.log(dataChart)

@@ -71,25 +71,57 @@
                                 </a>
                             </li>
                             <?php if($this_user['role'] === 'dosen') :?>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'result' ?'active' :''?>">
-                                <a href="<?= base_url('dosen/result'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
-                                    <span>Hasil Survei</span>
-                                </a>
-                            </li>
                             <li class="sidebar-title">Isi Survei</li>
                             <li class="sidebar-item <?= $this->uri->segment(1) === 'dashboard' ?> ">
                                 <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
-                                    <span>Survei Kepuasan Dosen</span>
+                                    <span>Kepuasan Dosen</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(1) === 'survei-pembelajaran-dosen' ?> ">
                                 <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
-                                    <span>Survei pembelajaran dosen</span>
+                                    <span>Pembelajaran dosen</span>
                                 </a>
                             </li>
+                            <li class="sidebar-title">Hasil Survei</li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'mahasiswa' ?'active' :''?>">
+                                <a href="<?= base_url('dosen/result/mahasiswa'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Mahasiswa</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
+                                <a href="<?= base_url('dosen/result/dosen'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Dosen</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
+                                <a href="<?= base_url('dosen/result/tendik'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Tenaga Pendidikan</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'alumni' ?'active' :''?>">
+                                <a href="<?= base_url('dosen/result/alumni'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Alumni</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'mitra' ?'active' :''?>">
+                                <a href="<?= base_url('dosen/result/mitra'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Mitra</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'pengguna' ?'active' :''?>">
+                                <a href="<?= base_url('dosen/result/pengguna'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid-fill"></i>
+                                    <span>Pengguna</span>
+                                </a>
+                            </li>
+
                             <?php endif ?>
                             <?php if($this_user['role'] === 'superadmin') :?>
                             <li class="sidebar-item  has-sub">

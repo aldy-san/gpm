@@ -81,3 +81,4 @@ $route['survei/(:any)/delete'] = 'Superadmin/delete_survei/$1';
 
 # -----------------------------------DOSEN---------------------------------
 $route['dosen/dashboard'] = 'Dosen/index';
+$route['dosen/result/(:any)'] = 'Dosen/result/$1';
