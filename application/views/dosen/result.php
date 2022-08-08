@@ -17,7 +17,7 @@
                 <a class="dropdown-item" href="#">Separated link</a>
             </div>
         </div>
-        <button class="btn btn-success d-flex align-items-center">
+        <button onclick="exportHandler()" class="btn btn-success d-flex align-items-center">
             <i class="bi bi-save me-2"></i>
             <b>Export</b>
         </button>
@@ -40,12 +40,17 @@
 <script type="text/javascript">
 var dataSurvei = []
 var dataChart = []
+
 $.get('<?=base_url('api/getDataSurvei/'.$this->uri->segment(3))?>', (res) => {
-    var dataSurvei = JSON.parse(res);
+    dataSurvei = JSON.parse(res);
     dataSurvei.forEach((item) => {
+        // manipulate data to chart
         $.get('<?=base_url('api/getChartDataByIdSurvei/')?>' + item.id, (res2) => {
             var temp = JSON.parse(res2)
             let selections = item.selections.split(',')
+            if (item.type === 'bar') {
+                selections = ['0-20', '21-40', '41-60', '61-80', '81-100']
+            }
             let series = selections.map(selection => {
                 var obj = temp.find(item2 => item2.answer === selection)
                 return Number(obj?.total) || 0
@@ -55,7 +60,7 @@ $.get('<?=base_url('api/getDataSurvei/'.$this->uri->segment(3))?>', (res) => {
                 labels: ['No Data'],
                 colors: ['#f0f0f0'],
                 chart: {
-                    width: 350,
+                    height: 250,
                     type: "pie",
                 },
                 stroke: {
@@ -70,7 +75,7 @@ $.get('<?=base_url('api/getDataSurvei/'.$this->uri->segment(3))?>', (res) => {
                     options = {
                         series: series,
                         chart: {
-                            height: 350,
+                            height: 250,
                             type: "pie",
                         },
                         labels: selections,
@@ -103,7 +108,7 @@ $.get('<?=base_url('api/getDataSurvei/'.$this->uri->segment(3))?>', (res) => {
                     })
                     options = {
                         chart: {
-                            height: 338,
+                            height: 238,
                             type: 'bar'
                         },
                         series: [{
@@ -112,12 +117,99 @@ $.get('<?=base_url('api/getDataSurvei/'.$this->uri->segment(3))?>', (res) => {
                     }
                 }
             }
-            console.log(item.type)
             var chart = new ApexCharts(document.querySelector("#chart-" + item.id),
                 options);
             chart.render();
         });
+        // add to js pdf
+
     })
-    console.log(dataChart)
 });
+async function genCanvas() {
+
+}
+
+async function exportHandler() {
+
+    const {
+        jsPDF
+    } = window.jspdf
+    const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: 'mm',
+        format: 'a4',
+        putOnlyUsedFonts: true,
+        floatPrecision: 16
+    });
+    const promises = []
+    dataSurvei.forEach((item, index) => {
+        promises.push(html2canvas($('#result-' + item.id)[0]))
+    })
+    await Promise.all(promises).then(res => {
+            console.log(res)
+            dataSurvei.forEach((item, index) => {
+                var imgData = res[index].toDataURL('image-' + item.id + '/png');
+                var width = pdf.internal.pageSize.getWidth();
+                var height = pdf.internal.pageSize.getHeight();
+                console.log(width, height)
+                var x = 0,
+                    y = 0;
+                if ((index + 1) % 4 === 2) {
+                    x = width / 2
+                } else if ((index + 1) % 4 === 3) {
+                    y = height / 2
+                } else if ((index + 1) % 4 === 0) {
+                    x = width / 2
+                    y = height / 2
+                }
+                if (((index + 1) % 4 === 1) && (index !== 0)) {
+                    pdf.addPage()
+                }
+                console.log('==>', item, x, y)
+                pdf.addImage(imgData, 'PNG', x, y, width / 2, height / 2);
+            })
+        })
+        .finally(() => {
+            pdf.save('test.pdf')
+        })
+    //let genCanvas = new Promise((myResolve) => {
+    //    const {
+    //        jsPDF
+    //    } = window.jspdf
+    //    const pdf = new jsPDF({
+    //        orientation: "landscape",
+    //        unit: 'mm',
+    //        format: 'a4',
+    //        putOnlyUsedFonts: true,
+    //        floatPrecision: 16
+    //    });
+    //    var check = dataSurvei.length
+    //    dataSurvei.forEach((item, index) => {
+    //        console.log($('#result-' + item.id))
+    //        html2canvas($('#result-' + item.id)[0]).then((canvas) => {
+    //            var imgData = canvas.toDataURL('image-' + item.id + '/png');
+    //            var width = pdf.internal.pageSize.getWidth();
+    //            var height = pdf.internal.pageSize.getHeight();
+    //            console.log(width, height)
+    //            var x = 0,
+    //                y = 0;
+    //            if ((index + 1) % 4 === 2) {
+    //                x = width / 2
+    //            } else if ((index + 1) % 4 === 3) {
+    //                y = height / 2
+    //            } else if ((index + 1) % 4 === 0) {
+    //                x = width / 2
+    //                y = height / 2
+    //            }
+    //            if (((index + 1) % 4 === 1) && (index !== 0)) {
+    //                pdf.addPage()
+    //            }
+    //            console.log('==>', item, x, y)
+    //            pdf.addImage(imgData, 'PNG', x, y, width / 2, height / 2);
+    //        });
+    //    })
+    //    myResolve(check); // when successful
+    //    myReject(); // when error
+    //});
+}
 </script>

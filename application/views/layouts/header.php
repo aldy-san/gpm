@@ -85,7 +85,7 @@
                                 </a>
                             </li>
                             <li class="sidebar-title">Hasil Survei</li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'mahasiswa' ?'active' :''?>">
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
                                 <a href="<?= base_url('dosen/result/mahasiswa'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Mahasiswa</span>
