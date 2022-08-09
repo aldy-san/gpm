@@ -34,22 +34,22 @@ class Superadmin extends CI_Controller {
         $data['slug'] = explode('-', $slug)[0];
         $data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
         $table = 'survei';
+
         if(!in_array($data['sub_slug'], $this->globalData['survei_levels']) || !in_array($data['slug'], $this->globalData['survei_roles']) ) redirect('/dashboard');
+
+        if ($data['sub_slug']){
+            $where = ['role' => $data['slug'], 'level' => $data['sub_slug']];
+        } else {
+            $where = ['role' => $data['slug']];
+        }
+
         // Config Pagination
 		$config['base_url'] = base_url('/survei/'.$slug.'/');
-        if ($data['sub_slug']){
-            $config['total_rows'] = $this->db->where(['role' => $data['slug'], 'level' => $data['sub_slug']])->get($table)->num_rows();
-        }else {
-            $config['total_rows'] = $this->db->where(['role' => $data['slug']])->get($table)->num_rows();
-        }
-		$config['per_page'] = 2;
+        $config['total_rows'] = $this->db->get_where($table, $where)->num_rows();
+		$config['per_page'] = 10;
 		$config['start'] = $this->uri->segment(3);
 		$this->pagination->initialize($config);
-        if ($data['sub_slug']){
-            $data['data_table'] = $this->db->where(['role' => $data['slug'], 'level' => $data['sub_slug']])->limit($config['per_page'], $config['start'])->get($table)->result_array();
-        }else {
-            $data['data_table'] = $this->db->where(['role' => $data['slug']])->limit($config['per_page'], $config['start'])->get($table)->result_array();
-        }
+        $data['data_table'] = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
 
         // Config Template Table Page
         $data['title'] = 'Survei '.$data['slug'];
@@ -82,7 +82,6 @@ class Superadmin extends CI_Controller {
                     'level' => $data['sub_slug'],
                     'role' => $data['slug'],
                     'question' => $this->input->post('question'),
-                    'slug' => str_replace("-", " ", $this->input->post('question')),
                     'type' => $this->input->post('type'),
                     'selections' => $this->input->post('selections'),
                     'bar_from' => $this->input->post('bar_from'),
@@ -128,7 +127,6 @@ class Superadmin extends CI_Controller {
                     'level' => $data['sub_slug'],
                     'role' => $data['slug'],
                     'question' => $this->input->post('question'),
-                    'slug' => str_replace("-", " ", $this->input->post('question')),
                     'type' => $this->input->post('type'),
                     'selections' => $this->input->post('selections'),
                     'bar_from' => $this->input->post('bar_from'),

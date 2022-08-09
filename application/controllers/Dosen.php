@@ -39,16 +39,17 @@ class Dosen extends CI_Controller {
         $data = $this->globalData;
         $data['slug'] = $id;
         $data['sub_slug'] = false;
-        $per_page =  $this->input->get('per_page') ?  $this->input->get('per_page')-1 : 0;
+
         // Config Pagination
 		$config['base_url'] = base_url('/dosen/detail/'.$id.'/');
-		$config['total_rows'] = $this->db->select('users.username, answer.answer')->from('answer')->where(['id_survei' => $id])->join('users', 'users.id = answer.id_user', 'left')->get()->num_rows();
-		$config['per_page'] = 2;
+		$config['total_rows'] = $this->M_survei->getDetailResultSurvei($id)->num_rows();
+		$config['per_page'] = 10;
 		$config['start'] = $this->uri->segment(4);
         $config['page_query_string'] = TRUE;
         $config['use_page_numbers'] = TRUE;
 		$this->pagination->initialize($config);
-        $data['data_table'] = $this->db->select('users.username, answer.answer')->from('answer')->where(['id_survei' => $id])->join('users', 'users.id = answer.id_user', 'left')->limit($config['per_page'],$per_page * $config['per_page'])->get()->result_array();
+        $offset =  $this->input->get('per_page') ?  ($this->input->get('per_page')-1)*$config['per_page'] : 0;
+        $data['data_table'] = $this->M_survei->getDetailResultSurvei($id, $config['per_page'], $offset)->result_array();
 
         // Config Template Table Page
         $data['title'] = 'Detail Result '.$data['slug'];

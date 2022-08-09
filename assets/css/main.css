@@ -6,6 +6,7 @@
 }
 .auth-form {
 	margin-top: 75px;
+	width: 100vw;
 }
 p {
 	margin: 0 !important;

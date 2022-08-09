@@ -17,8 +17,11 @@
                 <a class="dropdown-item" href="#">Separated link</a>
             </div>
         </div>
-        <button onclick="exportHandler()" class="btn btn-success d-flex align-items-center">
+        <button id="btn-export" onclick="exportHandler()" class="btn btn-success d-flex align-items-center">
             <i class="bi bi-save me-2"></i>
+            <div class="spinner-border spinner-border-sm me-2 d-none" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
             <b>Export</b>
         </button>
     </div>
@@ -156,6 +159,9 @@ $.get('<?=base_url('api/getDataSurvei/'.$this->uri->segment(3))?>', (res) => {
 });
 
 async function exportHandler() {
+    console.log('hai')
+    $('#btn-export .bi-save').toggleClass('d-none')
+    $('#btn-export .spinner-border').toggleClass('d-none')
     const {
         jsPDF
     } = window.jspdf
@@ -171,7 +177,6 @@ async function exportHandler() {
         promises.push(html2canvas($('#result-' + item.id)[0]))
     })
     await Promise.all(promises).then(res => {
-            console.log(res)
             dataSurvei.forEach((item, index) => {
                 var imgData = res[index].toDataURL('image-' + item.id + '/png');
                 var width = pdf.internal.pageSize.getWidth();
@@ -196,45 +201,8 @@ async function exportHandler() {
         })
         .finally(() => {
             pdf.save('test.pdf')
+            $('#btn-export .bi-save').toggleClass('d-none')
+            $('#btn-export .spinner-border').toggleClass('d-none')
         })
-    //let genCanvas = new Promise((myResolve) => {
-    //    const {
-    //        jsPDF
-    //    } = window.jspdf
-    //    const pdf = new jsPDF({
-    //        orientation: "landscape",
-    //        unit: 'mm',
-    //        format: 'a4',
-    //        putOnlyUsedFonts: true,
-    //        floatPrecision: 16
-    //    });
-    //    var check = dataSurvei.length
-    //    dataSurvei.forEach((item, index) => {
-    //        console.log($('#result-' + item.id))
-    //        html2canvas($('#result-' + item.id)[0]).then((canvas) => {
-    //            var imgData = canvas.toDataURL('image-' + item.id + '/png');
-    //            var width = pdf.internal.pageSize.getWidth();
-    //            var height = pdf.internal.pageSize.getHeight();
-    //            console.log(width, height)
-    //            var x = 0,
-    //                y = 0;
-    //            if ((index + 1) % 4 === 2) {
-    //                x = width / 2
-    //            } else if ((index + 1) % 4 === 3) {
-    //                y = height / 2
-    //            } else if ((index + 1) % 4 === 0) {
-    //                x = width / 2
-    //                y = height / 2
-    //            }
-    //            if (((index + 1) % 4 === 1) && (index !== 0)) {
-    //                pdf.addPage()
-    //            }
-    //            console.log('==>', item, x, y)
-    //            pdf.addImage(imgData, 'PNG', x, y, width / 2, height / 2);
-    //        });
-    //    })
-    //    myResolve(check); // when successful
-    //    myReject(); // when error
-    //});
 }
 </script>

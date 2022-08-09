@@ -60,6 +60,7 @@ $route['tes/create'] = 'Admin/createTes';
 $route['tes/edit/(:num)'] = 'Admin/editTes/$1';
 $route['tes/detail/(:num)'] = 'Admin/detailTes/$1';
 $route['tes/delete'] = 'Admin/deleteTes';
+
 # ----------------------------------API------------------------------------
 $route['api/getDataSurvei/(:any)'] = 'Api/getDataSurvei/$1';
 $route['api/getChartDataByIdSurvei/(:num)'] = 'Api/getChartDataByIdSurvei/$1';
@@ -69,6 +70,9 @@ $route['api/getChartDataByIdSurvei/(:num)'] = 'Api/getChartDataByIdSurvei/$1';
 $route['login'] = 'Auth/login';
 $route['register'] = 'Auth/register';
 $route['logout'] = 'Home/logout';
+$route['alumni'] = 'Home/alumni';
+$route['mitra'] = 'Home/mitra';
+$route['pengguna'] = 'Home/pengguna';
 
 # -------------------------------SUPERADMIN--------------------------------
 $route['dashboard'] = 'Superadmin/index';
@@ -79,6 +83,7 @@ $route['survei/(:any)/create'] = 'Superadmin/create_survei/$1';
 $route['survei/(:any)/edit/(:num)'] = 'Superadmin/edit_survei/$1/$2';
 $route['survei/(:any)/detail/(:num)'] = 'Superadmin/detail_survei/$1/$2';
 $route['survei/(:any)/delete'] = 'Superadmin/delete_survei/$1';
+$route['manage-period'] = 'Superadmin/period';
 
 # -----------------------------------DOSEN---------------------------------
 $route['dosen/dashboard'] = 'Dosen/index';

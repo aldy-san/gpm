@@ -127,19 +127,19 @@
                             <li class="sidebar-item  has-sub">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
-                                    <span>survei-mahasiswa</span>
+                                    <span>survei mahasiswa</span>
                                 </a>
-                                <ul class="submenu ">
-                                    <li class="submenu-item ">
+                                <ul class="submenu">
+                                    <li class="submenu-item">
                                         <a href="<?= base_url('/survei/mahasiswa-d4'); ?>">D4</a>
                                     </li>
-                                    <li class="submenu-item ">
+                                    <li class="submenu-item">
                                         <a href="<?= base_url('/survei/mahasiswa-s1'); ?>">S1</a>
                                     </li>
-                                    <li class="submenu-item ">
+                                    <li class="submenu-item">
                                         <a href="<?= base_url('/survei/mahasiswa-s2'); ?>">S2</a>
                                     </li>
-                                    <li class="submenu-item ">
+                                    <li class="submenu-item">
                                         <a href="<?= base_url('/survei/mahasiswa-s3'); ?>">S3</a>
                                     </li>
                                 </ul>
@@ -147,31 +147,37 @@
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'dosen' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/dosen'); ?>" class='sidebar-link'>
                                     <i class="bi bi-collection-fill"></i>
-                                    <span>survei-dosen</span>
+                                    <span>survei dosen</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'tendik' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/tendik'); ?>" class='sidebar-link'>
                                     <i class="bi bi-collection-fill"></i>
-                                    <span>survei-tendik</span>
+                                    <span>survei tendik</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'alumni' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/alumni'); ?>" class='sidebar-link'>
                                     <i class="bi bi-collection-fill"></i>
-                                    <span>survei-alumni</span>
+                                    <span>survei alumni</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'mitra' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/mitra'); ?>" class='sidebar-link'>
                                     <i class="bi bi-collection-fill"></i>
-                                    <span>survei-mitra</span>
+                                    <span>survei mitra</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'pengguna' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/pengguna'); ?>" class='sidebar-link'>
                                     <i class="bi bi-collection-fill"></i>
-                                    <span>survei-pengguna</span>
+                                    <span>survei pengguna</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'manage-period' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('manage-period'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-collection-fill"></i>
+                                    <span>Kelola Periode</span>
                                 </a>
                             </li>
                             <?php endif;?>

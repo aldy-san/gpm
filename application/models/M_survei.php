@@ -5,14 +5,16 @@ class M_survei extends CI_Model {
 		parent::__construct();
 	}
 
-    public function getChartDataByIdSurvei($id)
+    public function getDetailResultSurvei($id, $limit = false, $offset = false)
     {
-        $this->db->select('answer, count(*) as total');
+        $this->db->select('users.username, answer.answer');
         $this->db->from('answer');
-        $this->db->where(['id' => $id]);
-        $this->db->group_by('answer');
-        $result = $this->db->get()->result();
-        return $result;
+        $this->db->where(['id_survei' => $id]);
+        if ($limit){
+            $this->db->limit($limit, $offset);
+        }
+        $this->db->join('users', 'users.id = answer.id_user', 'left');
+        return $this->db->get();
     }
 }
 ?>

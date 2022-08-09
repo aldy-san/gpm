@@ -26,9 +26,9 @@
         <button type="submit" class="btn btn-primary mx-auto col-8">Login</button>
         <small class="text-center text-muted my-3">Tanpa login jika anda alumni, mitra, atau pengguna</small>
         <div class="row justify-content-center">
-            <button class="btn btn-success col-3 mx-2">Alumni</button>
-            <button class="btn btn-info col-3 mx-2">Mitra</button>
-            <button class="btn btn-warning col-3 mx-2">Pengguna</button>
+            <a href="<?= base_url('alumni'); ?>" class="btn btn-success col-3 mx-2">Alumni</a>
+            <a href="<?= base_url('mitra'); ?>" class="btn btn-info col-3 mx-2">Mitra</a>
+            <a href="<?= base_url('pengguna'); ?>" class="btn btn-warning col-3 mx-2">Pengguna</a>
         </div>
     </div>
 </form>
