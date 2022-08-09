@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="form-group mb-3 col-6">
-                <label for="chart">Program Studi</label>
+                <label for="chart" class="mb-2">Program Studi</label>
                 <fieldset>
                     <select class="form-select" name="chart">
                         <option value="bar">
