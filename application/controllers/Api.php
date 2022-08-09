@@ -23,4 +23,14 @@ class Api extends CI_Controller {
         echo json_encode($result);
         //return $result;
     }
+    public function getListDataByIdSurvei($id, $limit = 4)
+    {
+        $this->db->select('users.username, answer.answer');
+        $this->db->from('answer');
+        $this->db->where(['id_survei' => $id]);
+        $this->db->join('users', 'users.id = answer.id_user', 'left');
+        $this->db->limit($limit);
+        $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
 }

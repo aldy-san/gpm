@@ -74,6 +74,7 @@ $route['logout'] = 'Home/logout';
 $route['dashboard'] = 'Superadmin/index';
 $route['survei/(:any)'] = 'Superadmin/survei/$1';
 $route['survei/(:any)/(:num)'] = 'Superadmin/survei/$1';
+$route['survei/(:any)/(:num)'] = 'Superadmin/survei/$1';
 $route['survei/(:any)/create'] = 'Superadmin/create_survei/$1';
 $route['survei/(:any)/edit/(:num)'] = 'Superadmin/edit_survei/$1/$2';
 $route['survei/(:any)/detail/(:num)'] = 'Superadmin/detail_survei/$1/$2';
@@ -82,3 +83,5 @@ $route['survei/(:any)/delete'] = 'Superadmin/delete_survei/$1';
 # -----------------------------------DOSEN---------------------------------
 $route['dosen/dashboard'] = 'Dosen/index';
 $route['dosen/result/(:any)'] = 'Dosen/result/$1';
+$route['dosen/detail/(:any)'] = 'Dosen/detail/$1';
+$route['dosen/detail/(:any)/(:num)'] = 'Dosen/detail/$1';

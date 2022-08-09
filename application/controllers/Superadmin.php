@@ -36,9 +36,13 @@ class Superadmin extends CI_Controller {
         $table = 'survei';
         if(!in_array($data['sub_slug'], $this->globalData['survei_levels']) || !in_array($data['slug'], $this->globalData['survei_roles']) ) redirect('/dashboard');
         // Config Pagination
-		$config['base_url'] = base_url('/survei/'.$slug);
-		$config['total_rows'] = $this->db->where(['level' => $slug])->get($table)->num_rows();;
-		$config['per_page'] = 10;
+		$config['base_url'] = base_url('/survei/'.$slug.'/');
+        if ($data['sub_slug']){
+            $config['total_rows'] = $this->db->where(['role' => $data['slug'], 'level' => $data['sub_slug']])->get($table)->num_rows();
+        }else {
+            $config['total_rows'] = $this->db->where(['role' => $data['slug']])->get($table)->num_rows();
+        }
+		$config['per_page'] = 2;
 		$config['start'] = $this->uri->segment(3);
 		$this->pagination->initialize($config);
         if ($data['sub_slug']){
@@ -78,6 +82,7 @@ class Superadmin extends CI_Controller {
                     'level' => $data['sub_slug'],
                     'role' => $data['slug'],
                     'question' => $this->input->post('question'),
+                    'slug' => str_replace("-", " ", $this->input->post('question')),
                     'type' => $this->input->post('type'),
                     'selections' => $this->input->post('selections'),
                     'bar_from' => $this->input->post('bar_from'),
@@ -123,6 +128,7 @@ class Superadmin extends CI_Controller {
                     'level' => $data['sub_slug'],
                     'role' => $data['slug'],
                     'question' => $this->input->post('question'),
+                    'slug' => str_replace("-", " ", $this->input->post('question')),
                     'type' => $this->input->post('type'),
                     'selections' => $this->input->post('selections'),
                     'bar_from' => $this->input->post('bar_from'),

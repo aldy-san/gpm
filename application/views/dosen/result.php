@@ -30,7 +30,21 @@
                     <h4><?= $s['question']; ?></h4>
                 </div>
                 <div class="card-body">
+                    <?php if ($s['type'] !== 'description'): ?>
                     <div id="chart-<?=$s['id']; ?>"></div>
+                    <?php else: ?>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nama</th>
+                                <th>Jawaban</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tbody-<?= $s['id']; ?>"></tbody>
+                    </table>
+                    <a href="<?= base_url('dosen/detail/'.$s['id']); ?>" class="d-block ms-auto text-end mb-2">Lihat
+                        Lebih Lengkap</a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>
@@ -45,89 +59,103 @@ $.get('<?=base_url('api/getDataSurvei/'.$this->uri->segment(3))?>', (res) => {
     dataSurvei = JSON.parse(res);
     dataSurvei.forEach((item) => {
         // manipulate data to chart
-        $.get('<?=base_url('api/getChartDataByIdSurvei/')?>' + item.id, (res2) => {
-            var temp = JSON.parse(res2)
-            let selections = item.selections.split(',')
-            if (item.type === 'bar') {
-                selections = ['0-20', '21-40', '41-60', '61-80', '81-100']
-            }
-            let series = selections.map(selection => {
-                var obj = temp.find(item2 => item2.answer === selection)
-                return Number(obj?.total) || 0
-            })
-            var options = {
-                series: [1],
-                labels: ['No Data'],
-                colors: ['#f3f3f3'],
-                chart: {
-                    height: 250,
-                    type: "pie",
-                },
-                stroke: {
-                    width: 0
-                },
-                dataLabels: {
-                    enable: false
+        if (item.type !== 'description') {
+            $.get('<?=base_url('api/getChartDataByIdSurvei/')?>' + item.id, (res2) => {
+                var temp = JSON.parse(res2)
+                let selections = item.selections.split(',')
+                if (item.type === 'bar') {
+                    selections = ['0-20', '21-40', '41-60', '61-80', '81-100']
                 }
-            };
-            if (temp.length > 0) {
-                if (item.chart === 'pie') {
-                    options = {
-                        series: series,
-                        chart: {
-                            height: 250,
-                            type: "pie",
-                        },
-                        labels: selections,
-                        responsive: [{
-                            breakpoint: 480,
-                            options: {
-                                chart: {
-                                    width: 200,
-                                },
-                                legend: {
-                                    position: "bottom",
-                                },
+                let series = selections.map(selection => {
+                    var obj = temp.find(item2 => item2.answer === selection)
+                    return Number(obj?.total) || 0
+                })
+                var options = {
+                    series: [1],
+                    labels: ['No Data'],
+                    colors: ['#f3f3f3'],
+                    chart: {
+                        height: 250,
+                        type: "pie",
+                    },
+                    stroke: {
+                        width: 0
+                    },
+                    dataLabels: {
+                        enable: false
+                    }
+                };
+                if (temp.length > 0) {
+                    if (item.chart === 'pie') {
+                        options = {
+                            series: series,
+                            chart: {
+                                height: 250,
+                                type: "pie",
                             },
-                        }, ],
-                    };
-                } else if (item.chart === 'bar') {
-                    let barSeries = selections.map(selection => {
-                        var obj = temp.find(item2 => item2.answer === selection)
-                        if (obj) {
-                            return {
-                                x: selection,
-                                y: obj.total
+                            labels: selections,
+                            responsive: [{
+                                breakpoint: 480,
+                                options: {
+                                    chart: {
+                                        width: 200,
+                                    },
+                                    legend: {
+                                        position: "bottom",
+                                    },
+                                },
+                            }, ],
+                        };
+                    } else if (item.chart === 'bar') {
+                        let barSeries = selections.map(selection => {
+                            var obj = temp.find(item2 => item2.answer === selection)
+                            if (obj) {
+                                return {
+                                    x: selection,
+                                    y: obj.total
+                                }
+                            } else {
+                                return {
+                                    x: selection,
+                                    y: 0
+                                }
                             }
-                        } else {
-                            return {
-                                x: selection,
-                                y: 0
-                            }
+                        })
+                        options = {
+                            chart: {
+                                height: 238,
+                                type: 'bar'
+                            },
+                            series: [{
+                                data: barSeries
+                            }]
                         }
-                    })
-                    options = {
-                        chart: {
-                            height: 238,
-                            type: 'bar'
-                        },
-                        series: [{
-                            data: barSeries
-                        }]
                     }
                 }
-            }
-            var chart = new ApexCharts(document.querySelector("#chart-" + item.id),
-                options);
-            chart.render();
-        });
+                var chart = new ApexCharts(document.querySelector("#chart-" + item.id),
+                    options);
+                chart.render();
+            });
+        } else {
+            $.get('<?=base_url('api/getListDataByIdSurvei/')?>' + item.id, (res2) => {
+                var temp = JSON.parse(res2);
+                var inner = ''
+                temp.forEach(item2 => {
+                    inner += '<tr>'
+                    inner += '<td>' + item2.username + '</td>'
+                    inner += '<td>' + item2.answer + '</td>'
+                    inner += '</tr>'
+                })
+                $('#tbody-' + item.id).html(inner)
+            })
+        }
+
         // add to js pdf
 
     })
 });
 
 async function exportHandler() {
-
     const {
         jsPDF
     } = window.jspdf
