@@ -99,7 +99,8 @@ class Superadmin extends CI_Controller {
     public function detail_survei($slug, $id)
     {
         $data = $this->globalData;
-        $data['slug'] = $slug;
+        $data['slug'] = explode('-', $slug)[0];
+        $data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
         $data['data_slug'] = $this->db->where(['id' => $id])->get('survei')->row_array();
         $data['title'] = 'Detail Survei '.$data['slug'];
         $this->load->view('layouts/header', $data);

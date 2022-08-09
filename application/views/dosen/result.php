@@ -58,7 +58,7 @@ $.get('<?=base_url('api/getDataSurvei/'.$this->uri->segment(3))?>', (res) => {
             var options = {
                 series: [1],
                 labels: ['No Data'],
-                colors: ['#f0f0f0'],
+                colors: ['#f3f3f3'],
                 chart: {
                     height: 250,
                     type: "pie",
@@ -125,9 +125,6 @@ $.get('<?=base_url('api/getDataSurvei/'.$this->uri->segment(3))?>', (res) => {
 
     })
 });
-async function genCanvas() {
-
-}
 
 async function exportHandler() {
 
