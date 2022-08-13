@@ -29,6 +29,7 @@ class Dosen extends CI_Controller {
 	{
         $data = $this->globalData;
         $data['survei'] = $this->db->get_where('survei', ['role' => $role])->result_array();
+        $data['population'] = ['role'];
 		$this->load->view('layouts/header', $data);
 		$this->load->view('dosen/result', $data);
 		$this->load->view('layouts/footer');
@@ -50,9 +51,9 @@ class Dosen extends CI_Controller {
 		$this->pagination->initialize($config);
         $offset =  $this->input->get('per_page') ?  ($this->input->get('per_page')-1)*$config['per_page'] : 0;
         $data['data_table'] = $this->M_survei->getDetailResultSurvei($id, $config['per_page'], $offset)->result_array();
-
+        $data['survei'] = $this->db->get_where('survei', ['id' => $id])->row_array();
         // Config Template Table Page
-        $data['title'] = 'Detail Result '.$data['slug'];
+        $data['title'] = 'Detail - '.$data['survei']['question'];
         $data['desc'] = '';
         $data['create_url'] = false;
         $data['edit_url'] = false;

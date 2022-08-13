@@ -63,7 +63,7 @@ $route['tes/delete'] = 'Admin/deleteTes';
 
 # ----------------------------------API------------------------------------
 $route['api/getDataSurvei/(:any)'] = 'Api/getDataSurvei/$1';
-$route['api/getChartDataByIdSurvei/(:num)'] = 'Api/getChartDataByIdSurvei/$1';
+$route['api/getChartDataByGroupBy/(:any)'] = 'Api/getChartDataByGroupBy/$1';
 
 # ----------------------------------ALL------------------------------------
 

@@ -32,6 +32,10 @@ class Migration_Tb_answer extends CI_Migration{
                 'type' => 'VARCHAR',
                 'constraint' => '255',
             ),
+            'created_at' => array(
+                'type' => 'INT',
+                'constraint' => '11',
+            ),
         ));
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('answer');

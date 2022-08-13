@@ -9,9 +9,11 @@
     </div>
     <section class="section mt-4">
         <div class="card">
+            <?php if($create_url): ?>
             <div class="card-header">
                 <a href="<?= base_url($create_url); ?>" class="btn btn-success">Add item</a>
             </div>
+            <?php endif; ?>
             <div class="card-body">
                 <table class="table table-striped">
                     <thead>
