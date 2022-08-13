@@ -66,13 +66,15 @@ $route['api/getDataSurvei/(:any)'] = 'Api/getDataSurvei/$1';
 $route['api/getChartDataByGroupBy/(:any)'] = 'Api/getChartDataByGroupBy/$1';
 
 # ----------------------------------ALL------------------------------------
-
+// Not Logged
 $route['login'] = 'Auth/login';
 $route['register'] = 'Auth/register';
 $route['logout'] = 'Home/logout';
 $route['alumni'] = 'Home/alumni';
 $route['mitra'] = 'Home/mitra';
 $route['pengguna'] = 'Home/pengguna';
+// Logged
+$route['profile'] = 'Logged/profile';
 
 # -------------------------------SUPERADMIN--------------------------------
 $route['dashboard'] = 'Superadmin/index';
