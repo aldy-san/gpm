@@ -23,3 +23,15 @@ p {
 .page-item:last-child {
 	margin-left: 0 !important;
 }
+
+.survei .row {
+	background-color: #fff;
+}
+.survei .row h4:first-letter {
+	text-transform: uppercase;
+}
+
+.survei input[type="number"] {
+	width: 45px;
+	outline: none;
+}

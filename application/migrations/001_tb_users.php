@@ -8,7 +8,7 @@ class Migration_Tb_users extends CI_Migration{
     }
     public function up()
     {
-        //$this->dbforge->drop_table('users');
+        $this->dbforge->drop_table('users');
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',

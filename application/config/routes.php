@@ -92,3 +92,8 @@ $route['dosen/dashboard'] = 'Dosen/index';
 $route['dosen/result/(:any)'] = 'Dosen/result/$1';
 $route['dosen/detail/(:any)'] = 'Dosen/detail/$1';
 $route['dosen/detail/(:any)/(:num)'] = 'Dosen/detail/$1';
+
+# -----------------------------------Mahasiswa---------------------------------
+$route['mahasiswa/dashboard']['GET'] = 'Mahasiswa/index';
+$route['mahasiswa/(:any)/survei']['GET'] = 'Mahasiswa/survei/$1';
+$route['mahasiswa/answer']['POST'] = 'Mahasiswa/store';

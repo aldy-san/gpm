@@ -181,6 +181,34 @@
                                 </a>
                             </li>
                             <?php endif;?>
+
+                            <?php if($this_user['role'] === 'mahasiswa') :?>
+                            <li class="sidebar-title">Isi Survei</li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'kepuasan' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('mahasiswa/kepuasan/survei'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-collection-fill"></i>
+                                    <span>Kepuasan Mahasiswa</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'manage-period' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('manage-period'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-collection-fill"></i>
+                                    <span>Afektif Mahasiswa</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'manage-period' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('manage-period'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-collection-fill"></i>
+                                    <span>Pembelajaran Daring</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'manage-period' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('manage-period'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-collection-fill"></i>
+                                    <span>Survei PKKMB</span>
+                                </a>
+                            </li>
+                            <?php endif; ?>
                             <li class="sidebar-item">
                                 <a href="<?= base_url('logout'); ?>" class='sidebar-link'>
                                     <i class="bi bi-door-open-fill"></i>

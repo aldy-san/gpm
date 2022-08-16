@@ -8,7 +8,7 @@ class Migration_Tb_survei extends CI_Migration{
     }
     public function up()
     {
-        //$this->dbforge->drop_table('survei');
+        $this->dbforge->drop_table('survei');
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
@@ -171,7 +171,7 @@ class Migration_Tb_survei extends CI_Migration{
                 'chart' =>  'bar'
             ]
         ];
-        $this->db->insert_batch('survei', $seed); 
+        $this->db->insert_batch('survei', $seed);
     }
     public function down()
     {

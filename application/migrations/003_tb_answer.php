@@ -111,6 +111,9 @@ class Migration_Tb_answer extends CI_Migration{
                 'detail' => '']
         ];
         $this->db->insert_batch('answer', $seed); 
+
+        $this->dbforge->add_key('id', TRUE);
+        $this->dbforge->create_table('answer');
     }
     public function down()
     {
