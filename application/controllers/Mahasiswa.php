@@ -39,7 +39,7 @@ class Mahasiswa extends CI_Controller {
             $this->db->select('id');
             $survei = $this->db->get_where('survei',['role' => $data['this_user']['role']])->result_array();
             foreach($survei as $num => $sur){
-                $this->form_validation->set_rules('answer'.$sur['id'],'answer '.$num+1,'trim|required');
+                $this->form_validation->set_rules('answer'.$sur['id'],'answer '.($num+1),'trim|required');
             }
             if(!$this->form_validation->run()){
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
