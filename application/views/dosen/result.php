@@ -77,7 +77,6 @@ var dataPopulation = <?= json_encode($population); ?>;
 dataPopulation.forEach((item, index) => {
     $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item, (res) => {
         var temp = JSON.parse(res)
-        console.log(temp);
         var options = {
             series: [1],
             labels: ['No Data'],
@@ -93,8 +92,6 @@ dataPopulation.forEach((item, index) => {
                 enable: false
             }
         };
-        console.log(temp.map(item => item.total))
-        console.log(temp.map(item => item.grouped))
         if (temp.length > 0) {
             options = {
                 series: temp.map(item => Number(item.total)),
@@ -214,12 +211,9 @@ dataSurvei.forEach((item) => {
         })
     }
 
-    // add to js pdf
-
 })
 
 async function exportHandler() {
-    console.log('hai')
     $('#btn-export .bi-save').toggleClass('d-none')
     $('#btn-export .spinner-border').toggleClass('d-none')
     const {
@@ -233,27 +227,36 @@ async function exportHandler() {
         floatPrecision: 16
     });
     const promises = []
+    dataPopulation.forEach((item, index) => {
+        promises.push(html2canvas($('#result-population-' + index)[0]))
+    })
     dataSurvei.forEach((item, index) => {
         promises.push(html2canvas($('#result-' + item.id)[0]))
     })
+    console.log(promises)
     await Promise.all(promises).then(res => {
-            dataSurvei.forEach((item, index) => {
+            let idx = 0
+            dataPopulation.concat(dataSurvei).forEach((item, index) => {
                 var imgData = res[index].toDataURL('image-' + item.id + '/png');
                 var width = pdf.internal.pageSize.getWidth();
                 var height = pdf.internal.pageSize.getHeight();
-                console.log(width, height)
                 var x = 0,
                     y = 0;
-                if ((index + 1) % 4 === 2) {
+                if ((idx + 1) % 4 === 2) {
                     x = width / 2
-                } else if ((index + 1) % 4 === 3) {
+                } else if ((idx + 1) % 4 === 3) {
                     y = height / 2
-                } else if ((index + 1) % 4 === 0) {
+                } else if ((idx + 1) % 4 === 0) {
                     x = width / 2
                     y = height / 2
                 }
-                if (((index + 1) % 4 === 1) && (index !== 0)) {
+                if ((((idx + 1) % 4 === 1) && (idx !== 0)) || index === dataPopulation.length) {
                     pdf.addPage()
+                }
+                idx += 1;
+                if (index + 1 === dataPopulation.length) {
+                    console.log(index)
+                    idx = 0
                 }
                 console.log('==>', item, x, y)
                 pdf.addImage(imgData, 'PNG', x, y, width / 2, height / 2);
