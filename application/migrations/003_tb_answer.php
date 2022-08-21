@@ -45,71 +45,85 @@ class Migration_Tb_answer extends CI_Migration{
                 'id_user' => 1,
                 'id_survei' => 3,
                 'answer' => 'cool',
-                'detail' => ''
+                'detail' => '',
+                'created_at' => floor(microtime(true) * 1000)
             ],
             [
                 'id_user' => 2,
                 'id_survei' => 3,
                 'answer' => 'yes',
-                'detail' => ''
+                'detail' => '',
+                'created_at' => floor(microtime(true) * 1000)
             ],
             [
                 'id_user' => 3,
                 'id_survei' => 3,
                 'answer' => 'yo',
-                'detail' => ''
+                'detail' => '',
+                'created_at' => floor(microtime(true) * 1000)
             ],
             [
                 'id_user' => 4,
                 'id_survei' => 3,
                 'answer' => 'yes',
-                'detail' => ''
+                'detail' => '',
+                'created_at' => floor(microtime(true) * 1000)
             ],
             [
                 'id_user' => 1,
                 'id_survei' => 9,
                 'answer' => 'yo',
-                'detail' => ''
+                'detail' => '',
+                'created_at' => floor(microtime(true) * 1000)
             ],
             [
                 'id_user' => 1,
                 'id_survei' => 9,
                 'answer' => 'ma',
-                'detail' => ''
+                'detail' => '',
+                'created_at' => floor(microtime(true) * 1000)
             ],
             [
                 'id_user' => 1,
                 'id_survei' => 10,
                 'answer' => '81-100',
-                'detail' => '87'],
+                'detail' => '87',
+                'created_at' => floor(microtime(true) * 1000)
+            ],
             [
                 'id_user' => 2,
                 'id_survei' => 10,
                 'answer' => '61-80',
-                'detail' => '66'],
+                'detail' => '66',
+                'created_at' => floor(microtime(true) * 1000)
+            ],
             [
                 'id_user' => 2,
                 'id_survei' => 2,
                 'answer' => 'asdasd',
-                'detail' => ''
+                'detail' => '',
+                'created_at' => floor(microtime(true) * 1000)
             ],
             [
                 'id_user' => 3,
                 'id_survei' => 2,
                 'answer' => 'sadasd',
-                'detail' => ''
+                'detail' => '',
+                'created_at' => floor(microtime(true) * 1000)
             ],
             [
                 'id_user' => 3,
                 'id_survei' => 2,
                 'answer' => 'asdasd',
-                'detail' => ''
+                'detail' => '',
+                'created_at' => floor(microtime(true) * 1000)
             ],
             [
                 'id_user' => 4,
                 'id_survei' => 2,
                 'answer' => 'sadasd',
-                'detail' => '']
+                'detail' => '',
+                'created_at' => floor(microtime(true) * 1000)]
         ];
         $this->db->insert_batch('answer', $seed); 
     }

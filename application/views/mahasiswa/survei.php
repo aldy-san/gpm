@@ -20,11 +20,11 @@
             </div>
             <div class="page-content">
                 <section class="bootstrap-select">
-                    <form action="<?= base_url('mahasiswa/answer') ?>" method="POST">
+                    <form action="<?= base_url('mahasiswa/kepuasan/survei') ?>" method="POST">
                         <?php 
                             foreach($survei as $loop => $value) : 
                         ?>
-                        <div class="row my-3">
+                        <div class="row my-3" data-aos="fade-up" data-aos-duration="1500">
                             <div class="col-12 p-3">
                                 <?= form_error('answer'.$value['id'],'<small class="text-danger">','</small>'); ?>
                                 <h4 class="mb-4"> <?= $value['question'] ?></h4>
@@ -62,7 +62,6 @@
                                     $bar++;
                                     elseif($value['type'] === 'description') :  
                                 ?>
-
                                 <div class="form-group with-title mb-3">
                                     <textarea class="form-control" id="exampleFormControlTextarea1"
                                         name="answer<?= $value['id'] ?>"
@@ -81,6 +80,13 @@
         </div>
     </div>
 </div>
+
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+AOS.init({
+    once: true,
+});
+</script>
 
 <script>
 for (let x = 1; x <= <?= $bar_count ?>; x++) {
