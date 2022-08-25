@@ -39,7 +39,6 @@ class Migration_Tb_answer extends CI_Migration{
         ));
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('answer');
-        
         $seed = [
             [
                 'id_user' => 1,

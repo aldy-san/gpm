@@ -10,11 +10,9 @@
                 <span class="sr-only">GASAL 2021/2022 - 3</span>
             </button>
             <div class="dropdown-menu mt-2 shadow-sm">
-                <a class="dropdown-item" href="#">Option 1</a>
-                <a class="dropdown-item active" href="#">Option 2</a>
-                <a class="dropdown-item" href="#">Option 3</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
+                <?php foreach($period as $p): ?>
+                <a class="dropdown-item" href="#"><?= $p['name']; ?></a>
+                <?php endforeach; ?>
             </div>
         </div>
         <button id="btn-export" onclick="exportHandler()" class="btn btn-success d-flex align-items-center">

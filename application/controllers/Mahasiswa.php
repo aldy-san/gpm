@@ -19,9 +19,7 @@ class Mahasiswa extends CI_Controller {
     public function index()
     {
         $data = $this->globalData;
-        $this->load->view('layouts/header', $data);
-        $this->load->view('mahasiswa/index');
-        $this->load->view('layouts/footer');
+        customView('mahasiswa/index', $data);
     }
     public function survei($type){
         $data = $this->globalData;
@@ -67,8 +65,6 @@ class Mahasiswa extends CI_Controller {
         $data['survei'] = $this->db->get_where('survei', ['role' => $data['this_user']['role']])->result_array();
         $data['bar_count'] = $this->db->get_where('survei',['type' => 'bar', 'role' => $data['this_user']['role']])->num_rows();
         $data['bar'] = 1;
-        $this->load->view('layouts/header', $data);
-        $this->load->view('mahasiswa/survei',$data);
-        $this->load->view('layouts/footer');
+        customView('mahasiswa/survei', $data);
     }
 }

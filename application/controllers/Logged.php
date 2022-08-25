@@ -20,8 +20,6 @@ class Logged extends CI_Controller {
     public function Profile()
     {
         $data = $this->globalData;
-        $this->load->view('layouts/header', $data);
-		$this->load->view('pages/logged/profile', $data);
-		$this->load->view('layouts/footer');
+        customView('pages/logged/profile', $data);
     }
 }

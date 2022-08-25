@@ -49,9 +49,7 @@ class Auth extends CI_Controller {
 			}
 		}
 		$data = $this->globalData;
-		$this->load->view('layouts/header', $data);
-		$this->load->view('auth/login');
-		$this->load->view('layouts/footer');
+		customView('auth/login', $data);
 	}
 	public function register()
 	{
@@ -73,9 +71,7 @@ class Auth extends CI_Controller {
 			}
 		}
 		$data = $this->globalData;
-		$this->load->view('layouts/header', $data);
-		$this->load->view('auth/register');
-		$this->load->view('layouts/footer');
+		customView('auth/register', $data);
 	}
 	private function _redirect($role){
 		if($role === 'superadmin'){

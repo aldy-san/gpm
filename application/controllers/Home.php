@@ -22,22 +22,16 @@ class Home extends CI_Controller {
     public function alumni()
     {
         $data = $this->globalData;
-        $this->load->view('layouts/header', $data);
-		$this->load->view('pages/not-logged/alumni');
-		$this->load->view('layouts/footer');
+        customView('pages/not-logged/alumni', $data);
     }
     public function mitra()
     {
         $data = $this->globalData;
-        $this->load->view('layouts/header', $data);
-		$this->load->view('pages/not-logged/mitra');
-		$this->load->view('layouts/footer');
+        customView('pages/not-logged/mitra', $data);
     }
     public function pengguna()
     {
         $data = $this->globalData;
-        $this->load->view('layouts/header', $data);
-		$this->load->view('pages/not-logged/pengguna');
-		$this->load->view('layouts/footer');
+        customView('pages/not-logged/alpenggunamni', $data);
     }
 }

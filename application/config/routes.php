@@ -53,14 +53,6 @@ $route['default_controller'] = 'auth/login';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
-# ----------------------------------TES------------------------------------
-$route['tes'] = 'Admin/tes';
-$route['tes/(:num)'] = 'Admin/tes';
-$route['tes/create'] = 'Admin/createTes';
-$route['tes/edit/(:num)'] = 'Admin/editTes/$1';
-$route['tes/detail/(:num)'] = 'Admin/detailTes/$1';
-$route['tes/delete'] = 'Admin/deleteTes';
-
 # ----------------------------------API------------------------------------
 $route['api/getDataSurvei/(:any)'] = 'Api/getDataSurvei/$1';
 $route['api/getChartDataByGroupBy/(:any)'] = 'Api/getChartDataByGroupBy/$1';
@@ -78,6 +70,7 @@ $route['profile'] = 'Logged/profile';
 
 # -------------------------------SUPERADMIN--------------------------------
 $route['dashboard'] = 'Superadmin/index';
+// Survei
 $route['survei/(:any)'] = 'Superadmin/survei/$1';
 $route['survei/(:any)/(:num)'] = 'Superadmin/survei/$1';
 $route['survei/(:any)/(:num)'] = 'Superadmin/survei/$1';
@@ -85,8 +78,18 @@ $route['survei/(:any)/create'] = 'Superadmin/create_survei/$1';
 $route['survei/(:any)/edit/(:num)'] = 'Superadmin/edit_survei/$1/$2';
 $route['survei/(:any)/detail/(:num)'] = 'Superadmin/detail_survei/$1/$2';
 $route['survei/(:any)/delete'] = 'Superadmin/delete_survei/$1';
+// Period
 $route['manage-period'] = 'Superadmin/period';
-
+$route['manage-period/create'] = 'Superadmin/create_period';
+$route['manage-period/detail/(:num)'] = 'Superadmin/detail_period/$1';
+$route['manage-period/edit/(:num)'] = 'Superadmin/edit_period/$1';
+$route['manage-period/delete'] = 'Superadmin/delete_period';
+// Category Survey
+$route['manage-category'] = 'Superadmin/category';
+$route['manage-category/create'] = 'Superadmin/create_category';
+$route['manage-category/detail/(:num)'] = 'Superadmin/detail_category/$1';
+$route['manage-category/edit/(:num)'] = 'Superadmin/edit_category/$1';
+$route['manage-category/delete'] = 'Superadmin/delete_category';
 # -----------------------------------DOSEN---------------------------------
 $route['dosen/dashboard'] = 'Dosen/index';
 $route['dosen/result/(:any)'] = 'Dosen/result/$1';
