@@ -1,14 +1,14 @@
 <?php
 defined('BASEPATH') OR exit ('NO direct script access allowed');
 
-class Migration_Tb_period extends CI_Migration{
+class Migration_Tb_category extends CI_Migration{
     public function __construct() {
         $this->load->dbforge();
         $this->load->database();
     }
     public function up()
     {
-        $this->dbforge->drop_table('period');
+        $this->dbforge->drop_table('category');
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
@@ -20,33 +20,27 @@ class Migration_Tb_period extends CI_Migration{
                 'type' => 'VARCHAR',
                 'constraint' => '255',
             ),
-            'category' => array(
+            'role' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-            ),
-            'period_from' => array(
-                'type' => 'INT',
-                'constraint' => '11',
-            ),
-            'period_to' => array(
-                'type' => 'INT',
-                'constraint' => '11',
-            )
+            ), 'constraint' => '11',
         ));
         $this->dbforge->add_key('id', TRUE);
-        $this->dbforge->create_table('period');
+        $this->dbforge->create_table('category');
         $seed = [
             [
-                'name' => 'GENAP 2021/2022 - Monevjar Awal',
-                'category' => 1,
-                'period_from' => '1659304800',
-                'period_to' => '1661896800'
+                'name' => 'Survei Kepuasan Mahasiswa',
+                'role' => 'mahasiswa',
+            ],
+            [
+                'name' => 'Survei Afektifitas Dosen',
+                'role' => 'dosen',
             ],
         ];
-        $this->db->insert_batch('period', $seed); 
+        $this->db->insert_batch('category', $seed); 
     }
     public function down()
     {
-        $this->dbforge->drop_table('period');
+        $this->dbforge->drop_table('category');
     }
 }
