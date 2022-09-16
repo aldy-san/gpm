@@ -31,7 +31,7 @@
                         style="height:40px; width:40px;">
                     <span>Survei GPM</span>
                 </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -39,7 +39,7 @@
                     <a class="btn btn-primary me-2" aria-current="page" href="<?= base_url('login'); ?>">Login</a>
                     <a class="btn btn-outline-primary " aria-current="page"
                         href="<?= base_url('register'); ?>">Register</a>
-                </div>
+                </div>-->
             </div>
         </nav>
         <?php endif ?>
@@ -71,7 +71,7 @@
                                     <span>Dashboard</span>
                                 </a>
                             </li>
-                            <?php if($this_user['role'] === 'dosen') :?>
+                            <?php if (getRole($this_user['level']) === 'dosen') :?>
                             <li class="sidebar-title">Isi Survei</li>
                             <li class="sidebar-item <?= $this->uri->segment(1) === 'dashboard' ?> ">
                                 <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
@@ -124,7 +124,7 @@
                             </li>
 
                             <?php endif ?>
-                            <?php if($this_user['role'] === 'superadmin') :?>
+                            <?php  if (getRole($this_user['level']) === 'superadmin') :?>
                             <li
                                 class="sidebar-item <?= $this->uri->segment(1) === 'manage-category' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('manage-category'); ?>" class='sidebar-link'>
@@ -191,7 +191,7 @@
                             </li>
                             <?php endif;?>
 
-                            <?php if($this_user['role'] === 'mahasiswa') :?>
+                            <?php  if (getRole($this_user['level']) === 'mahasiswa') :?>
                             <li class="sidebar-title">Isi Survei</li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'kepuasan' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('mahasiswa/kepuasan/survei'); ?>" class='sidebar-link'>
@@ -235,7 +235,7 @@
                         <i class="bi bi-justify fs-3"></i>
                     </a>
                     <div class="d-flex align-items-center dropdown ms-auto">
-                        <span class="me-3 mt-2">Halo, <?= $this_user['username']; ?></span>
+                        <span class="me-3 mt-2">Halo, <?= $this_user['nama_lengkap']; ?></span>
                         <button class="btn " type="button" id="profileButton" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <div class="avatar">

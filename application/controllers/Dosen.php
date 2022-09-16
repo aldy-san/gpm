@@ -6,13 +6,14 @@ class Dosen extends CI_Controller {
 	public $globalData;
     public function __construct() {
         parent::__construct();
+		$this->db_master = $this->load->database('db_master', TRUE);
         $this->globalData = [
             'withNavbar' => false,
             'withSidebar' => true,
-            'this_user' => $this->db->where(['id' => $this->session->userdata('user')['id']])->get('users')->row_array(),
+            'this_user' => $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array(),
             'title' => false
         ];
-        if ($this->globalData['this_user']['role'] !== 'dosen') {
+        if (getRole($this->globalData['this_user']['level']) !== 'dosen') {
             $this->session->set_flashdata('alertForm', 'Role anda tidak memiliki akses untuk halaman tersebut');
             $this->session->set_flashdata('alertType', 'danger');
             redirect('auth');
@@ -29,7 +30,7 @@ class Dosen extends CI_Controller {
 	{
         $data = $this->globalData;
         $data['survei'] = $this->db->get_where('survei', ['role' => $role])->result_array();
-        $data['period'] = $this->db->get_where('period', ['type' => $role])->result_array();
+        //$data['period'] = $this->db->get_where('period', ['type' => $role])->result_array();
         $data['population'] = ['role'];
 		$this->load->view('layouts/header', $data);
 		$this->load->view('dosen/result', $data);

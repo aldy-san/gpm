@@ -60,7 +60,7 @@ $route['api/getChartDataByGroupBy/(:any)'] = 'Api/getChartDataByGroupBy/$1';
 # ----------------------------------ALL------------------------------------
 // Not Logged
 $route['login'] = 'Auth/login';
-$route['register'] = 'Auth/register';
+//$route['register'] = 'Auth/register';
 $route['logout'] = 'Home/logout';
 $route['alumni'] = 'Home/alumni';
 $route['mitra'] = 'Home/mitra';

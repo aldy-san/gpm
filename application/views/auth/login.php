@@ -8,11 +8,11 @@
         </div>
         <?php endif ?>
         <div class="mb-3 col-12">
-            <label for="email" class="form-label">email</label>
-            <input type="text" class="form-control <?= form_error('email') ? 'is-invalid': ''; ?>" name="email"
-                id="email" placeholder="name@example.com" autocomplete="off" value="<?= set_value('email'); ?>">
+            <label for="username" class="form-label">username</label>
+            <input type="text" class="form-control <?= form_error('username') ? 'is-invalid': ''; ?>" name="username"
+                id="username" placeholder="username" autocomplete="off" value="<?= set_value('username'); ?>">
             <div class="invalid-feedback">
-                <?= form_error('email'); ?>
+                <?= form_error('username'); ?>
             </div>
         </div>
         <div class="mb-3 col-12">
