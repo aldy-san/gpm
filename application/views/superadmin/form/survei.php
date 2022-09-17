@@ -95,6 +95,23 @@
                                 <?= form_error('bar_length'); ?>
                             </div>
                         </div>
+                        <div class="form-group col-6">
+                            <label for="category">Kategori</label>
+                            <fieldset>
+                                <select class="form-select <?= form_error('category') ? 'is-invalid': ''; ?>"
+                                    name="category" <?= $title === 'Detail Survei Mahasiswa' ? 'disabled' : ''; ?>>
+                                    <?php foreach($category as $c) : ?>
+                                    <option value="<?= $c['id']; ?>"
+                                        <?= $data_slug && ($data_slug['category'] === $c['id'])? 'selected' : ''; ?>>
+                                        <?= $c['name']; ?>
+                                    </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </fieldset>
+                            <div class="invalid-feedback">
+                                <?= form_error('category'); ?>
+                            </div>
+                        </div>
                     </div>
                     <?php if($title !== 'Detail Survei Mahasiswa') :?>
                     <button type="submit" class="btn btn-primary ">Save</button>

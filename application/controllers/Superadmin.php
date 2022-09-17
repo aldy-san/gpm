@@ -270,7 +270,13 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = '/survei/'.$slug.'/detail/';
         $data['delete_url'] = '/survei/'.$slug.'/delete/';
         $data['column_table'] = ['id','question', 'type', 'selections', 'bar_from', 'bar_to', 'bar_length', 'chart', 'category'];
-
+        $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
+        $data['data_table'] = [];
+        $category = $this->db->get('category')->result_array();
+        foreach ($temp as $value) {
+            $value['category'] = findObjectBy('id', $value['category'], $category)['name'];
+            array_push($data['data_table'],$value);
+        }
         customView('template/table_page', $data);
     }
     public function create_survei($slug)
@@ -283,6 +289,7 @@ class Superadmin extends CI_Controller {
 
         if($this->input->post()){
             $this->form_validation->set_rules('question','question','trim|required');
+            $this->form_validation->set_rules('category','category','trim|required');
 			if(!$this->form_validation->run()){
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
 				$this->session->set_flashdata('alertType', 'danger');
@@ -297,6 +304,7 @@ class Superadmin extends CI_Controller {
                     'bar_to' => $this->input->post('bar_to'),
                     'bar_length' => $this->input->post('bar_length'),
                     'chart' => $this->input->post('chart'),
+                    'category' => $this->input->post('category'),
                 ];
                 $this->db->insert('survei', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
@@ -305,6 +313,7 @@ class Superadmin extends CI_Controller {
             }
         }
         $data['title'] = 'Tambah Survei '.$data['slug'];
+        $data['category'] = $this->db->get('category')->result_array();
         customView('superadmin/form/survei', $data);
     }
     public function detail_survei($slug, $id)
@@ -324,6 +333,7 @@ class Superadmin extends CI_Controller {
 
         if($this->input->post()){
             $this->form_validation->set_rules('question','question','trim|required');
+            $this->form_validation->set_rules('category','category','trim|required');
 			if(!$this->form_validation->run()){
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
 				$this->session->set_flashdata('alertType', 'danger');
@@ -338,6 +348,7 @@ class Superadmin extends CI_Controller {
                     'bar_to' => $this->input->post('bar_to'),
                     'bar_length' => $this->input->post('bar_length'),
                     'chart' => $this->input->post('chart'),
+                    'category' => $this->input->post('category'),
                 ];
                 $this->db->where(['id' => $id])->update('survei', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
@@ -347,6 +358,7 @@ class Superadmin extends CI_Controller {
         }
         $data['data_slug'] = $this->db->where(['id' => $id])->get('survei')->row_array();
         $data['title'] = 'Edit Survei '.$data['slug'];
+        $data['category'] = $this->db->get('category')->result_array();
         customView('superadmin/form/survei', $data);
     }
     public function delete_survei($slug)
