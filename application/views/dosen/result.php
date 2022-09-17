@@ -71,10 +71,19 @@
 <script type="text/javascript">
 var dataSurvei = <?= json_encode($survei); ?>;
 var dataPopulation = <?= json_encode($population); ?>;
+var dataLabels = <?= json_encode($labels); ?>;
 
+async function getTable(label) {
+    await $.get('<?=base_url('api/getTable/')?>' + label, (res2) => {
+        var temp2 = JSON.parse(res2)
+        console.log('>', temp2.map(item => item['nama_' + label]))
+        return temp2.map(item => item['nama_' + label])
+    })
+}
 dataPopulation.forEach((item, index) => {
-    $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item, (res) => {
+    $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item, async (res) => {
         var temp = JSON.parse(res)
+        temp.shift()
         var options = {
             series: [1],
             labels: ['No Data'],
@@ -90,30 +99,64 @@ dataPopulation.forEach((item, index) => {
                 enable: false
             }
         };
-        if (temp.length > 0) {
-            options = {
-                series: temp.map(item => Number(item.total)),
-                chart: {
-                    height: 250,
-                    type: "pie",
-                },
-                labels: temp.map(item => item.grouped),
-                responsive: [{
-                    breakpoint: 480,
-                    options: {
-                        chart: {
-                            width: 200,
-                        },
-                        legend: {
-                            position: "bottom",
-                        },
+        //console.log(temp)
+        var labels = temp.map(item => item.grouped)
+        var totals = []
+        $.get('<?=base_url('api/getTable/')?>' + dataLabels[index], (res2) => {
+            var temp2 = JSON.parse(res2)
+            temp2.forEach(item2 => {
+                //console.log('item', item2)
+                //console.log('temp', item2[Object.keys(
+                //    item2)[0]])
+                let check = temp.filter(item3 => {
+                    return item3.grouped === item2[Object.keys(item2)[0]]
+                })
+                console.log(check)
+                if (check.length > 0) {
+                    totals.push(check[0].total)
+                } else {
+                    totals.push(0)
+                }
+            })
+            console.log(totals)
+            labels = temp2.map(item => item['nama_' + dataLabels[index]])
+        }).catch(err => {
+            //console.log('no table')
+        }).always(() => {
+            if (temp.length > 0) {
+                options = {
+                    series: temp.map(item => Number(item.total)),
+                    chart: {
+                        height: 250,
+                        type: "pie",
                     },
-                }, ],
-            };
-        }
-        var chart = new ApexCharts(document.querySelector("#chart-population-" + index),
-            options);
-        chart.render();
+                    colors: ['#1abc9c', '#2ecc71', '#3498db', '#9b59b6', '#f1c40f',
+                        '#e67e22', '#bdc3c7', '#e74c3c', '#34495e'
+                    ],
+                    labels: labels,
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 200,
+                            },
+                            legend: {
+                                position: "bottom",
+                            },
+                        },
+                    }, ],
+                };
+            }
+            var chart = new ApexCharts(document.querySelector("#chart-population-" + index),
+                options);
+            chart.render();
+        })
+        //if (dataLabels[index]) {
+        //    await getTable(dataLabels[index]).then(res2 => {
+        //        console.log(res2)
+        //    })
+        //}
+
     })
 })
 dataSurvei.forEach((item) => {

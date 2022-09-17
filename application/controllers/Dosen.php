@@ -30,8 +30,9 @@ class Dosen extends CI_Controller {
 	{
         $data = $this->globalData;
         $data['survei'] = $this->db->get_where('survei', ['role' => $role])->result_array();
-        //$data['period'] = $this->db->get_where('period', ['type' => $role])->result_array();
-        $data['population'] = ['role'];
+        $data['period'] = $this->db->get_where('period', ['id' => 1])->result_array();
+        $data['population'] = ['jenis_kelamin', 'jenjang', 'kode_prodi', 'tahun_masuk'];
+        $data['labels'] = [false, 'jenjang', 'prodi', false];
 		$this->load->view('layouts/header', $data);
 		$this->load->view('dosen/result', $data);
 		$this->load->view('layouts/footer');

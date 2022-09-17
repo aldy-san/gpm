@@ -21,10 +21,10 @@ class Api extends CI_Controller {
     }
     public function getListDataByIdSurvei($id, $limit = 4)
     {
-        $this->db->select('users.username, answer.answer');
+        $this->db->select('user.username, answer.answer');
         $this->db->from('answer');
         $this->db->where(['id_survei' => $id]);
-        $this->db->join('users', 'users.id = answer.id_user', 'left');
+        $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         $this->db->limit($limit);
         $result = $this->db->get()->result();
         echo json_encode($result);
@@ -35,9 +35,15 @@ class Api extends CI_Controller {
         $this->db->select($group_by.' as grouped, count('.$group_by.') as total');
         $this->db->from('answer');
         //$this->db->where(['created_at' => '']);
-        $this->db->join('users', 'users.id = answer.id_user', 'right');
+        $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         $this->db->group_by($group_by);
         $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
+    public function getTable($table)
+    {
+        $db_master = $this->load->database('db_master', TRUE);
+        $result = $db_master->get($table)->result_array();
         echo json_encode($result);
     }
 }
