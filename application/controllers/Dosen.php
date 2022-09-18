@@ -11,7 +11,9 @@ class Dosen extends CI_Controller {
             'withNavbar' => false,
             'withSidebar' => true,
             'this_user' => $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array(),
-            'title' => false
+            'title' => false,
+            'category_dosen' => $this->db->get_where('category', ['role' => 'dosen'])->result_array(),
+            'category_mahasiswa' => $this->db->get_where('category', ['role' => 'mahasiswa'])->result_array(),
         ];
         if (getRole($this->globalData['this_user']['level']) !== 'dosen') {
             $this->session->set_flashdata('alertForm', 'Role anda tidak memiliki akses untuk halaman tersebut');
@@ -26,11 +28,11 @@ class Dosen extends CI_Controller {
 		$this->load->view('dosen/index');
 		$this->load->view('layouts/footer');
 	}
-	public function result($role)
+	public function result($role, $category)
 	{
         $data = $this->globalData;
         $data['survei'] = $this->db->get_where('survei', ['role' => $role])->result_array();
-        $data['period'] = $this->db->get_where('period', ['id' => 1])->result_array();
+        $data['period'] = $this->db->order_by("period_from", "desc")->get_where('period', ['category' => $category])->result_array();
         $data['population'] = ['jenis_kelamin', 'jenjang', 'kode_prodi', 'tahun_masuk'];
         $data['labels'] = [false, 'jenjang', 'prodi', false];
 		$this->load->view('layouts/header', $data);

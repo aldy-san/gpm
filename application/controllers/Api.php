@@ -11,19 +11,28 @@ class Api extends CI_Controller {
     }
 	public function getChartDataByIdSurvei($id)
     {
+        $from = $this->input->get('from');
+        $to = $this->input->get('to');
         $this->db->select('answer, count(*) as total');
         $this->db->from('answer');
         $this->db->where(['id_survei' => $id]);
+        if($from && $to){
+            $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
         $this->db->group_by('answer');
         $result = $this->db->get()->result();
         echo json_encode($result);
-        //return $result;
     }
     public function getListDataByIdSurvei($id, $limit = 4)
     {
+        $from = $this->input->get('from');
+        $to = $this->input->get('to');
         $this->db->select('user.username, answer.answer');
         $this->db->from('answer');
         $this->db->where(['id_survei' => $id]);
+        if($from && $to){
+            $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
         $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         $this->db->limit($limit);
         $result = $this->db->get()->result();
@@ -32,9 +41,13 @@ class Api extends CI_Controller {
 
     public function getChartDataByGroupBy($group_by)
     {
+        $from = $this->input->get('from');
+        $to = $this->input->get('to');
         $this->db->select($group_by.' as grouped, count('.$group_by.') as total');
         $this->db->from('answer');
-        //$this->db->where(['created_at' => '']);
+        if($from && $to){
+            $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
         $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         $this->db->group_by($group_by);
         $result = $this->db->get()->result();

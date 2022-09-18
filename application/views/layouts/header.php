@@ -86,11 +86,19 @@
                                 </a>
                             </li>
                             <li class="sidebar-title">Hasil Survei</li>
-                            <li class="sidebar-item <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
-                                <a href="<?= base_url('dosen/result/mahasiswa'); ?>" class='sidebar-link'>
+                            <li class="sidebar-item has-sub  ">
+                                <a href="#" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Mahasiswa</span>
                                 </a>
+                                <ul class="submenu">
+                                    <?php foreach($category_mahasiswa as $c) :?>
+                                    <li class="submenu-item <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
+                                        <a
+                                            href="<?= base_url('dosen/result/mahasiswa/'.$c['id']); ?>"><?= $c['name']; ?></a>
+                                    </li>
+                                    <?php endforeach ?>
+                                </ul>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
                                 <a href="<?= base_url('dosen/result/dosen'); ?>" class='sidebar-link'>

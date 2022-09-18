@@ -93,7 +93,7 @@ $route['manage-category/edit/(:num)'] = 'Superadmin/edit_category/$1';
 $route['manage-category/delete'] = 'Superadmin/delete_category';
 # -----------------------------------DOSEN---------------------------------
 $route['dosen/dashboard'] = 'Dosen/index';
-$route['dosen/result/(:any)'] = 'Dosen/result/$1';
+$route['dosen/result/(:any):(:num)'] = 'Dosen/result/$1/$2';
 $route['dosen/detail/(:any)'] = 'Dosen/detail/$1';
 $route['dosen/detail/(:any)/(:num)'] = 'Dosen/detail/$1';
 
