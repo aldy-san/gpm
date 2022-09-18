@@ -86,7 +86,7 @@
                                 </a>
                             </li>
                             <li class="sidebar-title">Hasil Survei</li>
-                            <li class="sidebar-item has-sub  ">
+                            <li class="sidebar-item has-sub">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Mahasiswa</span>
@@ -100,19 +100,35 @@
                                     <?php endforeach ?>
                                 </ul>
                             </li>
-                            <li class="sidebar-item <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
-                                <a href="<?= base_url('dosen/result/dosen'); ?>" class='sidebar-link'>
+                            <li class="sidebar-item has-sub">
+                                <a href="#" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Dosen</span>
                                 </a>
+                                <ul class="submenu">
+                                    <?php foreach($category_dosen as $c) :?>
+                                    <li class="submenu-item <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
+                                        <a
+                                            href="<?= base_url('dosen/result/dosen/'.$c['id']); ?>"><?= $c['name']; ?></a>
+                                    </li>
+                                    <?php endforeach ?>
+                                </ul>
                             </li>
-                            <li class="sidebar-item <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
-                                <a href="<?= base_url('dosen/result/tendik'); ?>" class='sidebar-link'>
+                            <li class="sidebar-item has-sub">
+                                <a href="#" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
-                                    <span>Tenaga Pendidikan</span>
+                                    <span>Tenaga Pendidik</span>
                                 </a>
+                                <ul class="submenu">
+                                    <?php foreach($category_tendik as $c) :?>
+                                    <li class="submenu-item <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
+                                        <a
+                                            href="<?= base_url('dosen/result/tendik/'.$c['id']); ?>"><?= $c['name']; ?></a>
+                                    </li>
+                                    <?php endforeach ?>
+                                </ul>
                             </li>
-                            <li class="sidebar-item <?= $this->uri->segment(3) === 'alumni' ?'active' :''?>">
+                            <!--<li class="sidebar-item <?= $this->uri->segment(3) === 'alumni' ?'active' :''?>">
                                 <a href="<?= base_url('dosen/result/alumni'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Alumni</span>
@@ -129,7 +145,7 @@
                                     <i class="bi bi-grid-fill"></i>
                                     <span>Pengguna</span>
                                 </a>
-                            </li>
+                            </li>-->
 
                             <?php endif ?>
                             <?php  if (getRole($this_user['level']) === 'superadmin') :?>
@@ -201,30 +217,14 @@
 
                             <?php  if (getRole($this_user['level']) === 'mahasiswa') :?>
                             <li class="sidebar-title">Isi Survei</li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'kepuasan' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('mahasiswa/kepuasan/survei'); ?>" class='sidebar-link'>
+                            <?php foreach($category_mahasiswa as $c) :?>
+                            <li class="sidebar-item">
+                                <a href="<?= base_url('mahasiswa/survei/'.$c['id']); ?>" class='sidebar-link'>
                                     <i class="bi bi-collection-fill"></i>
-                                    <span>Kepuasan Mahasiswa</span>
+                                    <span><?= $c['name']; ?></span>
                                 </a>
                             </li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'manage-period' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('manage-period'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
-                                    <span>Afektif Mahasiswa</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'manage-period' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('manage-period'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
-                                    <span>Pembelajaran Daring</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'manage-period' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('manage-period'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
-                                    <span>Survei PKKMB</span>
-                                </a>
-                            </li>
+                            <?php endforeach ?>
                             <?php endif; ?>
                             <li class="sidebar-item">
                                 <a href="<?= base_url('logout'); ?>" class='sidebar-link'>

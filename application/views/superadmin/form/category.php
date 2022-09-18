@@ -37,6 +37,10 @@
                                         <?= $data_slug && ($data_slug['role'] === 'dosen')? 'selected' : ''; ?>>
                                         Dosen
                                     </option>
+                                    <option value="tendik"
+                                        <?= $data_slug && ($data_slug['role'] === 'tendik')? 'selected' : ''; ?>>
+                                        Tenaga Pendidikan
+                                    </option>
                                 </select>
                             </fieldset>
                             <div class="invalid-feedback">

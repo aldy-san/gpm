@@ -99,4 +99,4 @@ $route['dosen/detail/(:any)/(:num)'] = 'Dosen/detail/$1';
 
 # -----------------------------------Mahasiswa---------------------------------
 $route['mahasiswa/dashboard']['GET'] = 'Mahasiswa/index';
-$route['mahasiswa/(:any)/survei'] = 'Mahasiswa/survei/$1';
+$route['mahasiswa/survei/(:num)'] = 'Mahasiswa/survei/$1';

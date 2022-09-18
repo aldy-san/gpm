@@ -9,6 +9,7 @@ class Mahasiswa extends CI_Controller {
             'withNavbar' => false,
             'withSidebar' => true,
             'this_user' => $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array(),
+            'category_mahasiswa' => $this->db->get_where('category', ['role' => 'mahasiswa'])->result_array(),
             'title' => false
         ];
         if (getRole($this->globalData['this_user']['level']) !== 'mahasiswa') {
@@ -22,11 +23,11 @@ class Mahasiswa extends CI_Controller {
         $data = $this->globalData;
         customView('mahasiswa/index', $data);
     }
-    public function survei($type){
+    public function survei($id_category){
         $data = $this->globalData;
+        $survei = $this->db->get_where('survei',['category' => $id_category])->result_array();
         if ($this->input->post()){
             $this->db->select('id,bar_length');
-            $survei = $this->db->get_where('survei',['role' => getRole($this->globalData['this_user']['level'])])->result_array();
             foreach($survei as $num => $sur){
                 $this->form_validation->set_rules('answer'.$sur['id'],'answer '.($num+1),'trim|required');
             }
@@ -38,7 +39,7 @@ class Mahasiswa extends CI_Controller {
                     var_dump($survei[$loop]['bar_length']);
                     if($survei[$loop]['bar_length'] == ''){
                         $this->db->insert('answer', [
-                            'id_user' => $data['this_user']['id'],
+                            'id_user' => $data['this_user']['username'],
                             'id_survei' => filter_var($key, FILTER_SANITIZE_NUMBER_INT),
                             'answer' => $answer,
                             'created_at' => floor(microtime(true) * 1000)
@@ -49,12 +50,12 @@ class Mahasiswa extends CI_Controller {
                                 : (($answer > 40 && $answer <=60) ? '40-60'
                                 : (($answer > 20 && $answer <=40) ? '20-40' : '0-20')));
                         $this->db->insert('answer', [
-                            'id_user' => $data['this_user']['id'],
+                            'id_user' => $data['this_user']['username'],
                             'id_survei' => filter_var($key, FILTER_SANITIZE_NUMBER_INT),
                             'answer' => $detail,
                             'detail' => $answer,
                             'created_at' => floor(microtime(true) * 1000)
-                        ]);     
+                        ]);
                     }
                     $loop++;
                 }
@@ -63,7 +64,8 @@ class Mahasiswa extends CI_Controller {
         }
         $this->globalData['withSidebar'] = false;
         $data = $this->globalData;
-        $data['survei'] = $this->db->get_where('survei', ['role' => getRole($this->globalData['this_user']['level'])])->result_array();
+        $data['survei'] = $survei;
+        $data['category'] = $this->db->get_where('category', ['id' => $id_category])->row_array();
         $data['bar_count'] = $this->db->get_where('survei',['type' => 'bar', 'role' => getRole($this->globalData['this_user']['level'])])->num_rows();
         $data['bar'] = 1;
         customView('mahasiswa/survei', $data);

@@ -14,6 +14,7 @@ class Dosen extends CI_Controller {
             'title' => false,
             'category_dosen' => $this->db->get_where('category', ['role' => 'dosen'])->result_array(),
             'category_mahasiswa' => $this->db->get_where('category', ['role' => 'mahasiswa'])->result_array(),
+            'category_tendik' => $this->db->get_where('category', ['role' => 'tendik'])->result_array(),
         ];
         if (getRole($this->globalData['this_user']['level']) !== 'dosen') {
             $this->session->set_flashdata('alertForm', 'Role anda tidak memiliki akses untuk halaman tersebut');

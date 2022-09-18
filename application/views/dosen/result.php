@@ -7,7 +7,7 @@
             <button type="button" class="btn btn-outline-primary">Periode</button>
             <button id="period-title" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
-                <span class="sr-only"><?= $period[0]['name']; ?></span>
+                <span class="sr-only"></span>
             </button>
             <div class="dropdown-menu mt-2 shadow-sm">
                 <button class="dropdown-item" onclick="executeGraphic(0,1,'tes',true)">tes</button>
@@ -74,6 +74,7 @@
 var dataSurvei = <?= json_encode($survei); ?>;
 var dataPopulation = <?= json_encode($population); ?>;
 var dataLabels = <?= json_encode($labels); ?>;
+var period = <?= json_encode($period); ?>;
 
 function executeGraphic(from, to, name, isUpdate = false) {
     const filter = (from && to) ? '?from=' + from + '&to=' + to : ''
@@ -122,7 +123,6 @@ function executeGraphic(from, to, name, isUpdate = false) {
                         series: totals.length > 0 ? totals.map(item => Number(item)) :
                             temp.map(item => Number(item.total)),
                         chart: {
-                            id: "chart-population-" + index,
                             height: 250,
                             type: "pie",
                         },
@@ -146,8 +146,9 @@ function executeGraphic(from, to, name, isUpdate = false) {
                         }, ],
                     };
                 }
+                options.chart.id = "chart-population-" + index
                 if (isUpdate) {
-                    console.log('update')
+                    console.log('update', options, temp)
                     ApexCharts.exec("chart-population-" + index, 'updateOptions', options,
                         false, true);
                 } else {
@@ -192,6 +193,9 @@ function executeGraphic(from, to, name, isUpdate = false) {
                                 height: 250,
                                 type: "pie",
                             },
+                            colors: ['#1abc9c', '#3498db', '#2ecc71', '#9b59b6', '#f1c40f',
+                                '#e67e22', '#bdc3c7', '#e74c3c', '#34495e'
+                            ],
                             labels: selections,
                             responsive: [{
                                 breakpoint: 480,
@@ -225,6 +229,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                                 height: 238,
                                 type: 'bar'
                             },
+                            colors: undefined,
                             series: [{
                                 data: barSeries
                             }]
@@ -313,5 +318,7 @@ async function exportHandler() {
             $('#btn-export .spinner-border').toggleClass('d-none')
         })
 }
-executeGraphic('0', '1', 'tes')
+//executeGraphic('0', '1', 'tes')
+//console.log(period[0])
+executeGraphic(period[0]['period_from'], period[0]['period_to'], period[0]['name'])
 </script>
