@@ -1,5 +1,5 @@
 <div class="page-heading">
-    <h1>Profil Saya</h1>
+    <h1>Ubah Kata Sandi</h1>
 </div>
 <div class="page-content row">
     <section class="p-2 col-12">
@@ -25,11 +25,6 @@
                         </div>
                         <div class="row">
                             <span> <span class="text-muted">Tahun Masuk:</span> <?= $this_user['tahun_masuk']; ?></span>
-                        </div>
-                    </div>
-                    <div class="row mt-4">
-                        <div class="col-3">
-                            <a class="btn btn-primary" href="<?= base_url('/change-password'); ?>">Ubah Kata Sandi</a>
                         </div>
                     </div>
                 </div>
