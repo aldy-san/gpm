@@ -8,7 +8,7 @@ class Migration_Tb_answer extends CI_Migration{
     }
     public function up()
     {
-        $this->dbforge->drop_table('answer');
+        //$this->dbforge->drop_table('answer');
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
@@ -17,8 +17,8 @@ class Migration_Tb_answer extends CI_Migration{
                 'auto_increment' => TRUE
             ),
             'id_user' => array(
-                'type' => 'INT',
-                'constraint' => 10,
+                'type' => 'VARCHAR',
+                'constraint' => 100,
             ),
             'id_survei' => array(
                 'type' => 'INT',
@@ -41,88 +41,88 @@ class Migration_Tb_answer extends CI_Migration{
         $this->dbforge->create_table('answer');
         $seed = [
             [
-                'id_user' => 1,
+                'id_user' => '19053564604',
                 'id_survei' => 3,
                 'answer' => 'cool',
                 'detail' => '',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 2,
+                'id_user' => '19053564604',
                 'id_survei' => 3,
                 'answer' => 'yes',
                 'detail' => '',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 3,
+                'id_user' => '19053564604',
                 'id_survei' => 3,
                 'answer' => 'yo',
                 'detail' => '',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 4,
+                'id_user' => '19053564604',
                 'id_survei' => 3,
                 'answer' => 'yes',
                 'detail' => '',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 1,
+                'id_user' => '19053564604',
                 'id_survei' => 9,
                 'answer' => 'yo',
                 'detail' => '',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 1,
+                'id_user' => '19053564604',
                 'id_survei' => 9,
                 'answer' => 'ma',
                 'detail' => '',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 1,
+                'id_user' => '19053564604',
                 'id_survei' => 10,
                 'answer' => '81-100',
                 'detail' => '87',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 2,
+                'id_user' => '19053564604',
                 'id_survei' => 10,
                 'answer' => '61-80',
                 'detail' => '66',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 2,
+                'id_user' => '19053564604',
                 'id_survei' => 2,
                 'answer' => 'asdasd',
                 'detail' => '',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 3,
+                'id_user' => '19053564604',
                 'id_survei' => 2,
                 'answer' => 'sadasd',
                 'detail' => '',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 3,
+                'id_user' => '19053564604',
                 'id_survei' => 2,
                 'answer' => 'asdasd',
                 'detail' => '',
-                'created_at' => floor(microtime(true) * 1000)
+                'created_at' => '1663538401'
             ],
             [
-                'id_user' => 4,
+                'id_user' => '19053564604',
                 'id_survei' => 2,
                 'answer' => 'sadasd',
                 'detail' => '',
-                'created_at' => floor(microtime(true) * 1000)]
+                'created_at' => '1663538401']
         ];
         $this->db->insert_batch('answer', $seed); 
     }

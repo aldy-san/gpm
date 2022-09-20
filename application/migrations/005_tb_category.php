@@ -8,7 +8,7 @@ class Migration_Tb_category extends CI_Migration{
     }
     public function up()
     {
-        $this->dbforge->drop_table('category');
+        //$this->dbforge->drop_table('category');
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
@@ -23,7 +23,7 @@ class Migration_Tb_category extends CI_Migration{
             'role' => array(
                 'type' => 'VARCHAR',
                 'constraint' => '255',
-            ), 'constraint' => '11',
+            ),
         ));
         $this->dbforge->add_key('id', TRUE);
         $this->dbforge->create_table('category');

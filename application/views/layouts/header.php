@@ -31,15 +31,6 @@
                         style="height:40px; width:40px;">
                     <span>Survei GPM</span>
                 </a>
-                <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="d-flex" role="search">
-                    <a class="btn btn-primary me-2" aria-current="page" href="<?= base_url('login'); ?>">Login</a>
-                    <a class="btn btn-outline-primary " aria-current="page"
-                        href="<?= base_url('register'); ?>">Register</a>
-                </div>-->
             </div>
         </nav>
         <?php endif ?>
@@ -67,24 +58,22 @@
                             <li
                                 class="sidebar-item <?= $this->uri->segment(1) === 'dashboard' || $this->uri->segment(2) === 'dashboard' ? 'active' : ''; ?> ">
                                 <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
+                                    <i class="bi bi-house-door"></i>
                                     <span>Dashboard</span>
                                 </a>
                             </li>
                             <?php if (getRole($this_user['level']) === 'dosen') :?>
+                            <?php if (count($category_dosen) > 0): ?>
                             <li class="sidebar-title">Isi Survei</li>
-                            <li class="sidebar-item <?= $this->uri->segment(1) === 'dashboard' ?> ">
-                                <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
-                                    <span>Kepuasan Dosen</span>
+                            <?php endif ?>
+                            <?php foreach($category_dosen as $c) :?>
+                            <li class="sidebar-item">
+                                <a href="<?= base_url('mahasiswa/survei/'.$c['id']); ?>" class='sidebar-link'>
+                                    <i class="bi bi-question-octagon"></i>
+                                    <span><?= $c['name']; ?></span>
                                 </a>
                             </li>
-                            <li class="sidebar-item <?= $this->uri->segment(1) === 'survei-pembelajaran-dosen' ?> ">
-                                <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
-                                    <span>Pembelajaran dosen</span>
-                                </a>
-                            </li>
+                            <?php endforeach ?>
                             <li class="sidebar-title">Hasil Survei</li>
                             <li class="sidebar-item has-sub">
                                 <a href="#" class='sidebar-link'>
@@ -152,19 +141,19 @@
                             <li
                                 class="sidebar-item <?= $this->uri->segment(1) === 'manage-category' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('manage-category'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
+                                    <i class="bi bi-archive"></i>
                                     <span>Kelola Kategori</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(1) === 'manage-period' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('manage-period'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
+                                    <i class="bi bi-calendar-range"></i>
                                     <span>Kelola Periode</span>
                                 </a>
                             </li>
                             <li class="sidebar-item  has-sub">
                                 <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
+                                    <i class="bi bi-collection"></i>
                                     <span>survei mahasiswa</span>
                                 </a>
 
@@ -185,42 +174,44 @@
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'dosen' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/dosen'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>survei dosen</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'tendik' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/tendik'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>survei tendik</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'alumni' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/alumni'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>survei alumni</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'mitra' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/mitra'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>survei mitra</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'pengguna' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/pengguna'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>survei pengguna</span>
                                 </a>
                             </li>
                             <?php endif;?>
 
                             <?php  if (getRole($this_user['level']) === 'mahasiswa') :?>
+                            <?php if (count($category_mahasiswa) > 0): ?>
                             <li class="sidebar-title">Isi Survei</li>
+                            <?php endif ?>
                             <?php foreach($category_mahasiswa as $c) :?>
                             <li class="sidebar-item">
                                 <a href="<?= base_url('mahasiswa/survei/'.$c['id']); ?>" class='sidebar-link'>
-                                    <i class="bi bi-collection-fill"></i>
+                                    <i class="bi bi-question-octagon"></i>
                                     <span><?= $c['name']; ?></span>
                                 </a>
                             </li>
@@ -228,7 +219,7 @@
                             <?php endif; ?>
                             <li class="sidebar-item">
                                 <a href="<?= base_url('logout'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-door-open-fill"></i>
+                                    <i class="bi bi-door-open"></i>
                                     <span>Logout</span>
                                 </a>
                             </li>

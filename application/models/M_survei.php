@@ -7,13 +7,13 @@ class M_survei extends CI_Model {
 
     public function getDetailResultSurvei($id, $limit = false, $offset = false)
     {
-        $this->db->select('users.username, answer.answer');
-        $this->db->from('answer');
+        $this->db->select('user.nama_lengkap, answer.answer');
+        $this->db->from('db_gpm.answer');
         $this->db->where(['id_survei' => $id]);
         if ($limit){
             $this->db->limit($limit, $offset);
         }
-        $this->db->join('users', 'users.id = answer.id_user', 'left');
+        $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         return $this->db->get();
     }
 }

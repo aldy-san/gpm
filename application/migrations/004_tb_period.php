@@ -8,7 +8,7 @@ class Migration_Tb_period extends CI_Migration{
     }
     public function up()
     {
-        $this->dbforge->drop_table('period');
+        //$this->dbforge->drop_table('period');
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
@@ -39,8 +39,8 @@ class Migration_Tb_period extends CI_Migration{
             [
                 'name' => 'GENAP 2021/2022 - Monevjar Awal',
                 'category' => 1,
-                'period_from' => '1659304800',
-                'period_to' => '1661896800'
+                'period_from' => '1663538400',
+                'period_to' => '1663538500'
             ],
         ];
         $this->db->insert_batch('period', $seed); 

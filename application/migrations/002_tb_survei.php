@@ -8,7 +8,7 @@ class Migration_Tb_survei extends CI_Migration{
     }
     public function up()
     {
-        $this->dbforge->drop_table('survei');
+        //$this->dbforge->drop_table('survei');
         $this->dbforge->add_field(array(
             'id' => array(
                 'type' => 'INT',
@@ -69,7 +69,8 @@ class Migration_Tb_survei extends CI_Migration{
                 'bar_from' => '',
                 'bar_to' => '',
                 'bar_length' => '',
-                'chart' => 'bar'
+                'chart' => 'bar',
+                'category' => 1
             ],
             [
                 'level'=>'d4',
@@ -80,7 +81,8 @@ class Migration_Tb_survei extends CI_Migration{
                 'bar_from' => '',
                 'bar_to' => '',
                 'bar_length' => '',
-                'chart' => 'bar'
+                'chart' => 'bar',
+                'category' => 1
             ],
             [
                 'level'=>'s1',
@@ -91,7 +93,8 @@ class Migration_Tb_survei extends CI_Migration{
                 'bar_from' => '',
                 'bar_to' => '',
                 'bar_length' => '',
-                'chart' => 'pie'
+                'chart' => 'pie',
+                'category' => 1
             ],
             [
                 'level'=>'',
@@ -102,7 +105,8 @@ class Migration_Tb_survei extends CI_Migration{
                 'bar_from' => '',
                 'bar_to' => '',
                 'bar_length' => '',
-                'chart' => 'pie'
+                'chart' => 'pie',
+                'category' => 1
             ],
             [
                 'level'=>'',
@@ -113,7 +117,8 @@ class Migration_Tb_survei extends CI_Migration{
                 'bar_from' => '',
                 'bar_to' => '',
                 'bar_length' => '',
-                'chart' => 'pie'
+                'chart' => 'pie',
+                'category' => 1
             ],
             [
                 'level'=>'0',
@@ -124,7 +129,8 @@ class Migration_Tb_survei extends CI_Migration{
                 'bar_from' => '',
                 'bar_to' => '',
                 'bar_length' => '',
-                'chart' => 'pie'
+                'chart' => 'pie',
+                'category' => 1
             ],
             [
                 'level'=>'0',
@@ -135,7 +141,8 @@ class Migration_Tb_survei extends CI_Migration{
                 'bar_from' => '',
                 'bar_to' => '',
                 'bar_length' => '',
-                'chart' => 'bar'
+                'chart' => 'bar',
+                'category' => 1
             ],
             [
                 'level'=>'0',
@@ -146,7 +153,8 @@ class Migration_Tb_survei extends CI_Migration{
                 'bar_from' => '',
                 'bar_to' => '',
                 'bar_length' => '',
-                'chart' => 'bar'
+                'chart' => 'bar',
+                'category' => 1
             ],
             [
                 'level'=>'s1',
@@ -157,7 +165,8 @@ class Migration_Tb_survei extends CI_Migration{
                 'bar_from' => '',
                 'bar_to' => '',
                 'bar_length' => '',
-                'chart' => 'bar'
+                'chart' => 'bar',
+                'category' => 1
             ],
             [
                 'level'=>'s1',
@@ -168,7 +177,8 @@ class Migration_Tb_survei extends CI_Migration{
                 'bar_from' => 'tidak puas',
                 'bar_to' =>  'sangat puas',
                 'bar_length' =>  '100',
-                'chart' =>  'bar'
+                'chart' =>  'bar',
+                'category' => 1
             ]
         ];
         $this->db->insert_batch('survei', $seed);

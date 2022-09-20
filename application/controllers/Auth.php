@@ -81,6 +81,7 @@ class Auth extends CI_Controller {
 	//	customView('auth/register', $data);
 	//}
 	private function _redirect($level){
+		//echo getRole($level);exit;
 		if (getRole($level) === 'superadmin'){
 			redirect('dashboard');
 		} else  if (getRole($level) === 'mahasiswa') {

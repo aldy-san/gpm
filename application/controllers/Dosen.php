@@ -65,7 +65,7 @@ class Dosen extends CI_Controller {
         $data['edit_url'] = false;
         $data['detail_url'] = false;
         $data['delete_url'] = false;
-        $data['column_table'] = ['username', 'answer'];
+        $data['column_table'] = ['nama_lengkap', 'answer'];
 
         $this->load->view('layouts/header', $data);
         $this->load->view('template/table_page',$data);

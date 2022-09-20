@@ -27,7 +27,7 @@ class Api extends CI_Controller {
     {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
-        $this->db->select('user.username, answer.answer');
+        $this->db->select('user.nama_lengkap as username, answer.answer');
         $this->db->from('answer');
         $this->db->where(['id_survei' => $id]);
         if($from && $to){
