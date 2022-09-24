@@ -32,6 +32,6 @@ class Home extends CI_Controller {
     public function pengguna()
     {
         $data = $this->globalData;
-        customView('pages/not-logged/alpenggunamni', $data);
+        customView('pages/not-logged/pengguna', $data);
     }
 }
