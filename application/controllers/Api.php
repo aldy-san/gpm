@@ -5,7 +5,6 @@ class Api extends CI_Controller {
 
     public function tes()
     {
-        $result = $this->db->query('SELECT * FROM db_gpm.users')->result();
         $result = $this->db->query('SELECT * FROM db_master.user')->result();
         echo json_encode($result);
     }

@@ -55,6 +55,10 @@ class Migration_Tb_survei extends CI_Migration{
                 'type' => 'VARCHAR',
                 'constraint' => '100',
                 'default' => 'bar'
+            ),
+            'category' => array(
+                'type' => 'INT',
+                'constraint' => 10,
             )
         ));
         $this->dbforge->add_key('id', TRUE);

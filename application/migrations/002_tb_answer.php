@@ -48,77 +48,77 @@ class Migration_Tb_answer extends CI_Migration{
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564641',
                 'id_survei' => 3,
                 'answer' => 'yes',
                 'detail' => '',
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564644',
                 'id_survei' => 3,
                 'answer' => 'yo',
                 'detail' => '',
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564655',
                 'id_survei' => 3,
                 'answer' => 'yes',
                 'detail' => '',
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564654',
                 'id_survei' => 9,
                 'answer' => 'yo',
                 'detail' => '',
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564624',
                 'id_survei' => 9,
                 'answer' => 'ma',
                 'detail' => '',
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564684',
                 'id_survei' => 10,
                 'answer' => '81-100',
                 'detail' => '87',
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564614',
                 'id_survei' => 10,
                 'answer' => '61-80',
                 'detail' => '66',
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564605',
                 'id_survei' => 2,
                 'answer' => 'asdasd',
                 'detail' => '',
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564609',
                 'id_survei' => 2,
                 'answer' => 'sadasd',
                 'detail' => '',
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564651',
                 'id_survei' => 2,
                 'answer' => 'asdasd',
                 'detail' => '',
                 'created_at' => '1663538401'
             ],
             [
-                'id_user' => '19053564604',
+                'id_user' => '19053564641',
                 'id_survei' => 2,
                 'answer' => 'sadasd',
                 'detail' => '',

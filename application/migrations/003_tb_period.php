@@ -21,8 +21,8 @@ class Migration_Tb_period extends CI_Migration{
                 'constraint' => '255',
             ),
             'category' => array(
-                'type' => 'VARCHAR',
-                'constraint' => '255',
+                'type' => 'INT',
+                'constraint' => '10',
             ),
             'period_from' => array(
                 'type' => 'INT',
@@ -37,7 +37,7 @@ class Migration_Tb_period extends CI_Migration{
         $this->dbforge->create_table('period');
         $seed = [
             [
-                'name' => 'GENAP 2021/2022 - Monevjar Awal',
+                'name' => 'Gasal Awal',
                 'category' => 1,
                 'period_from' => '1663538400',
                 'period_to' => '1663538500'
