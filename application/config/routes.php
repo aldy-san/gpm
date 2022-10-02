@@ -97,6 +97,12 @@ $route['dosen/result/(:any):(:num)'] = 'Dosen/result/$1/$2';
 $route['dosen/detail/(:any)'] = 'Dosen/detail/$1';
 $route['dosen/detail/(:any)/(:num)'] = 'Dosen/detail/$1';
 
+
 # -----------------------------------Mahasiswa---------------------------------
 $route['mahasiswa/dashboard']['GET'] = 'Mahasiswa/index';
-$route['mahasiswa/survei/(:num)'] = 'Mahasiswa/survei/$1';
+
+# -----------------------------------SURVEI---------------------------------
+$route['dosen/survei/(:num)'] = 'Logged/survei/$1';
+$route['mahasiswa/survei/(:num)'] = 'Logged/survei/$1';
+$route['tendik/survei/(:num)'] = 'Logged/survei/$1';
+$route['(:any)/survei'] = 'Home/survei/$1';

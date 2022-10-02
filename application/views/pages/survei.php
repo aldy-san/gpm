@@ -16,11 +16,13 @@
             </div>
             <?php endif ?>
             <div class="page-heading text-center">
-                <h2 class="text-capitalize"><?= $category['name']; ?></h2>
+                <h2 class="text-capitalize"><?= $notLogged ? $this->uri->segment(1) : $category['name']; ?></h2>
             </div>
             <div class="page-content">
                 <section class="bootstrap-select">
-                    <form action="<?= base_url('mahasiswa/survei/'.$this->uri->segment(3)) ?>" method="POST">
+                    <form
+                        action="<?= base_url($this->uri->segment(1).'/survei/'.(!$notLogged ? $this->uri->segment(3) : '')) ?>"
+                        method="POST">
                         <?php 
                             foreach($survei as $loop => $value) : 
                         ?>

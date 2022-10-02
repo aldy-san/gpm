@@ -1,29 +1,31 @@
-<form class="d-flex justify-content-center align-items-center auth-form">
+<form action="<?= base_url('mitra'); ?>" method="POST"
+    class="d-flex justify-content-center align-items-center auth-form">
     <div class="col-11 col-md-8 col-lg-6 rounded-2 border p-4 bg-white">
         <h4 class="text-center mb-4">Identitas Mitra</h4>
         <div class="row">
             <div class="mb-3 col-12 col-md-6">
-                <label for="jabatan" class="form-label">Jabatan Pengisi</label>
-                <input type="text" class="form-control <?= form_error('jabatan') ? 'is-invalid': ''; ?>" name="jabatan"
-                    id="jabatan" placeholder="Jabatan" autocomplete="off" value="<?= set_value('jabatan'); ?>">
+                <label for="position" class="form-label">Jabatan Pengisi</label>
+                <input type="text" class="form-control <?= form_error('position') ? 'is-invalid': ''; ?>"
+                    name="position" id="position" placeholder="Jabatan Pengisi" autocomplete="off"
+                    value="<?= set_value('position'); ?>">
                 <div class="invalid-feedback">
-                    <?= form_error('jabatan'); ?>
+                    <?= form_error('position'); ?>
                 </div>
             </div>
             <div class="mb-3 col-12 col-md-6">
-                <label for="name" class="form-label">Nama Instansi</label>
-                <input type="text" class="form-control <?= form_error('name') ? 'is-invalid': ''; ?>" name="name"
-                    id="name" placeholder="nama" autocomplete="off" value="<?= set_value('name'); ?>">
+                <label for="agency" class="form-label">Nama Instansi</label>
+                <input type="text" class="form-control <?= form_error('agency') ? 'is-invalid': ''; ?>" name="agency"
+                    id="agency" placeholder="Nama Instansi" autocomplete="off" value="<?= set_value('agency'); ?>">
                 <div class="invalid-feedback">
-                    <?= form_error('name'); ?>
+                    <?= form_error('agency'); ?>
                 </div>
             </div>
             <div class="mb-3 col-12 col-md-6">
-                <label for="telepon" class="form-label">Nomor Telepon</label>
-                <input type="text" class="form-control <?= form_error('telepon') ? 'is-invalid': ''; ?>" name="telepon"
-                    id="telepon" placeholder="08xxxxxxxxxxx" autocomplete="off" value="<?= set_value('telepon'); ?>">
+                <label for="phone" class="form-label">Nomor Telepon</label>
+                <input type="text" class="form-control <?= form_error('phone') ? 'is-invalid': ''; ?>" name="phone"
+                    id="phone" placeholder="08xxxxxxxxxxx" autocomplete="off" value="<?= set_value('phone'); ?>">
                 <div class="invalid-feedback">
-                    <?= form_error('telepon'); ?>
+                    <?= form_error('phone'); ?>
                 </div>
             </div>
             <div class="form-group mb-3 col-12 col-md-6">

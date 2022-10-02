@@ -1,6 +1,6 @@
 <form class="row justify-content-center align-items-center auth-form">
     <div class="col-11 col-md-8 col-lg-6 rounded-2 border p-4 bg-white">
-        <h4 class="text-center mb-4">Identitas Mitra</h4>
+        <h4 class="text-center mb-4">Identitas Pengguna</h4>
         <div class="row">
             <div class="mb-3 col-6">
                 <label for="name" class="form-label">Jabatan Pengisi</label>

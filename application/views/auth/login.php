@@ -3,12 +3,13 @@
         <h2 class="text-center">LOGIN</h2>
         <small class="text-center text-muted mb-2">Login jika anda dosen, mahasiswa, atau tenaga pendidikan</small>
         <?php if ($this->session->flashdata('alertForm')): ?>
-        <div class="alert alert-danger" role="alert">
+        <div class="alert alert-<?= $this->session->flashdata('alertType') ? $this->session->flashdata('alertType') : 'danger'; ?>"
+            role="alert">
             <p class="text-center"><?= $this->session->flashdata('alertForm'); ?></p>
         </div>
         <?php endif ?>
         <div class="mb-3 col-12">
-            <label for="username" class="form-label">username</label>
+            <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control <?= form_error('username') ? 'is-invalid': ''; ?>" name="username"
                 id="username" placeholder="username" autocomplete="off" value="<?= set_value('username'); ?>">
             <div class="invalid-feedback">
@@ -16,7 +17,7 @@
             </div>
         </div>
         <div class="mb-3 col-12">
-            <label for="password" class="form-label">password</label>
+            <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control <?= form_error('password') ? 'is-invalid': ''; ?>"
                 name="password" id="password" placeholder="password">
             <div class="invalid-feedback">
