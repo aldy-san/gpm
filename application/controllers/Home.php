@@ -123,10 +123,10 @@ class Home extends CI_Controller {
                             'created_at' => time()
                         ]);
                     }else{
-                        $detail = ($answer > 80 && $answer <=100) ? '80-100' 
-                                : (($answer > 60 && $answer <=80) ? '60-100' 
-                                : (($answer > 40 && $answer <=60) ? '40-60'
-                                : (($answer > 20 && $answer <=40) ? '20-40' : '0-20')));
+                        $detail = ($answer > 80 && $answer <=100) ? '81-100' 
+                                : (($answer > 60 && $answer <=80) ? '61-80' 
+                                : (($answer > 40 && $answer <=60) ? '41-60'
+                                : (($answer > 20 && $answer <=40) ? '21-40' : '0-20')));
                         $this->db->insert('answer', [
                             'id_user' => $insert_id,
                             'id_survei' => filter_var($key, FILTER_SANITIZE_NUMBER_INT),

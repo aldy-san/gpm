@@ -75,9 +75,12 @@ var dataSurvei = <?= json_encode($survei); ?>;
 var dataPopulation = <?= json_encode($population); ?>;
 var dataLabels = <?= json_encode($labels); ?>;
 var period = <?= json_encode($period); ?>;
+var role = '<?= $this->uri->segment(3); ?>'
 
 function executeGraphic(from, to, name, isUpdate = false) {
-    const filter = (from && to) ? '?from=' + from + '&to=' + to : ''
+    let filter = (from) ? '?from=' + from : ''
+    filter += (to) ? '&to=' + to : ''
+    filter += '&role=<?= $this->uri->segment(3); ?>'
     $("#period-title > span").text(name)
     dataPopulation.forEach((item, index) => {
         $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item + filter, async (
@@ -319,6 +322,12 @@ async function exportHandler() {
         })
 }
 //executeGraphic('0', '1', 'tes')
+
 //console.log(period[0])
-executeGraphic(period[0]['period_from'], period[0]['period_to'], period[0]['name'])
+const noPeriod = ['mitra', 'alumni', 'pengguna']
+if (noPeriod.includes(role)) {
+    executeGraphic(1, null, role)
+} else {
+    executeGraphic(period[0]['period_from'], period[0]['period_to'], period[0]['name'])
+}
 </script>

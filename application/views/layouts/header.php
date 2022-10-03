@@ -77,7 +77,7 @@
                             <li class="sidebar-title">Hasil Survei</li>
                             <li class="sidebar-item has-sub">
                                 <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>Mahasiswa</span>
                                 </a>
                                 <ul class="submenu">
@@ -91,7 +91,7 @@
                             </li>
                             <li class="sidebar-item has-sub">
                                 <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>Dosen</span>
                                 </a>
                                 <ul class="submenu">
@@ -105,7 +105,7 @@
                             </li>
                             <li class="sidebar-item has-sub">
                                 <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>Tenaga Pendidik</span>
                                 </a>
                                 <ul class="submenu">
@@ -117,24 +117,24 @@
                                     <?php endforeach ?>
                                 </ul>
                             </li>
-                            <!--<li class="sidebar-item <?= $this->uri->segment(3) === 'alumni' ?'active' :''?>">
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'alumni' ?'active' :''?>">
                                 <a href="<?= base_url('dosen/result/alumni'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>Alumni</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(3) === 'mitra' ?'active' :''?>">
                                 <a href="<?= base_url('dosen/result/mitra'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>Mitra</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(3) === 'pengguna' ?'active' :''?>">
                                 <a href="<?= base_url('dosen/result/pengguna'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid-fill"></i>
+                                    <i class="bi bi-grid"></i>
                                     <span>Pengguna</span>
                                 </a>
-                            </li>-->
+                            </li>
 
                             <?php endif ?>
                             <?php  if (getRole($this_user['level']) === 'superadmin') :?>

@@ -29,13 +29,20 @@ class Dosen extends CI_Controller {
 		$this->load->view('dosen/index');
 		$this->load->view('layouts/footer');
 	}
-	public function result($role, $category)
+	public function result($role, $category = null)
 	{
         $data = $this->globalData;
         $data['survei'] = $this->db->get_where('survei', ['role' => $role])->result_array();
         $data['period'] = $this->db->order_by("period_from", "desc")->get_where('period', ['category' => $category])->result_array();
-        $data['population'] = ['jenis_kelamin', 'jenjang', 'kode_prodi', 'tahun_masuk'];
-        $data['labels'] = [false, 'jenjang', 'prodi', false];
+
+        $data['population'] = [];
+        $data['labels'] = [];
+        if ($role === 'mahasiswa') {
+            $data['population'] = ['jenis_kelamin', 'jenjang', 'kode_prodi', 'tahun_masuk'];
+            $data['labels'] = [false, 'jenjang', 'prodi', false];
+        } else if ($role === 'dosen'){
+            // data role
+        }
 		$this->load->view('layouts/header', $data);
 		$this->load->view('dosen/result', $data);
 		$this->load->view('layouts/footer');

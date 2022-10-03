@@ -55,6 +55,9 @@
                                         <?= $c['name']; ?>
                                     </option>
                                     <?php endforeach; ?>
+                                    <!--<option value="1000000001">Survei Alumni</option>
+                                    <option value="1000000002">Survei Mitra</option>
+                                    <option value="1000000003">Survei Pengguna</option>-->
                                 </select>
                             </fieldset>
                             <div class="invalid-feedback">
