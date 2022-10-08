@@ -2,7 +2,8 @@
     <h3>Hasil Survei</h3>
 </div>
 <div class="page-content">
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-end align-items-end ">
+        <?php if (!in_array($this->uri->segment(3),['alumni', 'mitra', 'pengguna'])): ?>
         <div class="btn-group dropdown me-2">
             <button type="button" class="btn btn-outline-primary">Periode</button>
             <button id="period-title" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
@@ -17,12 +18,18 @@
                 <?php endforeach; ?>
             </div>
         </div>
+        <?php else: ?>
+        <div class="form-group me-2 mb-0">
+            <label for="question">Tanggal</label>
+            <input class="form-control" name="dates" type="text">
+        </div>
+        <?php endif; ?>
         <button id="btn-export" onclick="exportHandler()" class="btn btn-success d-flex align-items-center">
             <i class="bi bi-save me-2"></i>
             <div class="spinner-border spinner-border-sm me-2 d-none" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
-            <b>Export</b>
+            <b>Exports</b>
         </button>
     </div>
     <section class="row mt-3">
@@ -70,7 +77,19 @@
         <?php endforeach; ?>
     </section>
 </div>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 <script type="text/javascript">
+$('input[name="dates"]').daterangepicker({
+    locale: {
+        format: 'D MMM, YYYY'
+    }
+}, (start, end, label) => {
+    const s = new Date(start).getTime() / 1000
+    const e = new Date(end).getTime() / 1000
+    executeGraphic(s, e, '', true)
+});
 var dataSurvei = <?= json_encode($survei); ?>;
 var dataPopulation = <?= json_encode($population); ?>;
 var dataLabels = <?= json_encode($labels); ?>;
