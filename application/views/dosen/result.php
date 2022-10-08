@@ -32,13 +32,14 @@
             <b>Exports</b>
         </button>
     </div>
+    <?php if (count($population) > 0): ?>
     <section class="row mt-3">
         <h4>Populasi Data</h4>
         <?php foreach ($population as $index=>$p): ?>
         <div id="result-population-<?= $index; ?>" class="col-12 col-lg-6">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="text-capitalize"><?= join(" ",explode("_", $p)); ?></h4>
+                    <h4 class="text-capitalize"><?= $titles[$index]; ?></h4>
                 </div>
                 <div class="card-body">
                     <div id="chart-population-<?=$index; ?>"></div>
@@ -47,6 +48,8 @@
         </div>
         <?php endforeach; ?>
     </section>
+    <?php endif; ?>
+    <?php if (count($survei) > 0): ?>
     <section class="row mt-3">
         <h4>Survei Data</h4>
         <?php foreach ($survei as $s): ?>
@@ -76,6 +79,7 @@
         </div>
         <?php endforeach; ?>
     </section>
+    <?php endif; ?>
 </div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>

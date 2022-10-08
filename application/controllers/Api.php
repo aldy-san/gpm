@@ -26,13 +26,26 @@ class Api extends CI_Controller {
     {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
-        $this->db->select('user.nama_lengkap as username, answer.answer');
+        $role = $this->input->get('role');
+        if ($role == 'alumni'){
+            $this->db->select('alumni.name as username, answer.answer');
+        } else if ($role == 'mitra'){
+            $this->db->select('mitra.agency as username, answer.answer');
+        } else if ($role == 'pengguna'){
+            $this->db->select('pengguna.email as username, answer.answer');
+        } else {
+            $this->db->select('user.nama_lengkap as username, answer.answer');
+        }
         $this->db->from('answer');
         $this->db->where(['id_survei' => $id]);
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
         }
-        $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
+        if (in_array($role, ['alumni', 'mitra', 'pengguna'])){
+            $this->db->join($role, $role.'.id = answer.id_user', 'left');
+        } else {
+            $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
+        }
         $this->db->limit($limit);
         $result = $this->db->get()->result();
         echo json_encode($result);
@@ -42,12 +55,17 @@ class Api extends CI_Controller {
     {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
+        $role = $this->input->get('role');
         $this->db->select($group_by.' as grouped, count('.$group_by.') as total');
         $this->db->from('answer');
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
         }
-        $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
+        if (in_array($role, ['alumni', 'mitra', 'pengguna'])){
+            $this->db->join($role, $role.'.id = answer.id_user', 'left');
+        } else {
+            $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
+        }
         $this->db->group_by($group_by);
         $result = $this->db->get()->result();
         echo json_encode($result);

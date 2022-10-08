@@ -3,54 +3,26 @@
 </div>
 <div class="page-content">
     <section class="row">
+        <?php if (count($category_mahasiswa) > 0): ?>
         <h5>Silahkan Pilih Menu Survei</h1>
+            <?php foreach ($category_mahasiswa as $category): ?>
             <div class="col-12 col-lg-6">
-                <a href="">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Kepuasan Mahasiswa</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="tes"></div>
-                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        <h4><?= $category['name']; ?></h4>
                     </div>
-                </a>
-            </div>
-            <div class="col-12 col-lg-6">
-                <a href="">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Afektif Mahasiswa</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="tes"></div>
-                        </div>
+                    <div class="card-body">
+                        <a href="<?= base_url('mahasiswa/survei/'.$category['id']); ?>" class="btn btn-primary">Mulai
+                            Mengisi Survei</a>
                     </div>
-                </a>
+                </div>
             </div>
-            <div class="col-12 col-lg-6">
-                <a href="">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Pembelajaran Daring</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="tes-bar"></div>
-                        </div>
-                    </div>
-                </a>
+            <?php endforeach; ?>
+            <?php else: ?>
+            <div class="d-flex flex-column align-items-center w-full mt-4">
+                <object data="<?= base_url('assets/svg/no-data.svg'); ?>" width="250" height="250"> </object>
+                <h4 class="mt-4 text-center">Tidak Ada Survei</h4>
             </div>
-            <div class="col-12 col-lg-6">
-                <a href="">
-                    <div class="card">
-                        <div class="card-header">
-                            <h4>Survei PKKMB</h4>
-                        </div>
-                        <div class="card-body">
-                            <div id="tes-bar"></div>
-                        </div>
-                    </div>
-                </a>
-            </div>
+            <?php endif; ?>
     </section>
 </div>

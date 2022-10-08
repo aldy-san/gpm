@@ -39,10 +39,15 @@ class Dosen extends CI_Controller {
         $data['labels'] = [];
         if ($role === 'mahasiswa') {
             $data['population'] = ['jenis_kelamin', 'jenjang', 'kode_prodi', 'tahun_masuk'];
+            $data['titles'] = ['Jenis Kelamin', 'Jenjang', 'Prodi', 'Tahun Masuk'];
             $data['labels'] = [false, 'jenjang', 'prodi', false];
-        } else if ($role === 'dosen'){
-            // data role
-        }
+        } else if ($role === 'alumni'){
+            $data['population'] = ['year_to', 'year_from', 'prodi', 'activity'];
+            $data['titles'] = ['Tahun Masuk', 'Tahun Lulus', 'Prodi', 'Aktifitas Setelah Lulus'];
+        } else if ($role === 'mitra'){
+            $data['population'] = ['position', 'agency', 'scale', 'year_since', 'year_coop'];
+            $data['titles'] = ['Position', 'Instansi', 'Skala', 'Tahun Berdiri', 'Tahun Kerjasama'];
+        } 
 		$this->load->view('layouts/header', $data);
 		$this->load->view('dosen/result', $data);
 		$this->load->view('layouts/footer');
