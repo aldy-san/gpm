@@ -9,7 +9,7 @@ class Mahasiswa extends CI_Controller {
             'withNavbar' => false,
             'withSidebar' => true,
             'this_user' => $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array(),
-            'category_mahasiswa' => $this->db->get_where('category', ['role' => 'mahasiswa'])->result_array(),
+            'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa'),
             'title' => false
         ];
         if (getRole($this->globalData['this_user']['level']) !== 'mahasiswa') {

@@ -16,9 +16,9 @@ class Logged extends CI_Controller {
             'withSidebar' => true,
             'title' => false,
             'this_user' => $this->db_master->where(['username' => $this->session->userdata('user')['username']])->get('user')->row_array(),
-            'category_dosen' => $this->db->get_where('category', ['role' => 'dosen'])->result_array(),
-            'category_mahasiswa' => $this->db->get_where('category', ['role' => 'mahasiswa'])->result_array(),
-            'category_tendik' => $this->db->get_where('category', ['role' => 'tendik'])->result_array(),
+            'category_dosen' => $this->M_survei->getCategory('dosem'),
+            'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa'),
+            'category_tendik' => $this->M_survei->getCategory('tendik'),
         ];
     }
 

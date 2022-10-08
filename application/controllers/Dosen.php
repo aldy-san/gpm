@@ -12,9 +12,9 @@ class Dosen extends CI_Controller {
             'withSidebar' => true,
             'this_user' => $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array(),
             'title' => false,
-            'category_dosen' => $this->db->get_where('category', ['role' => 'dosen'])->result_array(),
-            'category_mahasiswa' => $this->db->get_where('category', ['role' => 'mahasiswa'])->result_array(),
-            'category_tendik' => $this->db->get_where('category', ['role' => 'tendik'])->result_array(),
+            'category_dosen' => $this->M_survei->getCategory('dosem'),
+            'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa'),
+            'category_tendik' => $this->M_survei->getCategory('tendik'),
         ];
         if (getRole($this->globalData['this_user']['level']) !== 'dosen') {
             $this->session->set_flashdata('alertForm', 'Role anda tidak memiliki akses untuk halaman tersebut');

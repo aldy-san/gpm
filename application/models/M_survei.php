@@ -16,5 +16,13 @@ class M_survei extends CI_Model {
         $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         return $this->db->get();
     }
+    public function getCategory($role)
+    {
+        $this->db->select('category.id as id, category.name as name');
+        $this->db->from('category');
+        $this->db->where(['role' => $role, 'period_from <=' => time(), 'period_to >=' => time()]);
+        $this->db->join('period','category.id = period.category', 'right');
+        return $this->db->get()->result_array();
+    }
 }
 ?>
