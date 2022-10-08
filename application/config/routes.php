@@ -68,6 +68,7 @@ $route['mitra'] = 'Home/mitra';
 $route['pengguna'] = 'Home/pengguna';
 // Logged
 $route['profile'] = 'Logged/profile';
+$route['change-password'] = 'Logged/change_password';
 
 # -------------------------------SUPERADMIN--------------------------------
 $route['dashboard'] = 'Superadmin/index';
@@ -91,6 +92,7 @@ $route['manage-category/create'] = 'Superadmin/create_category';
 $route['manage-category/detail/(:num)'] = 'Superadmin/detail_category/$1';
 $route['manage-category/edit/(:num)'] = 'Superadmin/edit_category/$1';
 $route['manage-category/delete'] = 'Superadmin/delete_category';
+
 # -----------------------------------DOSEN---------------------------------
 $route['dosen/dashboard'] = 'Dosen/index';
 $route['dosen/result/(:any)'] = 'Dosen/result/$1';

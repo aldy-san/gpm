@@ -16,7 +16,7 @@ class Logged extends CI_Controller {
             'withSidebar' => true,
             'title' => false,
             'this_user' => $this->db_master->where(['username' => $this->session->userdata('user')['username']])->get('user')->row_array(),
-            'category_dosen' => $this->M_survei->getCategory('dosem'),
+            'category_dosen' => $this->M_survei->getCategory('dosen'),
             'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa'),
             'category_tendik' => $this->M_survei->getCategory('tendik'),
         ];
@@ -27,6 +27,33 @@ class Logged extends CI_Controller {
         $data = $this->globalData;
         customView('pages/logged/profile', $data);
     }
+
+    public function change_password()
+    {
+        $data = $this->globalData;
+        if ($this->input->post()){
+            $this->form_validation->set_rules('old_password','Kata Sandi Lama','trim|required');
+            $this->form_validation->set_rules('password','Kata Sandi Baru','min_length[3]|trim|required');
+            $this->form_validation->set_rules('confirm_password','Konfirmasi Kata Sandi Baru','trim|required|matches[password]');
+            if(!$this->form_validation->run()){
+				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
+                $this->session->set_flashdata('alertType', 'danger');
+			} else {
+				$password = $this->input->post('old_password');
+                if(md5($password) ===  $data['this_user']['pwd_hash']){
+                    $this->M_survei->changePassword($this->input->post('password'), $data['this_user']['username']);
+                    $this->session->set_flashdata('alertForm', 'Anda Berhasil Mengganti Password');
+                    $this->session->set_flashdata('alertType', 'success');
+                    redirect('profile');
+                } else {
+                    $this->session->set_flashdata('alertForm', 'Password Lama Salah');
+                    $this->session->set_flashdata('alertType', 'danger');
+                }
+            }
+        }
+        customView('pages/logged/change-password', $data);
+    }
+
     public function survei($id_category){
         $data = $this->globalData;
         $survei = $this->db->get_where('survei',['category' => $id_category])->result_array();

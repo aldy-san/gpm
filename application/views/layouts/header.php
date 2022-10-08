@@ -244,8 +244,9 @@
                         <div class="dropdown-menu mt-2 shadow" aria-labelledby="profileButton">
                             <a class="dropdown-item d-flex align-items-center" href="<?= base_url('profile'); ?>"><i
                                     class="bi bi-person-fill me-2"></i>Profil Saya</a>
-                            <a class="dropdown-item d-flex align-items-center" href="#"><i
-                                    class="bi bi-pencil-square me-2"></i>Ubah Kata Sandi</a>
+                            <a class="dropdown-item d-flex align-items-center"
+                                href="<?= base_url('change-password'); ?>"><i class="bi bi-pencil-square me-2"></i>Ubah
+                                Kata Sandi</a>
                             <a class="dropdown-item d-flex align-items-center" href="<?= base_url('logout'); ?>"><i
                                     class="bi bi-door-open-fill me-2"></i>Logout</a>
                         </div>

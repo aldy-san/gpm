@@ -24,5 +24,12 @@ class M_survei extends CI_Model {
         $this->db->join('period','category.id = period.category', 'right');
         return $this->db->get()->result_array();
     }
+
+    public function changePassword($password, $id)
+    {
+        $this->db->set('pwd_hash', md5($password));
+        $this->db->where('username', $id);
+        $this->db->update('db_master.user');
+    }
 }
 ?>
