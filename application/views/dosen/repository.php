@@ -9,6 +9,7 @@
     <section class="section mt-4">
         <div class="card">
             <div class="card-body">
+                <?= form_open_multipart($data_slug ? base_url('/dosen/repository/edit/'.$data_slug['id']) : base_url('/dosen/repository/create')); ?>
                 <form
                     action="<?= $data_slug ? base_url('/dosen/repository/edit/'.$data_slug['id']) : base_url('/dosen/repository/create'); ?>"
                     method="POST">
@@ -59,12 +60,47 @@
                                 <?= form_error('category'); ?>
                             </div>
                         </div>
+                        <div class="form-group col-6">
+                            <label for="sertifikat">File</label>
+                            <input id="sertifikat" type="file" name="sertifikat" class="basic-filepond">
+                        </div>
                     </div>
                     <?php if($is_edit) :?>
                     <button type="submit" class="btn btn-primary ">Simpan</button>
                     <?php endif; ?>
-                </form>
+                    <?= form_close(); ?>
             </div>
         </div>
     </section>
 </div>
+<script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.js"></script>
+<script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+<script src="https://unpkg.com/filepond/dist/filepond.js"></script>
+<script>
+FilePond.registerPlugin(
+    // validates the size of the file...
+    FilePondPluginFileValidateSize,
+    // validates the file type...
+    FilePondPluginFileValidateType,
+);
+// Filepond: Basic
+const pond = FilePond.create(document.querySelector('.basic-filepond'), {
+    allowFileEncode: false,
+    required: true,
+    storeAsFile: true,
+    acceptedFileTypes: ['application/pdf'],
+    allowFileSizeValidation: true,
+    labelFileTypeNotAllowed: 'Jenis file tidak valid',
+    fileValidateTypeLabelExpectedTypes: 'File harus bertipe PDF}',
+    maxFileSize: '10MB',
+    labelMaxFileSizeExceeded: 'Ukuran file berlalu besar',
+    labelMaxFileSize: 'Ukuran File Maksimal {filesize}',
+    fileValidateTypeDetectType: (source, type) => new Promise((resolve, reject) => {
+        resolve(type);
+    })
+});
+
+$('.basic-filepond').on('FilePond:addfile', function(e) {
+    console.log(pond.getFile().filename)
+});
+</script>

@@ -127,11 +127,25 @@ class Dosen extends CI_Controller {
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
 				$this->session->set_flashdata('alertType', 'danger');
 			} else {
+                $config['upload_path']	= './sertifikat';
+                $config['allowed_types'] = 'pdf';
+                $file = $_FILES['sertifikat']['name'];
+                $this->load->library('upload');
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload('sertifikat')) {
+                    $error = array('error' => $this->upload->display_errors());
+                    echo json_encode($error);
+                    die();
+                } else {
+                    $file = $this->upload->data('file_name');
+                }
                 $form = [
                     'name' => $this->input->post('name'),
                     'institution' => $this->input->post('institution'),
                     'date' => strtotime($this->input->post('date')),
                     'category' => $this->input->post('category'),
+                    'files' => $file,
+                    'id_user' => $data['this_user']['username'],
                 ];
                 $this->db->insert('repository', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
@@ -157,11 +171,25 @@ class Dosen extends CI_Controller {
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
 				$this->session->set_flashdata('alertType', 'danger');
 			} else {
+                $config['upload_path']	= './sertifikat';
+                $config['allowed_types'] = 'pdf';
+                $file = $_FILES['sertifikat']['name'];
+                $this->load->library('upload');
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload('sertifikat')) {
+                    $error = array('error' => $this->upload->display_errors());
+                    echo json_encode($error);
+                    die();
+                } else {
+                    $file = $this->upload->data('file_name');
+                }
                 $form = [
                     'name' => $this->input->post('name'),
                     'institution' => $this->input->post('institution'),
                     'date' => strtotime($this->input->post('date')),
                     'category' => $this->input->post('category'),
+                    'files' => $file,
+                    'id_user' => $data['this_user']['username']
                 ];
                 $this->db->where(['id' => $id])->update('repository', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
