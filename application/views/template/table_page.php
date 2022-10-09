@@ -47,6 +47,10 @@
                                     Delete
                                 </button>
                                 <?php endif ?>
+                                <?php if($download_url): ?>
+                                <a href="<?= base_url($download_url.$item['files']); ?>" class="btn btn-success">Lihat
+                                    File</a>
+                                <?php endif ?>
                             </td>
                             <?php endif ?>
                         </tr>
