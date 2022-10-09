@@ -105,10 +105,10 @@ class Dosen extends CI_Controller {
 		$config['per_page'] = 10;
 		$config['start'] = $this->uri->segment(3);
 		$this->pagination->initialize($config);
-        $temp = $this->db->get($table, $config['per_page'], $config['start'])->result_array();
+        $temp = $this->db->get_where($table, ['id_user' => $data['this_user']['username']], $config['per_page'], $config['start'])->result_array();
         $data['data_table'] = [];
         foreach ($temp as $value) {
-            $value['date'] = gmdate("d-m-Y", $value['date']);
+            $value['date'] = gmdate("d M, Y", $value['date']);
             array_push($data['data_table'],$value);
         }
         customView('template/table_page', $data);
