@@ -6,7 +6,8 @@
         <div class="row fs-5 ">
             <div class="col-3">
                 <div class="card">
-                    <img class=" rounded-circle p-5" src="<?= base_url('assets/images/faces/1.jpg'); ?>" alt="Face 1">
+                    <img class=" rounded-circle p-5"
+                        src="<?= base_url('assets/images/faces/'.$this_user['jenis_kelamin'].'.jpg'); ?>" alt="Face 1">
                 </div>
             </div>
             <div class="col-9">

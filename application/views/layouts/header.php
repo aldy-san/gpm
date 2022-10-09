@@ -238,7 +238,8 @@
                         <button class="btn " type="button" id="profileButton" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false">
                             <div class="avatar">
-                                <img src="<?= base_url('assets/images/faces/1.jpg'); ?>" alt="Face 1">
+                                <img src="<?= base_url('assets/images/faces/'.$this_user['jenis_kelamin'].'.jpg'); ?>"
+                                    alt="Face 1">
                             </div>
                         </button>
                         <div class="dropdown-menu mt-2 shadow" aria-labelledby="profileButton">
