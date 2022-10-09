@@ -11,7 +11,7 @@
                 <span class="sr-only"></span>
             </button>
             <div class="dropdown-menu mt-2 shadow-sm">
-                <button class="dropdown-item" onclick="executeGraphic(0,1,'tes',true)">tes</button>
+                <!--<button class="dropdown-item" onclick="executeGraphic(0,1,'tes',true)">tes</button>-->
                 <?php foreach($period as $p): ?>
                 <button class="dropdown-item"
                     onclick="executeGraphic(<?= $p['period_from'].','.$p['period_to'].',\''.$p['name'].'\''; ?>,true)"><?= $p['name']; ?></button>

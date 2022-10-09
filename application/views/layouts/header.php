@@ -63,6 +63,12 @@
                                 </a>
                             </li>
                             <?php if (getRole($this_user['level']) === 'dosen') :?>
+                            <li class="sidebar-item">
+                                <a href="<?= base_url('dosen/repository'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-folder2-open"></i>
+                                    <span>Repositori</span>
+                                </a>
+                            </li>
                             <?php if (count($category_dosen) > 0): ?>
                             <li class="sidebar-title">Isi Survei</li>
                             <?php endif ?>
@@ -75,12 +81,12 @@
                             </li>
                             <?php endforeach ?>
                             <li class="sidebar-title">Hasil Survei</li>
-                            <li class="sidebar-item has-sub">
+                            <li class="sidebar-item has-sub <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>
                                     <span>Mahasiswa</span>
                                 </a>
-                                <ul class="submenu">
+                                <ul class="submenu <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
                                     <?php foreach($category_mahasiswa as $c) :?>
                                     <li class="submenu-item <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
                                         <a
@@ -89,12 +95,12 @@
                                     <?php endforeach ?>
                                 </ul>
                             </li>
-                            <li class="sidebar-item has-sub">
+                            <li class="sidebar-item has-sub <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>
                                     <span>Dosen</span>
                                 </a>
-                                <ul class="submenu">
+                                <ul class="submenu <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
                                     <?php foreach($category_dosen as $c) :?>
                                     <li class="submenu-item <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
                                         <a
@@ -103,14 +109,14 @@
                                     <?php endforeach ?>
                                 </ul>
                             </li>
-                            <li class="sidebar-item has-sub">
+                            <li class="sidebar-item has-sub <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>
                                     <span>Tenaga Pendidik</span>
                                 </a>
-                                <ul class="submenu">
+                                <ul class="submenu <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
                                     <?php foreach($category_tendik as $c) :?>
-                                    <li class="submenu-item <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
+                                    <li class="submenu-item <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
                                         <a
                                             href="<?= base_url('dosen/result/tendik/'.$c['id']); ?>"><?= $c['name']; ?></a>
                                     </li>
@@ -151,10 +157,17 @@
                                     <span>Kelola Periode</span>
                                 </a>
                             </li>
-                            <li class="sidebar-item  has-sub">
+                            <li class="sidebar-title">Kelola Survei</li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'mahasiswa' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('survei/mahasiswa'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Survei Mahasiswa</span>
+                                </a>
+                            </li>
+                            <!--<li class="sidebar-item  has-sub">
                                 <a href="#" class='sidebar-link'>
                                     <i class="bi bi-collection"></i>
-                                    <span>survei mahasiswa</span>
+                                    <span>Survei Mahasiswa</span>
                                 </a>
 
                                 <ul class="submenu">
@@ -171,35 +184,35 @@
                                         <a href="<?= base_url('/survei/mahasiswa-s3'); ?>">S3</a>
                                     </li>
                                 </ul>
-                            </li>
+                            </li>-->
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'dosen' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/dosen'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>
-                                    <span>survei dosen</span>
+                                    <span>Survei Dosen</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'tendik' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/tendik'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>
-                                    <span>survei tendik</span>
+                                    <span>Survei Tendik</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'alumni' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/alumni'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>
-                                    <span>survei alumni</span>
+                                    <span>Survei Alumni</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'mitra' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/mitra'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>
-                                    <span>survei mitra</span>
+                                    <span>Survei Mitra</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'pengguna' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/pengguna'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>
-                                    <span>survei pengguna</span>
+                                    <span>Survei Pengguna</span>
                                 </a>
                             </li>
                             <?php endif;?>

@@ -66,7 +66,7 @@
                             </div>
                         </div>
                         <div class="form-group col-4">
-                            <label for="question">bar from</label>
+                            <label for="bar_from">bar from</label>
                             <input type="text" class="form-control <?= form_error('bar_from') ? 'is-invalid': ''; ?>"
                                 name="bar_from" id="bar_from" placeholder="bar_from" autocomplete="off"
                                 value="<?= $data_slug ?  (set_value('bar_from') ?  set_value('bar_from') : $data_slug['bar_from']) : set_value('bar_from'); ?>"
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="form-group col-4">
-                            <label for="question">bar to</label>
+                            <label for="bar_to">bar to</label>
                             <input type="text" class="form-control <?= form_error('bar_to') ? 'is-invalid': ''; ?>"
                                 name="bar_to" id="bar_to" placeholder="bar_to" autocomplete="off"
                                 value="<?= $data_slug ?  (set_value('bar_to') ?  set_value('bar_to') : $data_slug['bar_to']) : set_value('bar_to'); ?>"
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="form-group col-4">
-                            <label for="question">bar length</label>
+                            <label for="bar_length">bar length</label>
                             <input type="text" class="form-control <?= form_error('bar_length') ? 'is-invalid': ''; ?>"
                                 name="bar_length" id="bar_length" placeholder="bar_length" autocomplete="off"
                                 value="<?= $data_slug ?  (set_value('bar_length') ?  set_value('bar_length') : $data_slug['bar_length']) : set_value('bar_length'); ?>"
@@ -114,7 +114,7 @@
                         </div>
                     </div>
                     <?php if($title !== 'Detail Survei Mahasiswa') :?>
-                    <button type="submit" class="btn btn-primary ">Save</button>
+                    <button type="submit" class="btn btn-primary ">Simpan</button>
                     <?php endif; ?>
                 </form>
             </div>
