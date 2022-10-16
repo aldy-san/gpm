@@ -101,6 +101,7 @@ $route['dosen/detail/(:any)'] = 'Dosen/detail/$1';
 $route['dosen/detail/(:any)/(:num)'] = 'Dosen/detail/$1';
 // Repository
 $route['dosen/repository'] = 'Dosen/repository';
+$route['dosen/repository/all'] = 'Dosen/all_repository';
 $route['dosen/repository/create'] = 'Dosen/create_repository';
 $route['dosen/repository/detail/(:num)'] = 'Dosen/detail_repository/$1';
 $route['dosen/repository/edit/(:num)'] = 'Dosen/edit_repository/$1';
@@ -108,7 +109,8 @@ $route['dosen/repository/delete'] = 'Dosen/delete_repository';
 
 
 # -----------------------------------Mahasiswa---------------------------------
-$route['mahasiswa/dashboard']['GET'] = 'Mahasiswa/index';
+$route['mahasiswa/dashboard'] = 'Mahasiswa/index';
+$route['tendik/dashboard'] = 'Tendik/index';
 
 # -----------------------------------SURVEI---------------------------------
 $route['dosen/survei/(:num)'] = 'Logged/survei/$1';

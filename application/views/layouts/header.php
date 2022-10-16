@@ -60,22 +60,31 @@
                                 class="sidebar-item <?= $this->uri->segment(1) === 'dashboard' || $this->uri->segment(2) === 'dashboard' ? 'active' : ''; ?> ">
                                 <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
                                     <i class="bi bi-house-door"></i>
-                                    <span>Dashboard</span>
+                                    <span>Beranda</span>
                                 </a>
                             </li>
                             <?php if (getRole($this_user['level']) === 'dosen') :?>
-                            <li class="sidebar-item">
-                                <a href="<?= base_url('dosen/repository'); ?>" class='sidebar-link'>
+                            <?php if (in_array($this_user['level'], [8, 9, 10])) :?>
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'all' ?'active' :''?>">
+                                <a href="<?= base_url('dosen/repository/all'); ?>" class='sidebar-link'>
                                     <i class="bi bi-folder2-open"></i>
-                                    <span>Repositori</span>
+                                    <span>Semua Repositori</span>
                                 </a>
                             </li>
-                            <?php if (count($category_dosen) > 0): ?>
+                            <?php endif ?>
+                            <li
+                                class="sidebar-item <?= $this->uri->segment(2) === 'repository' && !$this->uri->segment(3) ?'active' :''?>">
+                                <a href="<?= base_url('dosen/repository'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-folder2-open"></i>
+                                    <span>Repositori Saya</span>
+                                </a>
+                            </li>
+                            <?php if (count($category_dosen_avail) > 0): ?>
                             <li class="sidebar-title">Isi Survei</li>
                             <?php endif ?>
-                            <?php foreach($category_dosen as $c) :?>
+                            <?php foreach($category_dosen_avail as $c) :?>
                             <li class="sidebar-item">
-                                <a href="<?= base_url('mahasiswa/survei/'.$c['id']); ?>" class='sidebar-link'>
+                                <a href="<?= base_url('dosen/survei/'.$c['id']); ?>" class='sidebar-link'>
                                     <i class="bi bi-question-octagon"></i>
                                     <span><?= $c['name']; ?></span>
                                 </a>
@@ -165,27 +174,6 @@
                                     <span>Survei Mahasiswa</span>
                                 </a>
                             </li>
-                            <!--<li class="sidebar-item  has-sub">
-                                <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-collection"></i>
-                                    <span>Survei Mahasiswa</span>
-                                </a>
-
-                                <ul class="submenu">
-                                    <li class="submenu-item">
-                                        <a href="<?= base_url('/survei/mahasiswa-d4'); ?>">D4</a>
-                                    </li>
-                                    <li class="submenu-item">
-                                        <a href="<?= base_url('/survei/mahasiswa-s1'); ?>">S1</a>
-                                    </li>
-                                    <li class="submenu-item">
-                                        <a href="<?= base_url('/survei/mahasiswa-s2'); ?>">S2</a>
-                                    </li>
-                                    <li class="submenu-item">
-                                        <a href="<?= base_url('/survei/mahasiswa-s3'); ?>">S3</a>
-                                    </li>
-                                </ul>
-                            </li>-->
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'dosen' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/dosen'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>

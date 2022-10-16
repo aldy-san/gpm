@@ -11,18 +11,22 @@
         <div class="card">
             <?php if($create_url): ?>
             <div class="card-header">
-                <a href="<?= base_url($create_url); ?>" class="btn btn-success">Add item</a>
+                <a href="<?= base_url($create_url); ?>" class="btn btn-success">Tambah item</a>
             </div>
             <?php endif; ?>
-            <div class="card-body">
+            <div class="card-body overflow-auto">
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <?php foreach ($column_table as $col): ?>
-                            <th class="text-capitalize"><?= join(' ', explode('_', $col,)); ?></th>
+                            <?php foreach ($column_table as $key => $col): ?>
+                            <?php if(isset($column_alias)): ?>
+                            <th class="text-capitalize text-nowrap"><?= $column_alias[$key]; ?></th>
+                            <?php else : ?>
+                            <th class="text-capitalize text-nowrap"><?= join(' ', explode('_', $col,)); ?></th>
+                            <?php endif; ?>
                             <?php endforeach; ?>
                             <?php if($detail_url || $edit_url || $delete_url): ?>
-                            <th>Action</th>
+                            <th>Aksi</th>
                             <?php endif; ?>
                         </tr>
                     </thead>
@@ -30,25 +34,26 @@
                         <?php foreach($data_table as $item): ?>
                         <tr>
                             <?php foreach ($column_table as $col): ?>
-                            <td><?= $item[$col] ?></td>
+                            <td class="text-nowrap"><?= $item[$col] ?></td>
                             <?php endforeach; ?>
-                            <?php if($detail_url || $edit_url || $delete_url): ?>
-                            <td>
+                            <?php if($detail_url || $edit_url || $delete_url || isset($download_url)): ?>
+                            <td class="d-flex">
                                 <?php if($detail_url): ?>
-                                <a href="<?= base_url($detail_url.$item['id']); ?>" class="btn btn-info">Detail</a>
+                                <a href="<?= base_url($detail_url.$item['id']); ?>" class="ms-1 btn btn-info">Detail</a>
                                 <?php endif ?>
                                 <?php if($edit_url): ?>
-                                <a href="<?= base_url($edit_url.$item['id']); ?>" class="btn btn-warning">Edit</a>
+                                <a href="<?= base_url($edit_url.$item['id']); ?>" class="ms-1 btn btn-warning">Edit</a>
                                 <?php endif ?>
                                 <?php if($delete_url): ?>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                <button type="button" class="ms-1 btn btn-danger" data-bs-toggle="modal"
                                     data-bs-target="#deleteModal"
                                     onclick="$('#form-delete input').attr('value','<?= $item['id']; ?>')">
                                     Delete
                                 </button>
                                 <?php endif ?>
-                                <?php if($download_url): ?>
-                                <a href="<?= base_url($download_url.$item['files']); ?>" class="btn btn-success">Lihat
+                                <?php if(isset($download_url)): ?>
+                                <a href="<?= base_url($download_url.$item['files']); ?>"
+                                    class="ms-1 btn btn-success">Lihat
                                     File</a>
                                 <?php endif ?>
                             </td>

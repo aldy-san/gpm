@@ -24,7 +24,7 @@ class Superadmin extends CI_Controller {
     public function index()
 	{
         $data = $this->globalData;
-		customView('superadmin/index', $data);
+		customView('dosen/index', $data);
 	}
 
     // PERIODE ===========================================================================================
@@ -41,6 +41,7 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = $root_url.'detail/';
         $data['delete_url'] = $root_url.'delete/';
         $data['column_table'] = ['id','name', 'category', 'period_from', 'period_to'];
+        $data['column_alias'] = ['id','nama', 'kategori', 'dari tanggal', 'sampai tanggal'];
 
         // Config Pagination
 		$config['base_url'] = base_url($root_url);
@@ -155,6 +156,7 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = $root_url.'detail/';
         $data['delete_url'] = $root_url.'delete/';
         $data['column_table'] = ['id','name', 'role'];
+        $data['column_alias'] = ['id','nama kategori', 'role'];
 
         // Config Pagination
 		$config['base_url'] = base_url($root_url);
@@ -269,7 +271,8 @@ class Superadmin extends CI_Controller {
         $data['edit_url'] = '/survei/'.$slug.'/edit/';
         $data['detail_url'] = '/survei/'.$slug.'/detail/';
         $data['delete_url'] = '/survei/'.$slug.'/delete/';
-        $data['column_table'] = ['id','question', 'type', 'selections', 'bar_from', 'bar_to', 'bar_length', 'chart', 'category'];
+        $data['column_table'] = ['id','question', 'type', 'selections', 'bar_from', 'bar_to', 'chart', 'category'];
+        $data['column_alias'] = ['id','pertanyaan', 'tipe', 'pilihan', 'bar from', 'bar to', 'grafik', 'kategori'];
         $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
         $data['data_table'] = [];
         $category = $this->db->get('category')->result_array();
@@ -288,8 +291,8 @@ class Superadmin extends CI_Controller {
         $data['data_slug'] = false;
 
         if($this->input->post()){
-            $this->form_validation->set_rules('question','question','trim|required');
-            $this->form_validation->set_rules('category','category','trim|required');
+            $this->form_validation->set_rules('question','Pertanyaan','trim|required');
+            $this->form_validation->set_rules('category','Kategori','trim|required');
 			if(!$this->form_validation->run()){
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
 				$this->session->set_flashdata('alertType', 'danger');
@@ -302,7 +305,7 @@ class Superadmin extends CI_Controller {
                     'selections' => $this->input->post('selections'),
                     'bar_from' => $this->input->post('bar_from'),
                     'bar_to' => $this->input->post('bar_to'),
-                    'bar_length' => $this->input->post('bar_length'),
+                    'bar_length' => 100,
                     'chart' => $this->input->post('chart'),
                     'category' => $this->input->post('category'),
                 ];
@@ -332,8 +335,8 @@ class Superadmin extends CI_Controller {
         $data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
 
         if($this->input->post()){
-            $this->form_validation->set_rules('question','question','trim|required');
-            $this->form_validation->set_rules('category','category','trim|required');
+            $this->form_validation->set_rules('question','Pertanyaan','trim|required');
+            $this->form_validation->set_rules('category','Kategori','trim|required');
 			if(!$this->form_validation->run()){
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
 				$this->session->set_flashdata('alertType', 'danger');
@@ -346,7 +349,7 @@ class Superadmin extends CI_Controller {
                     'selections' => $this->input->post('selections'),
                     'bar_from' => $this->input->post('bar_from'),
                     'bar_to' => $this->input->post('bar_to'),
-                    'bar_length' => $this->input->post('bar_length'),
+                    'bar_length' => 100,
                     'chart' => $this->input->post('chart'),
                     'category' => $this->input->post('category'),
                 ];

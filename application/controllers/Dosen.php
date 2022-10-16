@@ -12,9 +12,10 @@ class Dosen extends CI_Controller {
             'withSidebar' => true,
             'this_user' => $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array(),
             'title' => false,
-            'category_dosen' => $this->M_survei->getCategory('dosen'),
-            'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa'),
-            'category_tendik' => $this->M_survei->getCategory('tendik'),
+            'category_dosen_avail' => $this->M_survei->getCategory('dosen'),
+            'category_dosen' => $this->M_survei->getCategory('dosen', false),
+            'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa', false),
+            'category_tendik' => $this->M_survei->getCategory('tendik', false),
         ];
         if (getRole($this->globalData['this_user']['level']) !== 'dosen') {
             $this->session->set_flashdata('alertForm', 'Role anda tidak memiliki akses untuk halaman tersebut');
@@ -25,9 +26,7 @@ class Dosen extends CI_Controller {
 	public function index()
 	{
         $data = $this->globalData;
-		$this->load->view('layouts/header', $data);
-		$this->load->view('dosen/index');
-		$this->load->view('layouts/footer');
+		customView('dosen/index', $data);
 	}
 	public function result($role, $category = null)
 	{
@@ -48,9 +47,7 @@ class Dosen extends CI_Controller {
             $data['population'] = ['position', 'agency', 'scale', 'year_since', 'year_coop'];
             $data['titles'] = ['Position', 'Instansi', 'Skala', 'Tahun Berdiri', 'Tahun Kerjasama'];
         } 
-		$this->load->view('layouts/header', $data);
-		$this->load->view('dosen/result', $data);
-		$this->load->view('layouts/footer');
+		customView('dosen/result', $data);
 	}
 	public function detail($id)
 	{
@@ -78,19 +75,47 @@ class Dosen extends CI_Controller {
         $data['detail_url'] = false;
         $data['delete_url'] = false;
         $data['column_table'] = ['nama_lengkap', 'answer'];
-
-        $this->load->view('layouts/header', $data);
-        $this->load->view('template/table_page',$data);
-        $this->load->view('layouts/footer', $data);
+        $data['column_alias'] = ['nama_lengkap', 'jawaban'];
+		customView('template/table_page', $data);
 	}
 
+    public function all_repository()
+    {
+        //config
+        $data = $this->globalData;
+        $table = 'repository';
+        $root_url = '/dosen/repository/';
+        $data['title'] = 'Semua Repositori';
+        $data['desc'] = '';
+        $data['create_url'] = false;
+        $data['edit_url'] = false;
+        $data['detail_url'] = false;
+        $data['delete_url'] = false;
+        $data['download_url'] = '/sertifikat/';
+        $data['column_table'] = ['id','name', 'institution', 'date', 'category','nama_lengkap'];
+        $data['column_alias'] = ['id','nama', 'Nama Lembaga', 'Tanggal', 'kategori','nama lengkap'];
+
+        // Config Pagination
+		$config['base_url'] = base_url($root_url);
+        $config['total_rows'] = $this->db->get($table)->num_rows();
+		$config['per_page'] = 10;
+		$config['start'] = $this->uri->segment(3);
+		$this->pagination->initialize($config);
+        $temp = $this->db->join('db_master.user', 'user.username=id_user')->get($table, $config['per_page'], $config['start'])->result_array();
+        $data['data_table'] = [];
+        foreach ($temp as $value) {
+            $value['date'] = gmdate("d M, Y", $value['date']);
+            array_push($data['data_table'],$value);
+        }
+        customView('template/table_page', $data);
+    }
     public function repository()
     {
         //config
         $data = $this->globalData;
         $table = 'repository';
         $root_url = '/dosen/repository/';
-        $data['title'] = 'Repository';
+        $data['title'] = 'Repositori Saya';
         $data['desc'] = '';
         $data['create_url'] = $root_url.'create/';
         $data['edit_url'] = $root_url.'edit/';
@@ -98,6 +123,7 @@ class Dosen extends CI_Controller {
         $data['delete_url'] = $root_url.'delete/';
         $data['download_url'] = '/sertifikat/';
         $data['column_table'] = ['id','name', 'institution', 'date', 'category'];
+        $data['column_alias'] = ['id','nama', 'Nama Lembaga', 'Tanggal', 'kategori'];
 
         // Config Pagination
 		$config['base_url'] = base_url($root_url);
