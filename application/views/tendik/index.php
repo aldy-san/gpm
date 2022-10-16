@@ -3,16 +3,16 @@
 </div>
 <div class="page-content">
     <section class="row">
-        <?php if (count($category_mahasiswa) > 0): ?>
+        <?php if (count($category_tendik) > 0): ?>
         <h5>Silahkan Pilih Menu Survei</h1>
-            <?php foreach ($category_mahasiswa as $category): ?>
+            <?php foreach ($category_tendik as $category): ?>
             <div class="col-12 col-lg-6">
                 <div class="card">
                     <div class="card-header">
                         <h4><?= $category['name']; ?></h4>
                     </div>
                     <div class="card-body">
-                        <a href="<?= base_url('mahasiswa/survei/'.$category['id']); ?>" class="btn btn-primary">Mulai
+                        <a href="<?= base_url('tendik/survei/'.$category['id']); ?>" class="btn btn-primary">Mulai
                             Mengisi Survei</a>
                     </div>
                 </div>

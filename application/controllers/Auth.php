@@ -84,10 +84,12 @@ class Auth extends CI_Controller {
 		//echo getRole($level);exit;
 		if (getRole($level) === 'superadmin'){
 			redirect('dashboard');
-		} else  if (getRole($level) === 'mahasiswa') {
+		} else if (getRole($level) === 'mahasiswa') {
 			redirect('/mahasiswa/dashboard');
-		} else  if (getRole($level) === 'dosen') {
+		} else if (getRole($level) === 'dosen') {
 			redirect('/dosen/dashboard');
+		} else if (getRole($level) === 'tendik'){
+			redirect('/tendik/dashboard');
 		}
 	}
 }
