@@ -7,12 +7,22 @@ class Dosen extends CI_Controller {
     public function __construct() {
         parent::__construct();
 		$this->db_master = $this->load->database('db_master', TRUE);
+        $this_user = $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array();
+
+        $temp = $this->M_survei->getCategoryAnswered('dosen',$this_user['username']);
+        $category_dosen_avail = $this->M_survei->getCategory('dosen');
+        $category_dosen_answered = [];
+        foreach ($temp as $value) {
+            array_push($category_dosen_answered,$value['name']);
+        }
+
         $this->globalData = [
             'withNavbar' => false,
             'withSidebar' => true,
-            'this_user' => $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array(),
+            'this_user' => $this_user,
             'title' => false,
-            'category_dosen_avail' => $this->M_survei->getCategory('dosen'),
+            'category_dosen_avail' => $category_dosen_avail,
+            'category_dosen_answered' => $category_dosen_answered,
             'category_dosen' => $this->M_survei->getCategory('dosen', false),
             'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa', false),
             'category_tendik' => $this->M_survei->getCategory('tendik', false),

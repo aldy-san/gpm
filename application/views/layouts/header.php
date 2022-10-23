@@ -84,7 +84,8 @@
                             <?php endif ?>
                             <?php foreach($category_dosen_avail as $c) :?>
                             <li class="sidebar-item">
-                                <a href="<?= base_url('dosen/survei/'.$c['id']); ?>" class='sidebar-link'>
+                                <a href="<?= base_url('dosen/survei/'.$c['id']); ?>"
+                                    class='sidebar-link btn <?= in_array($c['name'], $category_dosen_answered) ? 'disabled':  ''; ?>'>
                                     <i class="bi bi-question-octagon"></i>
                                     <span><?= $c['name']; ?></span>
                                 </a>
@@ -98,7 +99,7 @@
                                 </a>
                                 <ul class="submenu <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
                                     <?php foreach($category_mahasiswa as $c) :?>
-                                    <li class="submenu-item <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
+                                    <li class="submenu-item <?= $this->uri->segment(4) === $c['id'] ?'active' :''?>">
                                         <a
                                             href="<?= base_url('dosen/result/mahasiswa/'.$c['id']); ?>"><?= $c['name']; ?></a>
                                     </li>
@@ -167,52 +168,30 @@
                                     <span>Kelola Periode</span>
                                 </a>
                             </li>
-                            <!--<li class="sidebar-title">Kelola Survei</li>-->
-                            <!--<li class="sidebar-item <?= $this->uri->segment(2) === 'mahasiswa' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('survei/mahasiswa'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Survei Mahasiswa</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'dosen' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('survei/dosen'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Survei Dosen</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'tendik' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('survei/tendik'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Survei Tendik</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'alumni' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('survei/alumni'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Survei Alumni</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'mitra' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('survei/mitra'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Survei Mitra</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'pengguna' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('survei/pengguna'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Survei Pengguna</span>
-                                </a>
-                            </li>-->
                             <?php endif;?>
 
                             <?php  if (getRole($this_user['level']) === 'mahasiswa') :?>
-                            <?php if (count($category_mahasiswa) > 0): ?>
+                            <?php if (count($category_mahasiswa_avail) > 0): ?>
                             <li class="sidebar-title">Isi Survei</li>
                             <?php endif ?>
-                            <?php foreach($category_mahasiswa as $c) :?>
+                            <?php foreach($category_mahasiswa_avail as $c) :?>
                             <li class="sidebar-item">
-                                <a href="<?= base_url('mahasiswa/survei/'.$c['id']); ?>" class='sidebar-link'>
+                                <a href="<?= base_url('mahasiswa/survei/'.$c['id']); ?>"
+                                    class='sidebar-link btn <?= in_array($c['name'], $category_mahasiswa_answered) ? 'disabled':  ''; ?>'>
+                                    <i class="bi bi-question-octagon"></i>
+                                    <span><?= $c['name']; ?></span>
+                                </a>
+                            </li>
+                            <?php endforeach ?>
+                            <?php endif; ?>
+                            <?php  if (getRole($this_user['level']) === 'tendik') :?>
+                            <?php if (count($category_tendik_avail) > 0): ?>
+                            <li class="sidebar-title">Isi Survei</li>
+                            <?php endif ?>
+                            <?php foreach($category_tendik_avail as $c) :?>
+                            <li class="sidebar-item">
+                                <a href="<?= base_url('tendik/survei/'.$c['id']); ?>"
+                                    class='sidebar-link btn <?= in_array($c['name'], $category_tendik_answered) ? 'disabled':  ''; ?>'>
                                     <i class="bi bi-question-octagon"></i>
                                     <span><?= $c['name']; ?></span>
                                 </a>

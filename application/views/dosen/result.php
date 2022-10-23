@@ -2,6 +2,7 @@
     <h3>Hasil Survei</h3>
 </div>
 <div class="page-content">
+    <?php if (count($period) > 0): ?>
     <div class="d-flex justify-content-end align-items-end ">
         <?php if (!in_array($this->uri->segment(3),['alumni', 'mitra', 'pengguna'])): ?>
         <div class="btn-group dropdown me-2">
@@ -80,6 +81,13 @@
         <?php endforeach; ?>
     </section>
     <?php endif; ?>
+    <?php else: ?>
+    <div class="d-flex flex-column align-items-center w-full mt-4">
+        <object data="<?= base_url('assets/svg/no-data.svg'); ?>" width="250" height="250"> </object>
+        <h4 class="mt-4 text-center">Tidak Ada Periode</h4>
+    </div>
+    <?php endif; ?>
+
 </div>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
