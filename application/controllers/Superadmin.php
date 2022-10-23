@@ -149,12 +149,13 @@ class Superadmin extends CI_Controller {
         $data = $this->globalData;
         $table = 'category';
         $root_url = '/manage-category/';
-        $data['title'] = 'Category';
+        $data['title'] = 'Kategori Survei';
         $data['desc'] = '';
         $data['create_url'] = $root_url.'create/';
         $data['edit_url'] = $root_url.'edit/';
         $data['detail_url'] = $root_url.'detail/';
         $data['delete_url'] = $root_url.'delete/';
+        $data['custom_url'] = '/survei/';
         $data['column_table'] = ['id','name', 'role'];
         $data['column_alias'] = ['id','nama kategori', 'role'];
 
@@ -244,17 +245,18 @@ class Superadmin extends CI_Controller {
     {
         //get slug
         $data = $this->globalData;
-        $data['slug'] = explode('-', $slug)[0];
-        $data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
+        $data['slug'] = $slug;
+        //$data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
         $table = 'survei';
 
-        if(!in_array($data['sub_slug'], $this->globalData['survei_levels']) || !in_array($data['slug'], $this->globalData['survei_roles']) ) redirect('/dashboard');
+        //if(!in_array($data['sub_slug'], $this->globalData['survei_levels']) || !in_array($data['slug'], $this->globalData['survei_roles']) ) redirect('/dashboard');
 
-        if ($data['sub_slug']){
-            $where = ['role' => $data['slug'], 'level' => $data['sub_slug']];
-        } else {
-            $where = ['role' => $data['slug']];
-        }
+        //if ($data['sub_slug']){
+        //    $where = ['role' => $data['slug'], 'level' => $data['sub_slug']];
+        //} else {
+        //    $where = ['role' => $data['slug']];
+        //}
+        $where = ['category' => $data['slug']];
 
         // Config Pagination
 		$config['base_url'] = base_url('/survei/'.$slug.'/');
@@ -265,17 +267,17 @@ class Superadmin extends CI_Controller {
         $data['data_table'] = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
 
         // Config Template Table Page
-        $data['title'] = 'Survei '.$data['slug'];
+        $category = $this->db->get('category')->result_array();
+        $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $category)['name'];
         $data['desc'] = '';
         $data['create_url'] = '/survei/'.$slug.'/create/';
         $data['edit_url'] = '/survei/'.$slug.'/edit/';
         $data['detail_url'] = '/survei/'.$slug.'/detail/';
         $data['delete_url'] = '/survei/'.$slug.'/delete/';
-        $data['column_table'] = ['id','question', 'type', 'selections', 'bar_from', 'bar_to', 'chart', 'category'];
-        $data['column_alias'] = ['id','pertanyaan', 'tipe', 'pilihan', 'bar from', 'bar to', 'grafik', 'kategori'];
+        $data['column_table'] = ['question', 'type', 'selections', 'bar_from', 'bar_to', 'chart', 'category'];
+        $data['column_alias'] = ['pertanyaan', 'tipe', 'pilihan', 'bar from', 'bar to', 'grafik', 'kategori'];
         $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
         $data['data_table'] = [];
-        $category = $this->db->get('category')->result_array();
         foreach ($temp as $value) {
             $value['category'] = findObjectBy('id', $value['category'], $category)['name'];
             array_push($data['data_table'],$value);
@@ -292,7 +294,7 @@ class Superadmin extends CI_Controller {
 
         if($this->input->post()){
             $this->form_validation->set_rules('question','Pertanyaan','trim|required');
-            $this->form_validation->set_rules('category','Kategori','trim|required');
+            //$this->form_validation->set_rules('category','Kategori','trim|required');
 			if(!$this->form_validation->run()){
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
 				$this->session->set_flashdata('alertType', 'danger');
@@ -303,11 +305,11 @@ class Superadmin extends CI_Controller {
                     'question' => $this->input->post('question'),
                     'type' => $this->input->post('type'),
                     'selections' => $this->input->post('selections'),
-                    'bar_from' => $this->input->post('bar_from'),
-                    'bar_to' => $this->input->post('bar_to'),
+                    'bar_from' => $this->input->post('bar_from') ? $this->input->post('bar_from') : '0%',
+                    'bar_to' => $this->input->post('bar_to') ? $this->input->post('bar_to') : '100%',
                     'bar_length' => 100,
                     'chart' => $this->input->post('chart'),
-                    'category' => $this->input->post('category'),
+                    'category' => $slug,
                 ];
                 $this->db->insert('survei', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
@@ -315,8 +317,8 @@ class Superadmin extends CI_Controller {
                 redirect('/survei/'.$slug);
             }
         }
-        $data['title'] = 'Tambah Survei '.$data['slug'];
         $data['category'] = $this->db->get('category')->result_array();
+        $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
         customView('superadmin/form/survei', $data);
     }
     public function detail_survei($slug, $id)
@@ -325,7 +327,8 @@ class Superadmin extends CI_Controller {
         $data['slug'] = explode('-', $slug)[0];
         $data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
         $data['data_slug'] = $this->db->where(['id' => $id])->get('survei')->row_array();
-        $data['title'] = 'Detail Survei '.$data['slug'];
+        $data['category'] = $this->db->get('category')->result_array();
+        $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
         customView('superadmin/form/survei', $data);
     }
     public function edit_survei($slug,$id)
@@ -336,7 +339,7 @@ class Superadmin extends CI_Controller {
 
         if($this->input->post()){
             $this->form_validation->set_rules('question','Pertanyaan','trim|required');
-            $this->form_validation->set_rules('category','Kategori','trim|required');
+            //$this->form_validation->set_rules('category','Kategori','trim|required');
 			if(!$this->form_validation->run()){
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
 				$this->session->set_flashdata('alertType', 'danger');
@@ -351,7 +354,7 @@ class Superadmin extends CI_Controller {
                     'bar_to' => $this->input->post('bar_to'),
                     'bar_length' => 100,
                     'chart' => $this->input->post('chart'),
-                    'category' => $this->input->post('category'),
+                    'category' => $slug,
                 ];
                 $this->db->where(['id' => $id])->update('survei', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
@@ -360,8 +363,8 @@ class Superadmin extends CI_Controller {
             }
         }
         $data['data_slug'] = $this->db->where(['id' => $id])->get('survei')->row_array();
-        $data['title'] = 'Edit Survei '.$data['slug'];
         $data['category'] = $this->db->get('category')->result_array();
+        $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
         customView('superadmin/form/survei', $data);
     }
     public function delete_survei($slug)

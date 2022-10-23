@@ -158,7 +158,7 @@
                                 class="sidebar-item <?= $this->uri->segment(1) === 'manage-category' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('manage-category'); ?>" class='sidebar-link'>
                                     <i class="bi bi-archive"></i>
-                                    <span>Kelola Kategori</span>
+                                    <span>Kelola Kategori Survei</span>
                                 </a>
                             </li>
                             <li class="sidebar-item <?= $this->uri->segment(1) === 'manage-period' ? 'active' : ''; ?>">
@@ -167,8 +167,8 @@
                                     <span>Kelola Periode</span>
                                 </a>
                             </li>
-                            <li class="sidebar-title">Kelola Survei</li>
-                            <li class="sidebar-item <?= $this->uri->segment(2) === 'mahasiswa' ? 'active' : ''; ?>">
+                            <!--<li class="sidebar-title">Kelola Survei</li>-->
+                            <!--<li class="sidebar-item <?= $this->uri->segment(2) === 'mahasiswa' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/mahasiswa'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>
                                     <span>Survei Mahasiswa</span>
@@ -203,7 +203,7 @@
                                     <i class="bi bi-grid"></i>
                                     <span>Survei Pengguna</span>
                                 </a>
-                            </li>
+                            </li>-->
                             <?php endif;?>
 
                             <?php  if (getRole($this_user['level']) === 'mahasiswa') :?>

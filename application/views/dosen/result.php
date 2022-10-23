@@ -109,7 +109,8 @@ function executeGraphic(from, to, name, isUpdate = false) {
         $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item + filter, async (
             res) => {
             var temp = JSON.parse(res)
-            temp.shift()
+            //console.log(res)
+            //temp.shift()
             var options = {
                 series: [1],
                 labels: ['No Data'],
@@ -141,6 +142,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                     }
                 })
                 labels = temp2.map(item => item['nama_' + dataLabels[index]])
+                console.log(labels)
             }).catch(err => {
                 //console.log('no table')
             }).always(() => {

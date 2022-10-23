@@ -27,7 +27,7 @@
                             foreach($survei as $loop => $value) : 
                         ?>
                         <div class="row my-3" data-aos="fade-up" data-aos-duration="1500">
-                            <div class="col-12 p-3">
+                            <div class="col-12 p-4">
                                 <?= form_error('answer'.$value['id'],'<small class="text-danger">','</small>'); ?>
                                 <h4 class="mb-4"> <?= $value['question'] ?></h4>
                                 <?php 
@@ -47,15 +47,15 @@
                                     elseif($value['type'] === 'bar') : 
                                 ?>
 
-                                <div class="col-md-11 d-flex justify-content-between">
+                                <div class="col-md-12 d-flex justify-content-between">
                                     <label for="range<?= $bar ?>"
                                         class="form-label text-capitalize"><?= $value['bar_from'] ?></label>
-                                    <input type="number" class="text-center border-0" id="input-range<?= $bar ?>"
-                                        max="100" value="50">
+                                    <input type="number" style="margin-left: 2rem !important;"
+                                        class="text-center border-0" id="input-range<?= $bar ?>" max="100" value="50">
                                     <label for="range<?= $bar ?>"
                                         class="form-label text-capitalize"><?= $value['bar_to'] ?></label>
                                 </div>
-                                <div class="col-md-11 ms-2">
+                                <div class="col-md-12 ">
                                     <input type="range" class="form-range" min="0" max="<?= $value['bar_length'] ?>"
                                         id="range<?= $bar ?>" name="answer<?= $value['id'] ?>">
                                 </div>

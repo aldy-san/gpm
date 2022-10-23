@@ -56,7 +56,8 @@ class Api extends CI_Controller {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
         $role = $this->input->get('role');
-        $this->db->select($group_by.' as grouped, count('.$group_by.') as total');
+        $this->db->distinct('id_user');
+        $this->db->select($group_by.' as grouped, count(DISTINCT id_user) as total');
         $this->db->from('answer');
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
@@ -66,7 +67,33 @@ class Api extends CI_Controller {
         } else {
             $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         }
-        $this->db->group_by($group_by);
+        //$this->db->group_by('id_user,'.$group_by);
+        $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
+    public function getMonev()
+    {
+        $monev_id = array(1, 2, 3);
+        //$db_master = $this->load->database('db_master', TRUE);
+        $this->db->select('AVG(detail) as avg');
+        $this->db->from('answer');
+        $this->db->where_in('survei.category', $monev_id);
+        $this->db->where(['survei.type' => 'bar']);
+        $this->db->join('survei', 'survei.id=id_survei');
+        $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
+    public function getMonevProdiPerPeriod()
+    {
+        $monev_id = array(1, 2, 3);
+        $this->db->select("kode_prodi, AVG(detail) as avg, FROM_UNIXTIME(answer.created_at , '%Y') AS year, QUARTER(from_unixtime(answer.created_at)) as quarter");
+        $this->db->from('answer');
+        $this->db->where_in('survei.category', $monev_id);
+        $this->db->where(['survei.type' => 'bar']);
+        $this->db->join('survei', 'survei.id=id_survei');
+        $this->db->join('db_master.user', 'user.username=answer.id_user');
+        $this->db->group_by('kode_prodi, year, quarter');
+        $this->db->order_by(' year, quarter, kode_prodi');
         $result = $this->db->get()->result();
         echo json_encode($result);
     }

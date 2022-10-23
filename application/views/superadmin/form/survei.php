@@ -23,7 +23,7 @@
                                 <?= form_error('question'); ?>
                             </div>
                         </div>
-                        <div class="form-group col-6">
+                        <!--<div class="form-group col-6">
                             <label for="category">Kategori</label>
                             <fieldset>
                                 <select class="form-select <?= form_error('category') ? 'is-invalid': ''; ?>"
@@ -39,8 +39,8 @@
                             <div class="invalid-feedback">
                                 <?= form_error('category'); ?>
                             </div>
-                        </div>
-                        <div class="form-group col-3">
+                        </div>-->
+                        <div class="form-group col-2">
                             <label for="type">Tipe</label>
                             <fieldset>
                                 <select id="form-type" class="form-select" name="type"
@@ -57,7 +57,7 @@
                                 </select>
                             </fieldset>
                         </div>
-                        <div class="form-group col-3">
+                        <div class="form-group col-2">
                             <label for="chart">Grafik</label>
                             <fieldset>
                                 <select class="form-select" name="chart"
@@ -71,7 +71,7 @@
                                 </select>
                             </fieldset>
                         </div>
-                        <div class="form-group col-12 selection-type">
+                        <div class="form-group col-8 selection-type">
                             <label for="selections">Pilihan</label>
                             <small class="text-muted">Pisahkan dengan koma. cth: <i>cool,excellent,yoma</i> </small>
                             <input type="text" class="form-control <?= form_error('selections') ? 'is-invalid': ''; ?>"

@@ -15,7 +15,7 @@
     integrity="sha512-BNaRQnYJYiPSqHHDb58B0yaPfCu+Wgds8Gp/gU33kqBtgNS4tSPHuGibyoeqMV/TJlSKda6FXzoEyYGjTe+vXA=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="<?= base_url('assets/js/custom.js') ?>" type="text/javascript"></script>
-<script>
+<!--<script>
 function tes2() {
     html2canvas($('.page-content')[0]).then(function(canvas) {
         var imgData = canvas.toDataURL('image/png');
@@ -66,7 +66,7 @@ function tes() {
 
 <script>
 // Default export is a4 paper, portrait, using millimeters for units
-</script>
+</script>-->
 </body>
 
 </html>
