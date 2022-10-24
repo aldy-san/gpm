@@ -29,21 +29,21 @@
                 </div>
             </div>
             <div class="form-group mb-3 col-12 col-md-6">
-                <label for="chart" class="mb-2">Skala Operasional</label>
+                <label for="scale" class="mb-2">Skala Operasional</label>
                 <fieldset>
-                    <select class="form-select" name="chart">
-                        <option value="">Internasional</option>
-                        <option value="">Nasional</option>
-                        <option value="">Swasta</option>
-                        <option value="">BUMN</option>
-                        <option value="">Negeri</option>
-                        <option value="">Milik Sendiri</option>
+                    <select class="form-select" name="scale">
+                        <option value="Internasional">Internasional</option>
+                        <option value="Nasional">Nasional</option>
+                        <option value="Swasta">Swasta</option>
+                        <option value="BUMN">BUMN</option>
+                        <option value="Negeri">Negeri</option>
+                        <option value="Milik Sendiri">Milik Sendiri</option>
                     </select>
                 </fieldset>
             </div>
             <div class="form-group mb-3 col-12 col-md-6">
-                <label for="" class="mb-2">Tahun Berdiri</label>
-                <select class="form-select" aria-label="Default select example" onfocus="this.size=4;"
+                <label for="year_since" class="mb-2">Tahun Berdiri</label>
+                <select class="form-select" name="year_since" aria-label="Default select example" onfocus="this.size=4;"
                     onblur="this.size=1;" onchange="this.size=1; this.blur();">
                     <?php for ($year = (int)date('Y'); 1900 <= $year; $year--): ?>
                     <option value=" <?=$year;?>"><?=$year;?></option>
@@ -51,8 +51,8 @@
                 </select>
             </div>
             <div class="form-group mb-3 col-12 col-md-6">
-                <label for="" class="mb-2">Tahun Kerjasama</label>
-                <select class="form-select" aria-label="Default select example" onfocus="this.size=4;"
+                <label for="year_coop" class="mb-2">Tahun Kerjasama</label>
+                <select class="form-select" name="year_coop" aria-label="Default select example" onfocus="this.size=4;"
                     onblur="this.size=1;" onchange="this.size=1; this.blur();">
                     <?php for ($year = (int)date('Y'); 1900 <= $year; $year--): ?>
                     <option value=" <?=$year;?>"><?=$year;?></option>

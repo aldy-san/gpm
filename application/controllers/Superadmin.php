@@ -251,12 +251,14 @@ class Superadmin extends CI_Controller {
 
         //if(!in_array($data['sub_slug'], $this->globalData['survei_levels']) || !in_array($data['slug'], $this->globalData['survei_roles']) ) redirect('/dashboard');
 
-        //if ($data['sub_slug']){
-        //    $where = ['role' => $data['slug'], 'level' => $data['sub_slug']];
-        //} else {
-        //    $where = ['role' => $data['slug']];
-        //}
-        $where = ['category' => $data['slug']];
+        if (is_numeric($data['slug'])){
+            $where = ['category' => $data['slug']];
+            $category = $this->db->get('category')->result_array();
+            $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $category)['name'];
+        } else {
+            $where = ['role' => $data['slug']];
+            $data['title'] = 'Survei '.$data['slug'];
+        }
 
         // Config Pagination
 		$config['base_url'] = base_url('/survei/'.$slug.'/');
@@ -267,20 +269,24 @@ class Superadmin extends CI_Controller {
         $data['data_table'] = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
 
         // Config Template Table Page
-        $category = $this->db->get('category')->result_array();
-        $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $category)['name'];
+       
         $data['desc'] = '';
         $data['create_url'] = '/survei/'.$slug.'/create/';
         $data['edit_url'] = '/survei/'.$slug.'/edit/';
         $data['detail_url'] = '/survei/'.$slug.'/detail/';
         $data['delete_url'] = '/survei/'.$slug.'/delete/';
-        $data['column_table'] = ['question', 'type', 'selections', 'bar_from', 'bar_to', 'chart', 'category'];
-        $data['column_alias'] = ['pertanyaan', 'tipe', 'pilihan', 'bar from', 'bar to', 'grafik', 'kategori'];
-        $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
-        $data['data_table'] = [];
-        foreach ($temp as $value) {
-            $value['category'] = findObjectBy('id', $value['category'], $category)['name'];
-            array_push($data['data_table'],$value);
+        if (is_numeric($data['slug'])){
+            $data['column_table'] = ['question', 'type', 'selections', 'bar_from', 'bar_to', 'chart', 'category'];
+            $data['column_alias'] = ['pertanyaan', 'tipe', 'pilihan', 'bar from', 'bar to', 'grafik', 'kategori'];
+            $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
+            $data['data_table'] = [];
+            foreach ($temp as $value) {
+                $value['category'] = findObjectBy('id', $value['category'], $category)['name'];
+                array_push($data['data_table'],$value);
+            }
+        }else {
+            $data['column_table'] = ['question', 'type', 'selections', 'bar_from', 'bar_to', 'chart'];
+            $data['column_alias'] = ['pertanyaan', 'tipe', 'pilihan', 'bar from', 'bar to', 'grafik'];
         }
         customView('template/table_page', $data);
     }
@@ -300,7 +306,7 @@ class Superadmin extends CI_Controller {
 				$this->session->set_flashdata('alertType', 'danger');
 			} else {
                 $form = [
-                    'level' => $data['sub_slug'],
+                    //'level' => $data['sub_slug'],
                     'role' => $data['slug'],
                     'question' => $this->input->post('question'),
                     'type' => $this->input->post('type'),
@@ -309,16 +315,25 @@ class Superadmin extends CI_Controller {
                     'bar_to' => $this->input->post('bar_to') ? $this->input->post('bar_to') : '100%',
                     'bar_length' => 100,
                     'chart' => $this->input->post('chart'),
-                    'category' => $slug,
+                    //'category' => x$slug,
                 ];
-                $this->db->insert('survei', $form);
+            if (is_numeric($data['slug'])){
+                $form['category'] = $data['slug'];
+            }else {
+                $form['role'] = $data['slug'];
+            }
+            $this->db->insert('survei', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
 				$this->session->set_flashdata('alertType', 'success');
                 redirect('/survei/'.$slug);
             }
         }
-        $data['category'] = $this->db->get('category')->result_array();
-        $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
+        if (is_numeric($data['slug'])){
+            $data['category'] = $this->db->get('category')->result_array();
+            $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
+        } else{
+            $data['title'] = 'Survei '.$data['slug'];
+        }
         customView('superadmin/form/survei', $data);
     }
     public function detail_survei($slug, $id)
@@ -327,8 +342,12 @@ class Superadmin extends CI_Controller {
         $data['slug'] = explode('-', $slug)[0];
         $data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
         $data['data_slug'] = $this->db->where(['id' => $id])->get('survei')->row_array();
-        $data['category'] = $this->db->get('category')->result_array();
-        $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
+        if (is_numeric($data['slug'])){
+            $data['category'] = $this->db->get('category')->result_array();
+            $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
+        } else{
+            $data['title'] = 'Survei '.$data['slug'];
+        }
         customView('superadmin/form/survei', $data);
     }
     public function edit_survei($slug,$id)
@@ -363,8 +382,12 @@ class Superadmin extends CI_Controller {
             }
         }
         $data['data_slug'] = $this->db->where(['id' => $id])->get('survei')->row_array();
-        $data['category'] = $this->db->get('category')->result_array();
-        $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
+        if (is_numeric($data['slug'])){
+            $data['category'] = $this->db->get('category')->result_array();
+            $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
+        } else{
+            $data['title'] = 'Survei '.$data['slug'];
+        }
         customView('superadmin/form/survei', $data);
     }
     public function delete_survei($slug)

@@ -155,17 +155,36 @@
 
                             <?php endif ?>
                             <?php  if (getRole($this_user['level']) === 'superadmin') :?>
-                            <li
-                                class="sidebar-item <?= $this->uri->segment(1) === 'manage-category' ? 'active' : ''; ?>">
-                                <a href="<?= base_url('manage-category'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-archive"></i>
-                                    <span>Kelola Kategori Survei</span>
-                                </a>
-                            </li>
                             <li class="sidebar-item <?= $this->uri->segment(1) === 'manage-period' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('manage-period'); ?>" class='sidebar-link'>
                                     <i class="bi bi-calendar-range"></i>
                                     <span>Kelola Periode</span>
+                                </a>
+                            </li>
+                            <li
+                                class="sidebar-item <?= $this->uri->segment(1) === 'manage-category' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('manage-category'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-archive"></i>
+                                    <span>Kelola Survei Login</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-title">Kelola Non-login</li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'alumni' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('survei/alumni'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Survei Alumni</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'mitra' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('survei/mitra'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Survei Mitra</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'pengguna' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('survei/pengguna'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Survei Pengguna</span>
                                 </a>
                             </li>
                             <?php endif;?>
