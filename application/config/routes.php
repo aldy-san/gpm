@@ -55,7 +55,8 @@ $route['translate_uri_dashes'] = FALSE;
 
 # ----------------------------------API------------------------------------
 $route['api/getDataSurvei/(:any)'] = 'Api/getDataSurvei/$1';
-$route['api/getChartDataByGroupBy/(:any)'] = 'Api/getChartDataByGroupBy/$1';
+$route['api/getChartDataByGroupBy/(:any)/(:num)'] = 'Api/getChartDataByGroupBy/$1/$2';
+$route['api/getTotalData/(:num)'] = 'Api/getTotalData/$1';
 $route['api/getTable/(:any)'] = 'Api/getTable/$1';
 
 # ----------------------------------ALL------------------------------------

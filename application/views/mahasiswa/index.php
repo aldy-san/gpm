@@ -17,8 +17,7 @@
                         Mengisi Survei</a>
                     <?php else: ?>
                     <a href="<?= base_url('mahasiswa/survei/'.$category['id']); ?>"
-                        class="btn btn-success disabled">Survei Telah
-                        Diisi</a>
+                        class="btn btn-success disabled">Anda telah mengisi survei</a>
                     <?php endif; ?>
                 </div>
             </div>

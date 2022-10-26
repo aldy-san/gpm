@@ -8,6 +8,29 @@ class Api extends CI_Controller {
         $result = $this->db->query('SELECT * FROM db_master.user')->result();
         echo json_encode($result);
     }
+    public function getTotalData($id){
+        $from = $this->input->get('from');
+        $to = $this->input->get('to');
+        $role = $this->input->get('role');
+        $this->db->select('count(DISTINCT id_user) as total');
+        $this->db->from('answer');
+        //where
+        $this->db->where(['category.id' => $id]);
+        if($from && $to){
+            $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
+        //join
+        if (in_array($role, ['alumni', 'mitra', 'pengguna'])){
+            $this->db->join($role, $role.'.id = answer.id_user', 'left');
+        } else {
+            $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
+        }
+        $this->db->join('survei', 'survei.id=id_survei', 'left');
+        $this->db->join('category', 'category.id=survei.category', 'left');
+
+        $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
 	public function getChartDataByIdSurvei($id)
     {
         $from = $this->input->get('from');
@@ -51,23 +74,28 @@ class Api extends CI_Controller {
         echo json_encode($result);
     }
 
-    public function getChartDataByGroupBy($group_by)
+    public function getChartDataByGroupBy($group_by, $id)
     {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
         $role = $this->input->get('role');
-        $this->db->distinct('id_user');
         $this->db->select($group_by.' as grouped, count(DISTINCT id_user) as total');
         $this->db->from('answer');
+        //where
+        $this->db->where(['category.id' => $id]);
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
         }
+        //join
         if (in_array($role, ['alumni', 'mitra', 'pengguna'])){
             $this->db->join($role, $role.'.id = answer.id_user', 'left');
         } else {
             $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         }
-        //$this->db->group_by('id_user,'.$group_by);
+        $this->db->join('survei', 'survei.id=id_survei', 'left');
+        $this->db->join('category', 'category.id=survei.category', 'left');
+
+        $this->db->group_by($group_by);
         $result = $this->db->get()->result();
         echo json_encode($result);
     }

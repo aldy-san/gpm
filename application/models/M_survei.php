@@ -19,29 +19,38 @@ class M_survei extends CI_Model {
     public function getCategory($role, $withPeriod = true)
     {
         $this->db->distinct('category.name');
-        $this->db->select('category.id as id, category.name as name, period_from, period_to');
+        $this->db->select('category.id as id, category.name as name');
         $this->db->from('category');
         $where = [];
         if ($withPeriod){
             $where = ['role' => $role, 'period_from <=' => time(), 'period_to >=' => time()];
-
         } else {
             $where = ['role' => $role];
         }
         $this->db->where($where);
-        $this->db->join('period','category.id = period.category', 'left');
+        if ($withPeriod){
+            $this->db->join('period','category.id = period.category', 'left');
+        }
         return $this->db->get()->result_array();
     }
     public function getCategoryAnswered($role, $id)
     {
         $this->db->distinct('category.name');
-        $this->db->select('category.name');
+        $this->db->select('category.name, period_from, period_to, created_at');
         $this->db->from('category');
         $this->db->where(['category.role' => $role, 'period_from <=' => time(), 'period_to >=' => time(), 'id_user' => $id]);
         $this->db->join('period','category.id = period.category', 'left');
         $this->db->join('survei','survei.category = category.id', 'left');
         $this->db->join('answer','id_survei = survei.id', 'left');
-        return $this->db->get()->result_array();
+        $temp = $this->db->get()->result_array();
+        $result = [];
+
+        foreach ($temp as $val){
+            if ($val['period_from'] <= $val['created_at'] && $val['period_to'] >= $val['created_at']){
+                array_push($result,$val);
+            }
+        }
+        return $result;
     }
 
     public function changePassword($password, $id)
