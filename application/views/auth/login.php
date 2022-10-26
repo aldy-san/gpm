@@ -24,13 +24,22 @@
                 <?= form_error('password'); ?>
             </div>
         </div>
+        <div class="mb-3 col-12 row ">
+            <div class="col-6 d-flex justify-content-center">
+                <div class=""><?= $captcha['image'] ?></div>
+            </div>
+            <div class="col-6">
+                <input type="text" class="form-control" name="captcha" id="captcha" placeholder="captcha">
+            </div>
+        </div>
         <button type="submit" class="btn btn-primary mx-auto col-8">Login</button>
         <small class="text-center text-muted my-3">Tanpa login jika anda alumni, mitra, atau pengguna</small>
         <div class="d-flex justify-content-center">
-            <a href="<?= base_url('alumni'); ?>" class="btn btn-success mx-2 disabled" style="flex: 1 1 0;">Alumni</a>
-            <a href="<?= base_url('mitra'); ?>" class="btn btn-info mx-2 disabled" style="flex: 1 1 0;">Mitra</a>
-            <a href="<?= base_url('pengguna'); ?>" class="btn btn-warning mx-2 disabled"
-                style="flex: 1 1 0;">Pengguna</a>
+            <?php foreach($survei_not_logged as $key => $survei): ?>
+            <a href="<?= base_url($survei['name']); ?>"
+                class="text-capitalize btn btn-<?= $survei_not_logged_color[$key]; ?> mx-2 <?= $survei['is_active'] ? '' : 'disabled'; ?>"
+                style="flex: 1 1 0;"><?= $survei['name']; ?></a>
+            <?php endforeach ?>
         </div>
     </div>
 </form>

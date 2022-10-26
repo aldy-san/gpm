@@ -102,6 +102,20 @@
                                 <?= form_error('bar_to'); ?>
                             </div>
                         </div>
+                        <div class="form-group col-4">
+                            <label for="is_active">Survei Aktif</label>
+                            <fieldset>
+                                <select class="form-select" name="is_active"
+                                    <?= $title === 'Detail Survei Mahasiswa'? 'disabled' : ''; ?>>
+                                    <option value="1"
+                                        <?= $data_slug && ($data_slug['is_active'] === '1')? 'selected' : ''; ?>>Ya
+                                    </option>
+                                    <option value="0"
+                                        <?= $data_slug && ($data_slug['is_active'] === '0')? 'selected' : ''; ?>>Tidak
+                                    </option>
+                                </select>
+                            </fieldset>
+                        </div>
                         <!--<div class="form-group col-4">
                             <label for="bar_length">Bar Length</label>
                             <input type="text" class="form-control <?= form_error('bar_length') ? 'is-invalid': ''; ?>"

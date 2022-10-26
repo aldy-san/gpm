@@ -276,12 +276,13 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = '/survei/'.$slug.'/detail/';
         $data['delete_url'] = '/survei/'.$slug.'/delete/';
         if (is_numeric($data['slug'])){
-            $data['column_table'] = ['question', 'type', 'selections', 'bar_from', 'bar_to', 'chart', 'category'];
-            $data['column_alias'] = ['pertanyaan', 'tipe', 'pilihan', 'bar from', 'bar to', 'grafik', 'kategori'];
+            $data['column_table'] = ['question', 'type', 'selections', 'bar_from', 'bar_to', 'chart', 'category', 'is_active'];
+            $data['column_alias'] = ['pertanyaan', 'tipe', 'pilihan', 'bar from', 'bar to', 'grafik', 'kategori', 'aktif'];
             $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
             $data['data_table'] = [];
             foreach ($temp as $value) {
                 $value['category'] = findObjectBy('id', $value['category'], $category)['name'];
+                $value['is_active'] = $value['is_active'] ? 'Ya' : 'Tidak';
                 array_push($data['data_table'],$value);
             }
         }else {
@@ -315,7 +316,7 @@ class Superadmin extends CI_Controller {
                     'bar_to' => $this->input->post('bar_to') ? $this->input->post('bar_to') : '100%',
                     'bar_length' => 100,
                     'chart' => $this->input->post('chart'),
-                    //'category' => x$slug,
+                    'is_active' => $this->input->post('is_active'),
                 ];
             if (is_numeric($data['slug'])){
                 $form['category'] = $data['slug'];
@@ -374,6 +375,7 @@ class Superadmin extends CI_Controller {
                     'bar_length' => 100,
                     'chart' => $this->input->post('chart'),
                     'category' => $slug,
+                    'is_active' => $this->input->post('is_active'),
                 ];
                 $this->db->where(['id' => $id])->update('survei', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');

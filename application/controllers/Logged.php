@@ -56,7 +56,7 @@ class Logged extends CI_Controller {
 
     public function survei($id_category){
         $data = $this->globalData;
-        $survei = $this->db->get_where('survei',['category' => $id_category])->result_array();
+        $survei = $this->db->get_where('survei',['category' => $id_category, 'is_active' => '1'])->result_array();
         if ($this->input->post()){
             //$this->db->select('id,bar_length');
             foreach($survei as $num => $sur){
