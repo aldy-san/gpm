@@ -11,14 +11,40 @@ class Logged extends CI_Controller {
             redirect('auth');
         }
         $this->db_master = $this->load->database('db_master', TRUE);
+        $this_user = $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array();
+
+        $temp = $this->M_survei->getCategoryAnswered('dosen',$this_user['username']);
+        $category_dosen_avail = $this->M_survei->getCategory('dosen');
+        $category_dosen_answered = [];
+        foreach ($temp as $value) {
+            array_push($category_dosen_answered,$value['name']);
+        }
+        $temp = $this->M_survei->getCategoryAnswered('tendik',$this_user['username']);
+        $category_tendik = $this->M_survei->getCategory('tendik');
+        $category_tendik_answered = [];
+        foreach ($temp as $value) {
+            array_push($category_tendik_answered,$value['name']);
+        }
+        $temp = $this->M_survei->getCategoryAnswered('mahasiswa',$this_user['username']);
+        $category_mahasiswa = $this->M_survei->getCategory('mahasiswa');
+        $category_mahasiswa_answered = [];
+        foreach ($temp as $value) {
+            array_push($category_mahasiswa_answered,$value['name']);
+        }
         $this->globalData = [
             'withNavbar' => false,
             'withSidebar' => true,
             'title' => false,
-            'this_user' => $this->db_master->where(['username' => $this->session->userdata('user')['username']])->get('user')->row_array(),
-            'category_dosen' => $this->M_survei->getCategory('dosen'),
-            'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa'),
-            'category_tendik' => $this->M_survei->getCategory('tendik'),
+            'this_user' => $this_user,
+            'category_dosen_avail' => $category_dosen_avail,
+            'category_dosen_answered' => $category_dosen_answered,
+            'category_mahasiswa_avail' => $category_mahasiswa,
+            'category_mahasiswa_answered' => $category_mahasiswa_answered,
+            'category_tendik_avail' => $category_tendik,
+            'category_tendik_answered' => $category_tendik_answered,
+            'category_dosen' => $this->M_survei->getCategory('dosen', false),
+            'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa', false),
+            'category_tendik' => $this->M_survei->getCategory('tendik', false),
         ];
     }
 
