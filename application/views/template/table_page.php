@@ -34,7 +34,16 @@
                         <?php foreach($data_table as $item): ?>
                         <tr>
                             <?php foreach ($column_table as $col): ?>
-                            <td class="text-capitalize"><?= $item[$col] ?></td>
+                            <?php if(in_array($col, $column_badge)): ?>
+                            <td class="text-capitalize">
+                                <span
+                                    class="<?= $item[$col] === 'Ya' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?= $item[$col] ?></span>
+                            </td>
+                            <?php else : ?>
+                            <td class="text-capitalize">
+                                <?= $item[$col] ?>
+                            </td>
+                            <?php endif; ?>
                             <?php endforeach; ?>
                             <?php if($detail_url || $edit_url || $delete_url || isset($download_url)): ?>
                             <td>

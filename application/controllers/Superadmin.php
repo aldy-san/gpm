@@ -289,6 +289,7 @@ class Superadmin extends CI_Controller {
             $data['column_table'] = ['question', 'type', 'selections', 'bar_from', 'bar_to', 'chart'];
             $data['column_alias'] = ['pertanyaan', 'tipe', 'pilihan', 'bar from', 'bar to', 'grafik'];
         }
+        $data['column_badge'] = ['is_active'];
         customView('template/table_page', $data);
     }
     public function create_survei($slug)
