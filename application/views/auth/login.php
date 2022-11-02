@@ -11,7 +11,7 @@
         <div class="mb-3 col-12">
             <label for="username" class="form-label">Username</label>
             <input type="text" class="form-control <?= form_error('username') ? 'is-invalid': ''; ?>" name="username"
-                id="username" placeholder="username" autocomplete="off" value="<?= set_value('username'); ?>">
+                id="username" placeholder="NIM / NIP / NITK" autocomplete="off" value="<?= set_value('username'); ?>">
             <div class="invalid-feedback">
                 <?= form_error('username'); ?>
             </div>
@@ -19,7 +19,7 @@
         <div class="mb-3 col-12">
             <label for="password" class="form-label">Password</label>
             <input type="password" class="form-control <?= form_error('password') ? 'is-invalid': ''; ?>"
-                name="password" id="password" placeholder="password">
+                name="password" id="Password" placeholder="password">
             <div class="invalid-feedback">
                 <?= form_error('password'); ?>
             </div>

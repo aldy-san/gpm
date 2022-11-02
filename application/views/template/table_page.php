@@ -22,7 +22,7 @@
                             <?php if(isset($column_alias)): ?>
                             <th class="text-capitalize text-nowrap"><?= $column_alias[$key]; ?></th>
                             <?php else : ?>
-                            <th class="text-capitalize text-nowrap"><?= join(' ', explode('_', $col,)); ?></th>
+                            <th class="text-capitalize text-nowrap"><?= join(' ', explode('_', $col)); ?></th>
                             <?php endif; ?>
                             <?php endforeach; ?>
                             <?php if($detail_url || $edit_url || $delete_url): ?>

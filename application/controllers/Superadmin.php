@@ -79,8 +79,8 @@ class Superadmin extends CI_Controller {
                 $form = [
                     'name' => $this->input->post('name'),
                     'category' => $this->input->post('category'),
-                    'period_from' => strtotime($this->input->post('period_from')),
-                    'period_to' => strtotime($this->input->post('period_to')),
+                    'period_from' => strtotime($this->input->post('period_from'))+1,
+                    'period_to' => strtotime($this->input->post('period_to'))+1,
                 ];
                 $this->db->insert('period', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
@@ -299,6 +299,7 @@ class Superadmin extends CI_Controller {
         $data['slug'] = explode('-', $slug)[0];
         $data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
         $data['data_slug'] = false;
+        $data['is_edit'] = true;
 
         if($this->input->post()){
             $this->form_validation->set_rules('question','Pertanyaan','trim|required');
@@ -344,6 +345,7 @@ class Superadmin extends CI_Controller {
         $data['slug'] = explode('-', $slug)[0];
         $data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
         $data['data_slug'] = $this->db->where(['id' => $id])->get('survei')->row_array();
+        $data['is_edit'] = false;
         if (is_numeric($data['slug'])){
             $data['category'] = $this->db->get('category')->result_array();
             $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
@@ -357,6 +359,7 @@ class Superadmin extends CI_Controller {
         $data = $this->globalData;
         $data['slug'] = explode('-', $slug)[0];
         $data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
+        $data['is_edit'] = true;
 
         if($this->input->post()){
             $this->form_validation->set_rules('question','Pertanyaan','trim|required');
