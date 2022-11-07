@@ -41,7 +41,13 @@ class Dosen extends CI_Controller {
 	public function result($role, $category = null)
 	{
         $data = $this->globalData;
-        $data['survei'] = $this->db->get_where('survei', ['role' => $role])->result_array();
+        
+        if ($category){
+            $data['survei'] = $this->db->get_where('survei', ['category' => $category])->result_array();
+        } else {
+            $data['survei'] = $this->db->get_where('survei', ['role' => $role])->result_array();
+        }
+
         $data['period'] = $this->db->order_by("period_from", "desc")->get_where('period', ['category' => $category])->result_array();
 
         $data['population'] = [];
