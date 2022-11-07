@@ -135,7 +135,6 @@ class Superadmin extends CI_Controller {
     }
     public function delete_period()
     {
-        var_dump($this->input->post('id'));
         $this->db->where(['id' => $this->input->post('id')])->delete('period');
         $this->session->set_flashdata('alertForm', 'Data berhasil dihapus');
 		$this->session->set_flashdata('alertType', 'success');
@@ -181,7 +180,6 @@ class Superadmin extends CI_Controller {
 			if(!$this->form_validation->run()){
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
 				$this->session->set_flashdata('alertType', 'danger');
-                var_dump('as');
 			} else {
                 $form = [
                     'name' => $this->input->post('name'),
@@ -233,7 +231,6 @@ class Superadmin extends CI_Controller {
     }
     public function delete_category()
     {
-        var_dump($this->input->post('id'));
         $this->db->where(['id' => $this->input->post('id')])->delete('category');
         $this->session->set_flashdata('alertForm', 'Data berhasil dihapus');
 		$this->session->set_flashdata('alertType', 'success');

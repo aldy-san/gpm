@@ -93,7 +93,6 @@ class Logged extends CI_Controller {
 			}else{
                 $loop = 0;
                 foreach($this->input->post() as $key => $answer){
-                    var_dump($survei[$loop]['bar_length']);
                     if($survei[$loop]['type'] != 'bar'){
                         $this->db->insert('answer', [
                             'id_user' => $data['this_user']['username'],

@@ -92,7 +92,6 @@ class Home extends CI_Controller {
                     'activity' => $this->input->post('activity'),
                 );
                 $this->session->set_userdata('notLoggedSurvei', $newSession);
-                var_dump($this->session->userdata('notLoggedSurvei'));
                 redirect('/alumni/survei');
             }
         }
@@ -114,7 +113,6 @@ class Home extends CI_Controller {
                 $this->db->insert($role, $session);
                 $insert_id = $this->db->insert_id();
                 foreach($this->input->post() as $key => $answer){
-                    var_dump($survei[$loop]['bar_length']);
                     if($survei[$loop]['bar_length'] == ''){
                         $this->db->insert('answer', [
                             'id_user' => $insert_id,

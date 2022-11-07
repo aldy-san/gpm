@@ -248,7 +248,6 @@ class Dosen extends CI_Controller {
     }
     public function delete_repository()
     {
-        var_dump($this->input->post('id'));
         $this->db->where(['id' => $this->input->post('id')])->delete('repository');
         $this->session->set_flashdata('alertForm', 'Data berhasil dihapus');
 		$this->session->set_flashdata('alertType', 'success');
