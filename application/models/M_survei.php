@@ -8,7 +8,7 @@ class M_survei extends CI_Model {
     public function getDetailResultSurvei($id, $limit = false, $offset = false)
     {
         $this->db->select('user.nama_lengkap, answer.answer');
-        $this->db->from('db_gpm.answer');
+        $this->db->from('answer');
         $this->db->where(['id_survei' => $id]);
         if ($limit){
             $this->db->limit($limit, $offset);
