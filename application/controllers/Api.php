@@ -114,15 +114,39 @@ class Api extends CI_Controller {
     public function getMonevProdiPerPeriod()
     {
         $monev_id = array(1, 2, 3);
-        $this->db->select("kode_prodi, AVG(detail) as avg, FROM_UNIXTIME(answer.created_at , '%Y') AS year, QUARTER(from_unixtime(answer.created_at)) as quarter");
+        $this->db->select("user.kode_prodi, jenjang, AVG(detail) as avg, FROM_UNIXTIME(answer.created_at , '%Y') AS year, QUARTER(from_unixtime(answer.created_at)) as quarter");
         $this->db->from('answer');
         $this->db->where_in('survei.category', $monev_id);
         $this->db->where(['survei.type' => 'bar']);
         $this->db->join('survei', 'survei.id=id_survei');
         $this->db->join('db_master.user', 'user.username=answer.id_user');
-        $this->db->group_by('kode_prodi, year, quarter');
-        $this->db->order_by(' year, quarter, kode_prodi');
+        // BY TABLE 
+        $this->db->group_by('kode_prodi');
+        // BY NAMA_PRODI
+        //$this->db->join('db_master.prodi', 'user.kode_prodi=prodi.kode_prodi', 'left');
+        //$this->db->group_by('nama_prodi');
+        // END
+        $this->db->group_by('jenjang, year, quarter');
+        $this->db->order_by('year, quarter, kode_prodi');
         $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
+    public function getProdi()
+    {
+        $db_master = $this->load->database('db_master', TRUE);
+
+        $db_master->select('user.kode_prodi, nama_prodi, id_jenjang, nama_jenjang');
+        $db_master->from('user');
+        $db_master->where(['level' => 1]);
+        $db_master->join('prodi', 'user.kode_prodi=prodi.kode_prodi', 'left');
+        $db_master->join('jenjang', 'user.jenjang=jenjang.id_jenjang', 'left');
+        // BY TABLE 
+        $db_master->group_by('user.kode_prodi');
+        // BY NAMA_PRODI
+        //$db_master->group_by('nama_prodi');
+        // END
+        $db_master->group_by('jenjang');
+        $result = $db_master->get()->result_array();
         echo json_encode($result);
     }
     public function getTable($table)

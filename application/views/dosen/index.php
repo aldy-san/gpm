@@ -118,7 +118,7 @@ function generateGauge() {
 async function generateMonev() {
     await Promise.all([
             $.get('<?=base_url('api/getMonevProdiPerPeriod')?>'),
-            $.get('<?=base_url('api/getTable/prodi')?>')
+            $.get('<?=base_url('api/getProdi')?>')
         ])
         .then(res => {
             const data = JSON.parse(res[0])
@@ -143,16 +143,17 @@ async function generateMonev() {
             series = prodi.map(p => {
                 const tempData = []
                 Object.keys(groupedYearS).map(item => {
-                    const ps = groupedYearS[item].find(g => g.kode_prodi === p.kode_prodi)
+                    const ps = groupedYearS[item].find(g => g.kode_prodi === p.kode_prodi && g
+                        .jenjang === p.id_jenjang)
                     console.log(ps)
                     if (ps) {
-                        tempData.push(Number(ps.avg))
+                        tempData.push(Number(ps.avg).toFixed(0))
                     } else {
                         tempData.push(0)
                     }
                 })
                 return {
-                    name: p.nama_prodi,
+                    name: p.nama_jenjang + ' ' + p.nama_prodi,
                     data: tempData
                 }
             })
@@ -163,6 +164,9 @@ async function generateMonev() {
                     type: "bar",
                     height: 350,
                 },
+                colors: ['#1abc9c', '#3498db', '#2ecc71', '#9b59b6', '#f1c40f',
+                    '#e67e22', '#bdc3c7', '#e74c3c', '#34495e'
+                ],
                 plotOptions: {
                     bar: {
                         horizontal: false,
