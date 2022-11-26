@@ -14,7 +14,7 @@
             <div class="mb-3 col-12 col-md-6">
                 <label for="email" class="form-label">Email</label>
                 <input type="text" class="form-control <?= form_error('email') ? 'is-invalid': ''; ?>" name="email"
-                    id="email" placeholder="nama@gmail.com" autocomplete="off" value="<?= set_value('email'); ?>">
+                    id="email" placeholder="email@gmail.com" autocomplete="off" value="<?= set_value('email'); ?>">
                 <div class="invalid-feedback">
                     <?= form_error('email'); ?>
                 </div>

@@ -76,23 +76,26 @@ class Home extends CI_Controller {
         $this->session->unset_userdata('notLoggedSurvei');
         if($this->input->post()){
             $this->form_validation->set_rules('position','position','trim|required');
-            $this->form_validation->set_rules('year_since','year_since','trim|required');
-            $this->form_validation->set_rules('year_from','year_from','trim|required');
-            $this->form_validation->set_rules('prodi','prodi','trim|required');
-            $this->form_validation->set_rules('activity','activity','trim|required');
+            $this->form_validation->set_rules('email','email','trim|required|valid_email');
+            $this->form_validation->set_rules('agency','agency','trim|required');
+            $this->form_validation->set_rules('employee','employee','trim|required');
+            $this->form_validation->set_rules('total_graduates','total_graduates','trim|required');
 			if(!$this->form_validation->run()){
 				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
 				$this->session->set_flashdata('alertType', 'danger');
 			} else {
                 $newSession = array(
                     'position' => $this->input->post('position'),
+                    'email' => $this->input->post('email'),
+                    'agency' => $this->input->post('agency'),
                     'year_since' => $this->input->post('year_since'),
-                    'year_from' => $this->input->post('year_from'),
-                    'prodi' => $this->input->post('prodi'),
-                    'activity' => $this->input->post('activity'),
+                    'employee' => $this->input->post('employee'),
+                    'total_graduates' => $this->input->post('total_graduates'),
+                    'year_since' => $this->input->post('year_since'),
+                    'scale' => $this->input->post('scale'),
                 );
                 $this->session->set_userdata('notLoggedSurvei', $newSession);
-                redirect('/alumni/survei');
+                redirect('/pengguna/survei');
             }
         }
         customView('pages/not-logged/pengguna', $data);

@@ -37,7 +37,7 @@
         <div class="d-flex justify-content-center">
             <?php foreach($survei_not_logged as $key => $survei): ?>
             <a href="<?= base_url($survei['name']); ?>"
-                class="text-capitalize btn btn-<?= $survei_not_logged_color[$key]; ?> mx-2 <?= $survei['is_active'] ? '' : 'disabled'; ?>"
+                class="text-capitalize btn btn-<?= $survei_not_logged_color[$key]; ?> mx-2 "
                 style="flex: 1 1 0;"><?= $survei['name']; ?></a>
             <?php endforeach ?>
         </div>
