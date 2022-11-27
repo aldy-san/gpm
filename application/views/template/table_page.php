@@ -135,18 +135,28 @@ document.getElementById('survei-activation').addEventListener('click', (e) => {
     console.log(e.target.checked)
     const val = e.target.checked ? 1 : 0
     $.post('<?=base_url('api/updateSurveiActivation/')?>', {
-        name: '<?= $activation; ?>',
-        value: val
-    }, () => {
-        console.log('selesai')
-    })
-    Toastify({
-        text: "This is toast in top center",
-        duration: 3000,
-        close: true,
-        gravity: "top",
-        position: "center",
-        backgroundColor: "#4fbe87",
-    }).showToast();
+            name: '<?= $activation; ?>',
+            value: val
+        }, () => {
+            Toastify({
+                text: "Aktivasi survei berhasil diganti",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "#4fbe87",
+            }).showToast();
+        })
+        .catch((err) => {
+            Toastify({
+                text: err,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "#e74c3c",
+            }).showToast();
+        })
+
 })
 </script>
