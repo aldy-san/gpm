@@ -255,6 +255,8 @@ class Superadmin extends CI_Controller {
         } else {
             $where = ['role' => $data['slug']];
             $data['title'] = 'Survei '.$data['slug'];
+            $data['activation'] = $data['slug'];
+            $data['is_survei_active'] = $this->db->get_where('survei_activation', ['name' => $data['slug']])->row_array();
         }
 
         // Config Pagination
@@ -266,7 +268,6 @@ class Superadmin extends CI_Controller {
         $data['data_table'] = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
 
         // Config Template Table Page
-       
         $data['desc'] = '';
         $data['create_url'] = '/survei/'.$slug.'/create/';
         $data['edit_url'] = '/survei/'.$slug.'/edit/';

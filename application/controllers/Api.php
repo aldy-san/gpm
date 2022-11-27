@@ -155,9 +155,11 @@ class Api extends CI_Controller {
         $result = $db_master->get($table)->result_array();
         echo json_encode($result);
     }
-    public function updateSurveiActivation($name, $is_active)
+    public function updateSurveiActivation()
     {
-        $this->db->set('is_active', $is_active);
+        $name = $this->input->post('name');
+        $value = $this->input->post('value');
+        $this->db->set('is_active', $value);
         $this->db->where('name', $name);
         $this->db->update('survei_activation');
     }

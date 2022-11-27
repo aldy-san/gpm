@@ -1,13 +1,28 @@
 <div class="page-heading">
     <div class="page-title">
         <div class="row">
-            <div class="col-12 col-md-6 order-md-1 order-last">
+            <div class="col-12 mb-3">
                 <h3><?= $title ?></h3>
                 <p class="text-subtitle text-muted"><?= $desc?></p>
             </div>
         </div>
     </div>
-    <section class="section mt-4">
+    <section class="section">
+        <?php if(isset($activation)): ?>
+        <div class="card col-2">
+            <div class="p-3">
+                <div class="form-check">
+                    <div class="custom-control custom-checkbox">
+                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow"
+                            name="customCheck" id="survei-activation"
+                            <?= $is_survei_active['is_active'] ? 'checked': ''; ?>>
+                        <label class="form-check-label" for="survei-activation">Aktivasi
+                            Survei</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <?php endif; ?>
         <div class="card">
             <?php if($create_url): ?>
             <div class="card-header">
@@ -114,3 +129,24 @@
         </div>
     </section>
 </div>
+<script type="text/javascript" src="<?= base_url('assets/vendors/toastify/toastify.js'); ?>"></script>
+<script type="text/javascript">
+document.getElementById('survei-activation').addEventListener('click', (e) => {
+    console.log(e.target.checked)
+    const val = e.target.checked ? 1 : 0
+    $.post('<?=base_url('api/updateSurveiActivation/')?>', {
+        name: '<?= $activation; ?>',
+        value: val
+    }, () => {
+        console.log('selesai')
+    })
+    Toastify({
+        text: "This is toast in top center",
+        duration: 3000,
+        close: true,
+        gravity: "top",
+        position: "center",
+        backgroundColor: "#4fbe87",
+    }).showToast();
+})
+</script>
