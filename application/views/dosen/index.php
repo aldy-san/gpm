@@ -165,7 +165,8 @@ async function generateMonev() {
                     height: 350,
                 },
                 colors: ['#1abc9c', '#3498db', '#2ecc71', '#9b59b6', '#f1c40f',
-                    '#e67e22', '#bdc3c7', '#e74c3c', '#34495e'
+                    '#e67e22', '#bdc3c7', '#e74c3c', '#34495e', '#C51D34', '#4E3B31', '#CFD3CD',
+                    '#256D7B', '#A12312'
                 ],
                 plotOptions: {
                     bar: {

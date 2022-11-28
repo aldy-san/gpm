@@ -16,3 +16,8 @@ application/logs/*
 !application/logs/index.html
 !application/logs/.htaccess
 /vendor/
+
+#custom
+captcha/*
+*.jpg
+captcha/1669519649.33.jpg
