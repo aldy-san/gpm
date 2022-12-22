@@ -214,7 +214,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
             $.get('<?=base_url('api/getChartDataByIdSurvei/')?>' + item.id + filter, (
                 res2) => {
                 var temp = JSON.parse(res2)
-                let selections = item.selections.split(',')
+                let selections = item.selections.split(';')
                 if (item.type === 'bar') {
                     selections = ['0-20', '21-40', '41-60', '61-80', '81-100']
                 }

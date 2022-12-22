@@ -168,7 +168,7 @@
                                     <span>Kelola Survei Login</span>
                                 </a>
                             </li>
-                            <li class="sidebar-title">Kelola Non-login</li>
+                            <li class="sidebar-title">Kelola Survei Non-login</li>
                             <li class="sidebar-item <?= $this->uri->segment(2) === 'alumni' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('survei/alumni'); ?>" class='sidebar-link'>
                                     <i class="bi bi-grid"></i>

@@ -32,7 +32,7 @@
                                 <h4 class="mb-4"> <?= $value['question'] ?></h4>
                                 <?php 
                                     if($value['type'] === 'selection'): 
-                                        foreach(explode(',',$value['selections']) as $key => $option) :    
+                                        foreach(explode(';',$value['selections']) as $key => $option) :    
                                 ?>
                                 <div class="ms-2 my-2 form-check">
                                     <input class="form-check-input" type="radio" name="answer<?= $value['id'] ?>"

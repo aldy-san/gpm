@@ -72,7 +72,7 @@
                         </div>
                         <div class="form-group col-8 selection-type">
                             <label for="selections">Pilihan</label>
-                            <small class="text-muted">Pisahkan dengan koma. cth: <i>cool,excellent,yoma</i> </small>
+                            <small class="text-muted">Pisahkan dengan koma. cth: <i>cool;excellent;yoma</i> </small>
                             <input type="text" class="form-control <?= form_error('selections') ? 'is-invalid': ''; ?>"
                                 name="selections" id="selections" placeholder="Pilihan" autocomplete="off"
                                 value="<?= $data_slug ?  (set_value('selections') ?  set_value('selections') : $data_slug['selections']) : set_value('selections'); ?>"
