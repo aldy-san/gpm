@@ -41,5 +41,10 @@
                 style="flex: 1 1 0;"><?= $survei['name']; ?></a>
             <?php endforeach ?>
         </div>
+        <small class="text-center text-muted my-3">Hasil Survei</small>
+        <div class="d-flex justify-content-center">
+            <a href="<?= base_url('survei_result'); ?>" class="text-capitalize btn btn-secondary mx-2"
+                style="flex: 1 1 0;">Lihat Hasil Survei</a>
+        </div>
     </div>
 </form>

@@ -6,11 +6,18 @@ class Home extends CI_Controller {
 	public $globalData;
     public function __construct() {
         parent::__construct();
+        $this->db_master = $this->load->database('db_master', TRUE);
         $this->globalData = [
             'withNavbar' => true,
             'withSidebar' => false,
-            'title' => false
+            'title' => false,
+            'category_dosen' => $this->M_survei->getCategory('dosen', false),
+            'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa', false),
+            'category_tendik' => $this->M_survei->getCategory('tendik', false),
         ];
+        if ($this->session->userdata('user')){
+            $this->globalData['this_user'] = $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array();
+        }
     }
 	public function logout()
 	{
@@ -100,6 +107,7 @@ class Home extends CI_Controller {
         }
         customView('pages/not-logged/pengguna', $data);
     }
+
     public function survei($role){
         $data = $this->globalData;
         $survei = $this->db->get_where('survei',['role' => $role])->result_array();
@@ -152,4 +160,74 @@ class Home extends CI_Controller {
         $data['bar'] = 1;
         customView('pages/survei', $data);
     }
+
+    
+    public function survei_result()
+    {
+        $data = $this->globalData;
+        $data['withNavbar'] = false;
+        $data['withSidebar'] = true;
+        # code...
+        customView('pages/survei_result', $data);
+    }
+
+    public function result($role, $category = null)
+	{
+        $data = $this->globalData;
+        $data['withNavbar'] = false;
+        $data['withSidebar'] = true;
+
+        if ($category){
+            $data['survei'] = $this->db->get_where('survei', ['category' => $category])->result_array();
+        } else {
+            $data['survei'] = $this->db->get_where('survei', ['role' => $role])->result_array();
+        }
+
+        $data['period'] = $this->db->order_by("period_from", "desc")->get_where('period', ['category' => $category])->result_array();
+
+        $data['population'] = [];
+        $data['labels'] = [];
+        if ($role === 'mahasiswa') {
+            $data['population'] = ['jenis_kelamin', 'jenjang', 'kode_prodi', 'tahun_masuk'];
+            $data['titles'] = ['Jenis Kelamin', 'Jenjang', 'Prodi', 'Tahun Masuk'];
+            $data['labels'] = [false, 'jenjang', 'prodi', false];
+        } else if ($role === 'alumni'){
+            $data['population'] = ['year_to', 'year_from', 'prodi', 'activity'];
+            $data['titles'] = ['Tahun Masuk', 'Tahun Lulus', 'Prodi', 'Aktifitas Setelah Lulus'];
+        } else if ($role === 'mitra'){
+            $data['population'] = ['position', 'agency', 'scale', 'year_since', 'year_coop'];
+            $data['titles'] = ['Position', 'Instansi', 'Skala', 'Tahun Berdiri', 'Tahun Kerjasama'];
+        } 
+		customView('dosen/result', $data);
+	}
+	public function detail($id)
+	{
+        // get slug
+        $data = $this->globalData;
+        $data['withNavbar'] = false;
+        $data['withSidebar'] = true;
+        $data['slug'] = $id;
+        $data['sub_slug'] = false;
+        // Config Pagination
+		$config['base_url'] = base_url('/detail/'.$id.'/');
+		$config['total_rows'] = $this->M_survei->getDetailResultSurvei($id)->num_rows();
+		$config['per_page'] = 10;
+		$config['start'] = $this->uri->segment(4);
+        $config['page_query_string'] = TRUE;
+        $config['use_page_numbers'] = TRUE;
+		$this->pagination->initialize($config);
+        $offset =  $this->input->get('per_page') ?  ($this->input->get('per_page')-1)*$config['per_page'] : 0;
+        $data['data_table'] = $this->M_survei->getDetailResultSurvei($id, $config['per_page'], $offset)->result_array();
+        $data['survei'] = $this->db->get_where('survei', ['id' => $id])->row_array();
+        // Config Template Table Page
+        $data['title'] = 'Detail - '.$data['survei']['question'];
+        $data['desc'] = '';
+        $data['create_url'] = false;
+        $data['edit_url'] = false;
+        $data['detail_url'] = false;
+        $data['delete_url'] = false;
+        $data['column_table'] = ['nama_lengkap', 'answer'];
+        $data['column_alias'] = ['nama_lengkap', 'jawaban'];
+		customView('template/table_page', $data);
+	}
 }

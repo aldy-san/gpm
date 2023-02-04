@@ -70,6 +70,12 @@ $route['pengguna'] = 'Home/pengguna';
 // Logged
 $route['profile'] = 'Logged/profile';
 $route['change-password'] = 'Logged/change_password';
+// Result
+$route['survei_result'] = 'Home/survei_result';
+$route['result/(:any)'] = 'Home/result/$1';
+$route['result/(:any)/(:num)'] = 'Home/result/$1/$2';
+$route['detail/(:any)'] = 'Home/detail/$1';
+$route['detail/(:any)/(:num)'] = 'Home/detail/$1';
 
 # -------------------------------SUPERADMIN--------------------------------
 $route['dashboard'] = 'Superadmin/index';
@@ -96,10 +102,7 @@ $route['manage-category/delete'] = 'Superadmin/delete_category';
 
 # -----------------------------------DOSEN---------------------------------
 $route['dosen/dashboard'] = 'Dosen/index';
-$route['dosen/result/(:any)'] = 'Dosen/result/$1';
-$route['dosen/result/(:any)/(:num)'] = 'Dosen/result/$1/$2';
-$route['dosen/detail/(:any)'] = 'Dosen/detail/$1';
-$route['dosen/detail/(:any)/(:num)'] = 'Dosen/detail/$1';
+
 // Repository
 $route['dosen/repository'] = 'Dosen/repository';
 $route['dosen/repository/all'] = 'Dosen/all_repository';

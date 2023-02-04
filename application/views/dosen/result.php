@@ -8,7 +8,7 @@
             <h5 id="total">Responden: . orang</h5>
         </div>
         <div class="d-flex">
-            <?php if (!in_array($this->uri->segment(3),['alumni', 'mitra', 'pengguna'])): ?>
+            <?php if (!in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna'])): ?>
             <div class="btn-group dropdown me-2">
                 <button type="button" class="btn btn-outline-primary">Periode</button>
                 <button id="period-title" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
@@ -77,7 +77,7 @@
                         </thead>
                         <tbody id="tbody-<?= $s['id']; ?>"></tbody>
                     </table>
-                    <a href="<?= base_url('dosen/detail/'.$s['id']); ?>" class="d-block ms-auto text-end mb-2">Lihat
+                    <a href="<?= base_url('detail/'.$s['id']); ?>" class="d-block ms-auto text-end mb-2">Lihat
                         Lebih Lengkap</a>
                     <?php endif; ?>
                 </div>
@@ -111,19 +111,20 @@ var dataSurvei = <?= json_encode($survei); ?>;
 var dataPopulation = <?= json_encode($population); ?>;
 var dataLabels = <?= json_encode($labels); ?>;
 var period = <?= json_encode($period); ?>;
-var role = '<?= $this->uri->segment(3); ?>'
-var id_category = '<?= $this->uri->segment(4); ?>'
+var role = '<?= $this->uri->segment(2); ?>'
+var id_category = '<?= $this->uri->segment(3); ?>'
 
 function executeGraphic(from, to, name, isUpdate = false) {
     let filter = (from) ? '?from=' + from : ''
     filter += (to) ? '&to=' + to : ''
-    filter += '&role=<?= $this->uri->segment(3); ?>'
+    filter += '&role=<?= $this->uri->segment(2); ?>'
     $.get('<?=base_url('api/getTotalData/')?>' + id_category + filter, (res) => {
         var temp = JSON.parse(res)
         console.log(temp[0])
         $("#total").text(`Responden: ${temp[0].total} orang`)
     })
     $("#period-title > span").text(name)
+    console.log(id_category)
     dataPopulation.forEach((item, index) => {
         $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item + `/${id_category}` +
             filter, async (

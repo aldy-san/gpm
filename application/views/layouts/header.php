@@ -59,11 +59,11 @@
                             <li
                                 class="sidebar-item <?= $this->uri->segment(1) === 'dashboard' || $this->uri->segment(2) === 'dashboard' ? 'active' : ''; ?> ">
                                 <a href="<?= base_url('dashboard'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-house-door"></i>
-                                    <span>Beranda</span>
+                                    <i class="bi <?= isset($this_user) ? 'bi-house-door' : 'bi-door-open' ?> "></i>
+                                    <span><?= isset($this_user) ? 'Beranda' : 'Login' ?></span>
                                 </a>
                             </li>
-                            <?php if (getRole($this_user['level']) === 'dosen') :?>
+                            <?php if (isset($this_user) && getRole($this_user['level']) === 'dosen') :?>
                             <?php if (in_array($this_user['level'], [8, 9, 10])) :?>
                             <li class="sidebar-item <?= $this->uri->segment(3) === 'all' ?'active' :''?>">
                                 <a href="<?= base_url('dosen/repository/all'); ?>" class='sidebar-link'>
@@ -91,70 +91,9 @@
                                 </a>
                             </li>
                             <?php endforeach ?>
-                            <li class="sidebar-title">Hasil Survei</li>
-                            <li class="sidebar-item has-sub <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
-                                <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Mahasiswa</span>
-                                </a>
-                                <ul class="submenu <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
-                                    <?php foreach($category_mahasiswa as $c) :?>
-                                    <li class="submenu-item <?= $this->uri->segment(4) === $c['id'] ?'active' :''?>">
-                                        <a
-                                            href="<?= base_url('dosen/result/mahasiswa/'.$c['id']); ?>"><?= $c['name']; ?></a>
-                                    </li>
-                                    <?php endforeach ?>
-                                </ul>
-                            </li>
-                            <li class="sidebar-item has-sub <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
-                                <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Dosen</span>
-                                </a>
-                                <ul class="submenu <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
-                                    <?php foreach($category_dosen as $c) :?>
-                                    <li class="submenu-item <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
-                                        <a
-                                            href="<?= base_url('dosen/result/dosen/'.$c['id']); ?>"><?= $c['name']; ?></a>
-                                    </li>
-                                    <?php endforeach ?>
-                                </ul>
-                            </li>
-                            <li class="sidebar-item has-sub <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
-                                <a href="#" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Tenaga Pendidik</span>
-                                </a>
-                                <ul class="submenu <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
-                                    <?php foreach($category_tendik as $c) :?>
-                                    <li class="submenu-item <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
-                                        <a
-                                            href="<?= base_url('dosen/result/tendik/'.$c['id']); ?>"><?= $c['name']; ?></a>
-                                    </li>
-                                    <?php endforeach ?>
-                                </ul>
-                            </li>
-                            <li class="sidebar-item <?= $this->uri->segment(3) === 'alumni' ?'active' :''?>">
-                                <a href="<?= base_url('dosen/result/alumni'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Alumni</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item <?= $this->uri->segment(3) === 'mitra' ?'active' :''?>">
-                                <a href="<?= base_url('dosen/result/mitra'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Mitra</span>
-                                </a>
-                            </li>
-                            <li class="sidebar-item <?= $this->uri->segment(3) === 'pengguna' ?'active' :''?>">
-                                <a href="<?= base_url('dosen/result/pengguna'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-grid"></i>
-                                    <span>Pengguna</span>
-                                </a>
-                            </li>
-
                             <?php endif ?>
-                            <?php  if (getRole($this_user['level']) === 'superadmin') :?>
+
+                            <?php  if (isset($this_user) && getRole($this_user['level']) === 'superadmin') :?>
                             <li class="sidebar-item <?= $this->uri->segment(1) === 'manage-period' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('manage-period'); ?>" class='sidebar-link'>
                                     <i class="bi bi-calendar-range"></i>
@@ -188,8 +127,68 @@
                                 </a>
                             </li>
                             <?php endif;?>
+                            <?php if ((isset($this_user) && (getRole($this_user['level']) === 'dosen' || getRole($this_user['level']) === 'superadmin')) || !isset($this_user)): ?>
+                            <li class="sidebar-title">Hasil Survei</li>
+                            <li class="sidebar-item has-sub <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Mahasiswa</span>
+                                </a>
+                                <ul class="submenu <?= $this->uri->segment(3) === 'mahasiswa' ?'active' :''?>">
+                                    <?php foreach($category_mahasiswa as $c) :?>
+                                    <li class="submenu-item <?= $this->uri->segment(4) === $c['id'] ?'active' :''?>">
+                                        <a href="<?= base_url('result/mahasiswa/'.$c['id']); ?>"><?= $c['name']; ?></a>
+                                    </li>
+                                    <?php endforeach ?>
+                                </ul>
+                            </li>
+                            <li class="sidebar-item has-sub <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Dosen</span>
+                                </a>
+                                <ul class="submenu <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
+                                    <?php foreach($category_dosen as $c) :?>
+                                    <li class="submenu-item <?= $this->uri->segment(3) === 'dosen' ?'active' :''?>">
+                                        <a href="<?= base_url('result/dosen/'.$c['id']); ?>"><?= $c['name']; ?></a>
+                                    </li>
+                                    <?php endforeach ?>
+                                </ul>
+                            </li>
+                            <li class="sidebar-item has-sub <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
+                                <a href="#" class='sidebar-link'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Tenaga Pendidik</span>
+                                </a>
+                                <ul class="submenu <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
+                                    <?php foreach($category_tendik as $c) :?>
+                                    <li class="submenu-item <?= $this->uri->segment(3) === 'tendik' ?'active' :''?>">
+                                        <a href="<?= base_url('result/tendik/'.$c['id']); ?>"><?= $c['name']; ?></a>
+                                    </li>
+                                    <?php endforeach ?>
+                                </ul>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'alumni' ?'active' :''?>">
+                                <a href="<?= base_url('result/alumni'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Alumni</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'mitra' ?'active' :''?>">
+                                <a href="<?= base_url('result/mitra'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Mitra</span>
+                                </a>
+                            </li>
+                            <li class="sidebar-item <?= $this->uri->segment(3) === 'pengguna' ?'active' :''?>">
+                                <a href="<?= base_url('result/pengguna'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Pengguna</span>
+                                </a>
+                            </li>
+                            <?php endif;?>
 
-                            <?php  if (getRole($this_user['level']) === 'mahasiswa') :?>
+                            <?php  if (isset($this_user) && getRole($this_user['level']) === 'mahasiswa') :?>
                             <?php if (count($category_mahasiswa_avail) > 0): ?>
                             <li class="sidebar-title">Isi Survei</li>
                             <?php endif ?>
@@ -203,7 +202,7 @@
                             </li>
                             <?php endforeach ?>
                             <?php endif; ?>
-                            <?php  if (getRole($this_user['level']) === 'tendik') :?>
+                            <?php  if (isset($this_user) && getRole($this_user['level']) === 'tendik') :?>
                             <?php if (count($category_tendik_avail) > 0): ?>
                             <li class="sidebar-title">Isi Survei</li>
                             <?php endif ?>
@@ -217,18 +216,21 @@
                             </li>
                             <?php endforeach ?>
                             <?php endif; ?>
+                            <?php  if (isset($this_user)) :?>
                             <li class="sidebar-item">
                                 <a href="<?= base_url('logout'); ?>" class='sidebar-link'>
                                     <i class="bi bi-door-open"></i>
                                     <span>Logout</span>
                                 </a>
                             </li>
+                            <?php endif; ?>
                         </ul>
                     </div>
                     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
                 </div>
             </div>
             <div id="main">
+                <?php if (isset($this_user)): ?>
                 <header class="mb-3 d-flex">
                     <a href="#" class="burger-btn d-block d-xl-none">
                         <i class="bi bi-justify fs-3"></i>
@@ -253,6 +255,7 @@
                         </div>
                     </div>
                 </header>
+                <?php endif ?>
                 <?php if ( $this->session->flashdata('alertForm')): ?>
                 <div class="alert alert-<?= $this->session->flashdata('alertType'); ?> alert-dismissible show fade"
                     role="alert">

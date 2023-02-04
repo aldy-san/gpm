@@ -13,7 +13,10 @@ class Superadmin extends CI_Controller {
             'this_user' => $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array(),
             'title' => false,
             'survei_levels' => ['d4', 's1', 's2', 's3', false],
-            'survei_roles' => ['mahasiswa', 'dosen', 'tendik', 'alumni', 'mitra', 'pengguna']
+            'survei_roles' => ['mahasiswa', 'dosen', 'tendik', 'alumni', 'mitra', 'pengguna'],
+            'category_dosen' => $this->M_survei->getCategory('dosen', false),
+            'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa', false),
+            'category_tendik' => $this->M_survei->getCategory('tendik', false),
         ];
         if (getRole($this->globalData['this_user']['level'])  !== 'superadmin') {
             $this->session->set_flashdata('alertForm', 'Role anda tidak memiliki akses untuk halaman tersebut');
