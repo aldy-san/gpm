@@ -7,6 +7,7 @@ class Home extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->db_master = $this->load->database('db_master', TRUE);
+        
         $this->globalData = [
             'withNavbar' => true,
             'withSidebar' => false,
@@ -17,7 +18,17 @@ class Home extends CI_Controller {
         ];
         if ($this->session->userdata('user')){
             $this->globalData['this_user'] = $this->db_master->get_where('user', ['username' => $this->session->userdata('user')['username']])->row_array();
+            if (getRole($this->globalData['this_user']['level']) === 'dosen'){
+                $temp = $this->M_survei->getCategoryAnswered('dosen',$this->globalData['this_user']['username']);
+                $category_dosen_avail = $this->M_survei->getCategory('dosen');
+                $category_dosen_answered = [];
+                foreach ($temp as $value) {
+                    array_push($category_dosen_answered,$value['name']);
+                }
+            }
         }
+        $this->globalData['category_dosen_avail'] = $category_dosen_avail;
+        $this->globalData['category_dosen_answered'] = $category_dosen_answered;
     }
 	public function logout()
 	{
