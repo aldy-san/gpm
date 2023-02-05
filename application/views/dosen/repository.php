@@ -79,6 +79,7 @@
                             <fieldset>
                                 <select class="form-select <?= form_error('category') ? 'is-invalid': ''; ?>"
                                     name="category" <?= $is_edit? '' : 'disabled'; ?>>
+                                    <?php if (getRole($this_user['level']) !== 'mahasiswa'): ?>
                                     <option value="Sertifikat Pendidik">Sertifikat Pendidik</option>
                                     <option value="Jabatan Fungsional">Jabatan Fungsional</option>
                                     <option value="Gelar Akademik">Gelar Akademik</option>
@@ -86,6 +87,12 @@
                                     </option>
                                     <option value="Bidang Keahlian Setiap Jenjang Pendidikan">Bidang Keahlian Setiap
                                         Jenjang Pendidikan</option>
+                                    <?php else : ?>
+                                    <option value="Sertifikasi Kompentensi">Sertifikasi Kompentensi</option>
+                                    <option value="Prestasi dan Penghargaan">Prestasi dan Penghargaan</option>
+                                    <option value="Program Pengembangan Diri">Program Pengembangan Diri</option>
+                                    <option value="Aktivitas Mahasiswa">Aktivitas Mahasiswa</option>
+                                    <?php endif ?>
                                 </select>
                             </fieldset>
                             <div class="invalid-feedback">

@@ -63,6 +63,15 @@
                                     <span><?= isset($this_user) ? 'Beranda' : 'Login' ?></span>
                                 </a>
                             </li>
+                            <?php if (isset($this_user)):?>
+                            <li
+                                class="sidebar-item <?= $this->uri->segment(1) === 'repository' && !$this->uri->segment(3) ?'active' :''?>">
+                                <a href="<?= base_url('repository'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-folder2-open"></i>
+                                    <span>Repositori Saya</span>
+                                </a>
+                            </li>
+                            <?php endif ?>
                             <?php if (isset($this_user) && getRole($this_user['level']) === 'dosen') :?>
                             <?php if (in_array($this_user['level'], [8, 9, 10])) :?>
                             <li class="sidebar-item <?= $this->uri->segment(3) === 'all' ?'active' :''?>">
@@ -72,13 +81,6 @@
                                 </a>
                             </li>
                             <?php endif ?>
-                            <li
-                                class="sidebar-item <?= $this->uri->segment(1) === 'repository' && !$this->uri->segment(3) ?'active' :''?>">
-                                <a href="<?= base_url('repository'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-folder2-open"></i>
-                                    <span>Repositori Saya</span>
-                                </a>
-                            </li>
                             <?php if (count($category_dosen_avail) > 0): ?>
                             <li class="sidebar-title">Isi Survei</li>
                             <?php endif ?>
@@ -203,12 +205,6 @@
                             <?php endforeach ?>
                             <?php endif; ?>
                             <?php  if (isset($this_user) && getRole($this_user['level']) === 'tendik') :?>
-                            <li class="sidebar-item <?= $this->uri->segment(1) === 'repository' ?'active' :''?>">
-                                <a href="<?= base_url('repository'); ?>" class='sidebar-link'>
-                                    <i class="bi bi-folder2-open"></i>
-                                    <span>Repositori Saya</span>
-                                </a>
-                            </li>
                             <?php if (count($category_tendik_avail) > 0): ?>
                             <li class="sidebar-title">Isi Survei</li>
                             <?php endif ?>
