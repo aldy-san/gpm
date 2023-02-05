@@ -124,7 +124,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
         $("#total").text(`Responden: ${temp[0].total} orang`)
     })
     $("#period-title > span").text(name)
-    console.log(id_category)
+    // console.log(id_category)
     dataPopulation.forEach((item, index) => {
         $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item + `/${id_category}` +
             filter, async (
@@ -217,7 +217,10 @@ function executeGraphic(from, to, name, isUpdate = false) {
                 var temp = JSON.parse(res2)
                 let selections = item.selections.split(';')
                 if (item.type === 'bar') {
-                    selections = ['0-20', '21-40', '41-60', '61-80', '81-100']
+                    // selections = ['0-20', '21-40', '61-80', '81-100', '41-60']
+                    selections = ['0-10', '11-20', '21-30', '31-40', '41-50', '51-60', '61-70', '71-80',
+                        '81-90', '91-100'
+                    ]
                 }
                 let series = selections.map(selection => {
                     var obj = temp.find(item2 => item2.answer === selection)

@@ -143,10 +143,20 @@ class Home extends CI_Controller {
                             'created_at' => time()
                         ]);
                     }else{
-                        $detail = ($answer > 80 && $answer <=100) ? '81-100' 
-                                : (($answer > 60 && $answer <=80) ? '61-80' 
-                                : (($answer > 40 && $answer <=60) ? '41-60'
-                                : (($answer > 20 && $answer <=40) ? '21-40' : '0-20')));
+                        // $detail = ($answer > 80 && $answer <=100) ? '81-100'
+                        //         : (($answer > 60 && $answer <=80) ? '61-80'
+                        //         : (($answer > 40 && $answer <=60) ? '41-60'
+                        //         : (($answer > 20 && $answer <=40) ? '21-40' : '0-20')));
+                        if($answer > 91 && $answer <=100) $detail='91-100';
+                        else if($answer > 81 && $answer <= 90) $detail='81-90';
+                        else if($answer > 71 && $answer <= 80) $detail='71-80';
+                        else if($answer > 61 && $answer <= 70) $detail='61-70';
+                        else if($answer > 51 && $answer <= 60) $detail='51-60';
+                        else if($answer > 41 && $answer <= 50) $detail='41-50';
+                        else if($answer > 31 && $answer <= 40) $detail='31-40';
+                        else if($answer > 21 && $answer <= 30) $detail='21-30';
+                        else if($answer > 11 && $answer <= 20) $detail='11-20';
+                        else $detail='0-10';
                         $this->db->insert('answer', [
                             'id_user' => $insert_id,
                             'id_survei' => filter_var($key, FILTER_SANITIZE_NUMBER_INT),
@@ -172,7 +182,7 @@ class Home extends CI_Controller {
         customView('pages/survei', $data);
     }
 
-    
+
     public function survei_result()
     {
         $data = $this->globalData;
@@ -208,7 +218,7 @@ class Home extends CI_Controller {
         } else if ($role === 'mitra'){
             $data['population'] = ['position', 'agency', 'scale', 'year_since', 'year_coop'];
             $data['titles'] = ['Position', 'Instansi', 'Skala', 'Tahun Berdiri', 'Tahun Kerjasama'];
-        } 
+        }
 		customView('dosen/result', $data);
 	}
 	public function detail($id)

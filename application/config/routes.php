@@ -104,17 +104,25 @@ $route['manage-category/delete'] = 'Superadmin/delete_category';
 $route['dosen/dashboard'] = 'Dosen/index';
 
 // Repository
-$route['dosen/repository'] = 'Dosen/repository';
-$route['dosen/repository/all'] = 'Dosen/all_repository';
-$route['dosen/repository/create'] = 'Dosen/create_repository';
-$route['dosen/repository/detail/(:num)'] = 'Dosen/detail_repository/$1';
-$route['dosen/repository/edit/(:num)'] = 'Dosen/edit_repository/$1';
-$route['dosen/repository/delete'] = 'Dosen/delete_repository';
+$route['repository'] = 'Logged/repository';
+$route['repository/all'] = 'Logged/all_repository';
+$route['repository/create'] = 'Logged/create_repository';
+$route['repository/detail/(:num)'] = 'Logged/detail_repository/$1';
+$route['repository/edit/(:num)'] = 'Logged/edit_repository/$1';
+$route['repository/delete'] = 'Logged/delete_repository';
 
 
 # -----------------------------------Mahasiswa---------------------------------
 $route['mahasiswa/dashboard'] = 'Mahasiswa/index';
+
+# -----------------------------------Tendik---------------------------------
 $route['tendik/dashboard'] = 'Tendik/index';
+// $route['tendik/repository'] = 'Logged/repository';
+// $route['tendik/repository/all'] = 'Logged/all_repository';
+// $route['tendik/repository/create'] = 'Logged/create_repository';
+// $route['tendik/repository/detail/(:num)'] = 'Logged/detail_repository/$1';
+// $route['tendik/repository/edit/(:num)'] = 'Logged/edit_repository/$1';
+// $route['tendik/repository/delete'] = 'Logged/delete_repository';
 
 # -----------------------------------SURVEI---------------------------------
 $route['dosen/survei/(:num)'] = 'Logged/survei/$1';
