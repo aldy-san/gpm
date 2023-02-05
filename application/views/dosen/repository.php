@@ -9,9 +9,9 @@
     <section class="section mt-4">
         <div class="card">
             <div class="card-body">
-                <?= form_open_multipart($data_slug ? base_url('/dosen/repository/edit/'.$data_slug['id']) : base_url('/dosen/repository/create')); ?>
+                <?= form_open_multipart($data_slug ? base_url('repository/edit/'.$data_slug['id']) : base_url('repository/create')); ?>
                 <form
-                    action="<?= $data_slug ? base_url('/dosen/repository/edit/'.$data_slug['id']) : base_url('/dosen/repository/create'); ?>"
+                    action="<?= $data_slug ? base_url('repository/edit/'.$data_slug['id']) : base_url('repository/create'); ?>"
                     method="POST">
                     <div class="row">
                         <div class="form-group col-6">
@@ -35,21 +35,31 @@
                                 <?= form_error('institution'); ?>
                             </div>
                         </div>
-                        <div class="form-group col-6">
-                            <label for="date">Tanggal Kegiatan</label>
-                            <input type="date" class="form-control <?= form_error('date') ? 'is-invalid': ''; ?>"
-                                name="date" id="date" placeholder="date" autocomplete="off"
-                                value="<?= $data_slug ?  (set_value('date') ?  set_value('date') :  gmdate("Y-m-d", $data_slug['date'])) : set_value('date'); ?>"
+                        <div class="form-group col-3">
+                            <label for="from_date">Tanggal Mulai Sertifikat</label>
+                            <input type="date" class="form-control <?= form_error('from_date') ? 'is-invalid': ''; ?>"
+                                name="from_date" id="from_date" placeholder="from date" autocomplete="off"
+                                value="<?= $data_slug ?  (set_value('from_date') ?  set_value('from_date') :  gmdate("Y-m-d", $data_slug['from_date'])) : set_value('from_date'); ?>"
                                 <?= $is_edit? '' : 'disabled'; ?>>
                             <div class="invalid-feedback">
-                                <?= form_error('date'); ?>
+                                <?= form_error('from_date'); ?>
+                            </div>
+                        </div>
+                        <div class="form-group col-3">
+                            <label for="end_date">Tanggal Akhir Sertifikat</label>
+                            <input type="date" class="form-control <?= form_error('end_date') ? 'is-invalid': ''; ?>"
+                                name="end_date" id="end_date" placeholder="end date" autocomplete="off"
+                                value="<?= $data_slug ?  (set_value('end_date') ?  set_value('end_date') :  gmdate("Y-m-d", $data_slug['end_date'])) : set_value('end_date'); ?>"
+                                <?= $is_edit? '' : 'disabled'; ?>>
+                            <div class="invalid-feedback">
+                                <?= form_error('end_date'); ?>
                             </div>
                         </div>
                         <div class="form-group col-6">
-                            <label for="category">Kategori</label>
+                            <label for="level">Tingkat</label>
                             <fieldset>
-                                <select class="form-select <?= form_error('category') ? 'is-invalid': ''; ?>"
-                                    name="category" <?= $is_edit? '' : 'disabled'; ?>>
+                                <select class="form-select <?= form_error('level') ? 'is-invalid': ''; ?>" name="level"
+                                    <?= $is_edit? '' : 'disabled'; ?>>
 
                                     <option value="Lokal">Lokal</option>
                                     <option value="Nasional">Nasional</option>
@@ -57,12 +67,30 @@
                                 </select>
                             </fieldset>
                             <div class="invalid-feedback">
-                                <?= form_error('category'); ?>
+                                <?= form_error('level'); ?>
                             </div>
                         </div>
                         <div class="form-group col-6">
                             <label for="sertifikat">File</label>
                             <input id="sertifikat" type="file" name="sertifikat" class="basic-filepond">
+                        </div>
+                        <div class="form-group col-6">
+                            <label for="category">Kategori</label>
+                            <fieldset>
+                                <select class="form-select <?= form_error('category') ? 'is-invalid': ''; ?>"
+                                    name="category" <?= $is_edit? '' : 'disabled'; ?>>
+                                    <option value="Sertifikat Pendidik">Sertifikat Pendidik</option>
+                                    <option value="Jabatan Fungsional">Jabatan Fungsional</option>
+                                    <option value="Gelar Akademik">Gelar Akademik</option>
+                                    <option value="Pendidikan S1, S2, S3 dan Asal PT">Pendidikan S1, S2, S3 dan Asal PT
+                                    </option>
+                                    <option value="Bidang Keahlian Setiap Jenjang Pendidikan">Bidang Keahlian Setiap
+                                        Jenjang Pendidikan</option>
+                                </select>
+                            </fieldset>
+                            <div class="invalid-feedback">
+                                <?= form_error('category'); ?>
+                            </div>
                         </div>
                     </div>
                     <?php if($is_edit) :?>

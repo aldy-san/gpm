@@ -102,10 +102,20 @@ class Logged extends CI_Controller {
                         ]);
                     }else{
                         if (is_numeric($answer)){
-                            $detail = ($answer > 80 && $answer <=100) ? '81-100' 
-                                    : (($answer > 60 && $answer <=80) ? '61-100' 
-                                    : (($answer > 40 && $answer <=60) ? '41-60'
-                                    : (($answer > 20 && $answer <=40) ? '21-40' : '0-20')));
+                            // $detail = ($answer > 80 && $answer <=100) ? '81-100'
+                            //         : (($answer > 60 && $answer <=80) ? '61-100'
+                            //         : (($answer > 40 && $answer <=60) ? '41-60'
+                            //         : (($answer > 20 && $answer <=40) ? '21-40' : '0-20')));
+                            if($answer > 91 && $answer <=100) $detail='91-100';
+                            else if($answer > 81 && $answer <= 90) $detail='81-90';
+                            else if($answer > 71 && $answer <= 80) $detail='71-80';
+                            else if($answer > 61 && $answer <= 70) $detail='61-70';
+                            else if($answer > 51 && $answer <= 60) $detail='51-60';
+                            else if($answer > 41 && $answer <= 50) $detail='41-50';
+                            else if($answer > 31 && $answer <= 40) $detail='31-40';
+                            else if($answer > 21 && $answer <= 30) $detail='21-30';
+                            else if($answer > 11 && $answer <= 20) $detail='11-20';
+                            else $detail='0-10';
                         }
                         $this->db->insert('answer', [
                             'id_user' => $data['this_user']['username'],
@@ -128,5 +138,181 @@ class Logged extends CI_Controller {
         $data['bar_count'] = $this->db->get_where('survei',['type' => 'bar', 'role' => getRole($this->globalData['this_user']['level'])])->num_rows();
         $data['bar'] = 1;
         customView('pages/survei', $data);
+    }
+
+    public function all_repository()
+    {
+        //config
+        $data = $this->globalData;
+        $table = 'repository';
+        $root_url = 'repository/';
+        $data['title'] = 'Semua Repositori';
+        $data['desc'] = '';
+        $data['create_url'] = false;
+        $data['edit_url'] = false;
+        $data['detail_url'] = false;
+        $data['delete_url'] = false;
+        $data['download_url'] = '/sertifikat/';
+        $data['column_table'] = ['id','name', 'institution', 'from_date','end_date', 'level','nama_lengkap','category'];
+        $data['column_alias'] = ['id','nama', 'Nama Lembaga', 'Tanggal', 'Tingkat','nama lengkap','Kategori'];
+
+        // Config Pagination
+		$config['base_url'] = base_url($root_url);
+        $config['total_rows'] = $this->db->get($table)->num_rows();
+		$config['per_page'] = 10;
+		$config['start'] = $this->uri->segment(3);
+		$this->pagination->initialize($config);
+        $temp = $this->db->join('db_master.user', 'user.username=id_user')->get($table, $config['per_page'], $config['start'])->result_array();
+
+        $data['data_table'] = [];
+        foreach ($temp as $value) {
+            $value['from_date'] = gmdate("d M, Y", $value['from_date']);
+            $value['end_date'] = gmdate("d M, Y", $value['end_date']);
+            array_push($data['data_table'],$value);
+        }
+        customView('template/table_page', $data);
+    }
+    public function repository()
+    {
+        //config
+        $data = $this->globalData;
+        $table = 'repository';
+        $root_url = 'repository/';
+        $data['title'] = 'Repositori Saya';
+        $data['desc'] = '';
+        $data['create_url'] = $root_url.'create/';
+        $data['edit_url'] = $root_url.'edit/';
+        $data['detail_url'] = $root_url.'detail/';
+        $data['delete_url'] = $root_url.'delete/';
+        $data['download_url'] = '/sertifikat/';
+        $data['column_table'] = ['id','name', 'institution', 'from_date','end_date', 'level','category'];
+        $data['column_alias'] = ['id','nama', 'Nama Lembaga', 'Tanggal Mulai','Tanggal Akhir', 'Tingkat','Kategori'];
+
+        // Config Pagination
+		$config['base_url'] = base_url($root_url);
+        $config['total_rows'] = $this->db->get($table)->num_rows();
+		$config['per_page'] = 10;
+		$config['start'] = $this->uri->segment(3);
+		$this->pagination->initialize($config);
+        $temp = $this->db->get_where($table, ['id_user' => $data['this_user']['username']], $config['per_page'], $config['start'])->result_array();
+        $data['data_table'] = [];
+        foreach ($temp as $value) {
+            $value['from_date'] = gmdate("d M, Y", $value['from_date']);
+            $value['end_date'] = gmdate("d M, Y", $value['end_date']);
+            array_push($data['data_table'],$value);
+        }
+        customView('template/table_page', $data);
+    }
+    public function create_repository()
+    {
+        // get slug
+        $data = $this->globalData;
+        $data['is_edit'] = true;
+        $data['data_slug'] = false;
+        if($this->input->post()){
+            $this->form_validation->set_rules('name','Nama Sertifikat','trim|required');
+            $this->form_validation->set_rules('institution','Nama Lembaga','trim|required');
+            $this->form_validation->set_rules('from_date','Tanggal Mulai Sertifikat','trim|required');
+            $this->form_validation->set_rules('end_date','Tanggal Akhir Sertifikat','trim|required');
+            $this->form_validation->set_rules('level','Level','trim|required');
+            $this->form_validation->set_rules('category','Kategori','trim|required');
+			if(!$this->form_validation->run()){
+				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
+				$this->session->set_flashdata('alertType', 'danger');
+			} else {
+                $config['upload_path']	= './sertifikat';
+                $config['allowed_types'] = 'pdf';
+                $file = $_FILES['sertifikat']['name'];
+                $this->load->library('upload');
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload('sertifikat')) {
+                    $error = array('error' => $this->upload->display_errors());
+                    echo json_encode($error);
+                    die();
+                } else {
+                    $file = $this->upload->data('file_name');
+                }
+                $form = [
+                    'name' => $this->input->post('name'),
+                    'institution' => $this->input->post('institution'),
+                    'from_date' => strtotime($this->input->post('from_date')),
+                    'end_date' => strtotime($this->input->post('end_date')),
+                    'level' => $this->input->post('level'),
+                    'category' => $this->input->post('category'),
+                    'files' => $file,
+                    'id_user' => $data['this_user']['username'],
+                ];
+                $this->db->insert('repository', $form);
+                $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
+				$this->session->set_flashdata('alertType', 'success');
+                redirect('repository');
+            }
+        }
+        $data['title'] = 'Tambah Sertifikat';
+        customView('dosen/repository', $data);
+    }
+    public function edit_repository($id)
+    {
+        // get slug
+        $data = $this->globalData;
+        $data['is_edit'] = true;
+        $data['data_slug'] = false;
+        if($this->input->post()){
+            $this->form_validation->set_rules('name','Nama Sertifikat','trim|required');
+            $this->form_validation->set_rules('institution','Nama Lembaga','trim|required');
+            $this->form_validation->set_rules('from_date','Tanggal Mulai Sertifikat','trim|required');
+            $this->form_validation->set_rules('end_date','Tanggal Akhir Sertifikat','trim|required');
+            $this->form_validation->set_rules('level','level','trim|required');
+            $this->form_validation->set_rules('category','Kategori','trim|required');
+			if(!$this->form_validation->run()){
+				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
+				$this->session->set_flashdata('alertType', 'danger');
+			} else {
+                $config['upload_path']	= './sertifikat';
+                $config['allowed_types'] = 'pdf';
+                $file = $_FILES['sertifikat']['name'];
+                $this->load->library('upload');
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload('sertifikat')) {
+                    $error = array('error' => $this->upload->display_errors());
+                    echo json_encode($error);
+                    die();
+                } else {
+                    $file = $this->upload->data('file_name');
+                }
+                $form = [
+                    'name' => $this->input->post('name'),
+                    'institution' => $this->input->post('institution'),
+                    'from_date' => strtotime($this->input->post('from_date')),
+                    'end_date' => strtotime($this->input->post('end_date')),
+                    'level' => $this->input->post('level'),
+                    'category' => $this->input->post('category'),
+                    'files' => $file,
+                    'id_user' => $data['this_user']['username']
+                ];
+                $this->db->where(['id' => $id])->update('repository', $form);
+                $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
+				$this->session->set_flashdata('alertType', 'success');
+                redirect('repository');
+            }
+        }
+        $data['data_slug'] = $this->db->where(['id' => $id])->get('repository')->row_array();
+        $data['title'] = 'Edit Sertifikat';
+        customView('/dosen/repository', $data);
+    }
+    public function detail_repository($id)
+    {
+        $data = $this->globalData;
+        $data['data_slug'] = $this->db->where(['id' => $id])->get('repository')->row_array();
+        $data['is_edit'] = false;
+        $data['title'] = 'Detail Sertifikat '. $data['data_slug']['name'];
+        customView('/dosen/repository', $data);
+    }
+    public function delete_repository()
+    {
+        $this->db->where(['id' => $this->input->post('id')])->delete('repository');
+        $this->session->set_flashdata('alertForm', 'Data berhasil dihapus');
+		$this->session->set_flashdata('alertType', 'success');
+        redirect('repository');
     }
 }
