@@ -79,14 +79,22 @@ $route['detail/(:any)/(:num)'] = 'Home/detail/$1';
 
 # -------------------------------SUPERADMIN--------------------------------
 $route['dashboard'] = 'Superadmin/index';
+// Survei Dosen Terbaik
+$route['survei/dosen-terbaik'] = 'Superadmin/survei_dosen_terbaik';
+$route['survei/dosen-terbaik/create'] = 'Superadmin/create_dosen/9999';
+$route['survei/dosen-terbaik/edit'] = 'Superadmin/edit_survei/dosen-terbaik/9999';
+$route['survei/dosen-terbaik/detail/(:num)'] = 'Superadmin/detail_dosen/$1';
+$route['survei/dosen-terbaik/edit-dosen/(:num)'] = 'Superadmin/edit_dosen/$1';
+$route['survei/dosen-terbaik/delete'] = 'Superadmin/delete_dosen';
+
 // Survei
 $route['survei/(:any)'] = 'Superadmin/survei/$1';
-$route['survei/(:any)/(:num)'] = 'Superadmin/survei/$1';
 $route['survei/(:any)/(:num)'] = 'Superadmin/survei/$1';
 $route['survei/(:any)/create'] = 'Superadmin/create_survei/$1';
 $route['survei/(:any)/edit/(:num)'] = 'Superadmin/edit_survei/$1/$2';
 $route['survei/(:any)/detail/(:num)'] = 'Superadmin/detail_survei/$1/$2';
 $route['survei/(:any)/delete'] = 'Superadmin/delete_survei/$1';
+
 // Period
 $route['manage-period'] = 'Superadmin/period';
 $route['manage-period/create'] = 'Superadmin/create_period';
@@ -97,6 +105,7 @@ $route['manage-period/delete'] = 'Superadmin/delete_period';
 $route['manage-category'] = 'Superadmin/category';
 $route['manage-category/create'] = 'Superadmin/create_category';
 $route['manage-category/detail/(:num)'] = 'Superadmin/detail_category/$1';
+$route['manage-category/detail/dosen-terbaik'] = 'Superadmin/detail_category/dosen_terbaik';
 $route['manage-category/edit/(:num)'] = 'Superadmin/edit_category/$1';
 $route['manage-category/delete'] = 'Superadmin/delete_category';
 
@@ -125,6 +134,7 @@ $route['tendik/dashboard'] = 'Tendik/index';
 // $route['tendik/repository/delete'] = 'Logged/delete_repository';
 
 # -----------------------------------SURVEI---------------------------------
+
 $route['dosen/survei/(:num)'] = 'Logged/survei/$1';
 $route['mahasiswa/survei/(:num)'] = 'Logged/survei/$1';
 $route['tendik/survei/(:num)'] = 'Logged/survei/$1';

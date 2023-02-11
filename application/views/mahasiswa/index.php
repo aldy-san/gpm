@@ -3,8 +3,20 @@
 </div>
 <div class="page-content">
     <section class="row">
-        <?php if (count($category_mahasiswa_avail) > 0): ?>
         <h4 class="col-12 mb-3">Silahkan Pilih Menu Survei</h4>
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-header ">
+                    <h5>Survei Dosen Terbaik</h5>
+                </div>
+                <div class="card-body">
+                    <a href="<?= base_url('mahasiswa/survei/9999'); ?>"
+                        class="btn btn-primary <?= $another_survey_answered ? 'disabled' : '' ?>">Mulai
+                        Mengisi Survei</a>
+                </div>
+            </div>
+        </div>
+        <?php if (count($category_mahasiswa_avail) > 0): ?>
         <?php foreach ($category_mahasiswa_avail as $category): ?>
         <div class="col-12 col-lg-6">
             <div class="card">

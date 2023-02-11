@@ -82,56 +82,82 @@ class Logged extends CI_Controller {
 
     public function survei($id_category){
         $data = $this->globalData;
-        $survei = $this->db->get_where('survei',['category' => $id_category, 'is_active' => '1'])->result_array();
+
         if ($this->input->post()){
-            //$this->db->select('id,bar_length');
-            foreach($survei as $num => $sur){
-                $this->form_validation->set_rules('answer'.$sur['id'],'answer '.($num+1),'trim|required');
-            }
-            if(!$this->form_validation->run()){
-				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
-			}else{
-                $loop = 0;
-                foreach($this->input->post() as $key => $answer){
-                    if($survei[$loop]['type'] != 'bar'){
-                        $this->db->insert('answer', [
-                            'id_user' => $data['this_user']['username'],
-                            'id_survei' => filter_var($key, FILTER_SANITIZE_NUMBER_INT),
-                            'answer' => $answer,
-                            'created_at' => time()
-                        ]);
-                    }else{
-                        if (is_numeric($answer)){
-                            // $detail = ($answer > 80 && $answer <=100) ? '81-100'
-                            //         : (($answer > 60 && $answer <=80) ? '61-100'
-                            //         : (($answer > 40 && $answer <=60) ? '41-60'
-                            //         : (($answer > 20 && $answer <=40) ? '21-40' : '0-20')));
-                            if($answer > 91 && $answer <=100) $detail='91-100';
-                            else if($answer > 81 && $answer <= 90) $detail='81-90';
-                            else if($answer > 71 && $answer <= 80) $detail='71-80';
-                            else if($answer > 61 && $answer <= 70) $detail='61-70';
-                            else if($answer > 51 && $answer <= 60) $detail='51-60';
-                            else if($answer > 41 && $answer <= 50) $detail='41-50';
-                            else if($answer > 31 && $answer <= 40) $detail='31-40';
-                            else if($answer > 21 && $answer <= 30) $detail='21-30';
-                            else if($answer > 11 && $answer <= 20) $detail='11-20';
-                            else $detail='0-10';
-                        }
-                        $this->db->insert('answer', [
-                            'id_user' => $data['this_user']['username'],
-                            'id_survei' => filter_var($key, FILTER_SANITIZE_NUMBER_INT),
-                            'answer' => $detail,
-                            'detail' => $answer,
-                            'created_at' => time()
-                        ]);
-                    }
-                    $loop++;
+            if(isset($this->input->post()['survey_dosen'])){
+                $this->form_validation->set_rules('answer','Jawaban Dosen Terbaik','trim|required');
+                if(!$this->form_validation->run()){
+                    $this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
+                }else{
+                    $form = [
+                        'id_user' => $data['this_user']['username'],
+                        'id_survei' => 9999,
+                        'answer' => $this->input->post()['answer'],
+                        'created_at' => time()
+                    ];
+                    $this->db->trans_start();
+                    $this->db->insert('answer',$form);
+                    $this->db->trans_complete();
+                    $this->session->set_flashdata('alertForm', 'Berhasil Mengisi Survei Dosen Terbaik');
+					$this->session->set_flashdata('alertType', 'success');
+                    redirect('/mahasiswa/dashboard');
                 }
-                redirect('/');
+            }
+            else{
+                //$this->db->select('id,bar_length');
+                foreach($survei as $num => $sur){
+                    $this->form_validation->set_rules('answer'.$sur['id'],'answer '.($num+1),'trim|required');
+                }
+                if(!$this->form_validation->run()){
+                    $this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
+                }else{
+                    $loop = 0;
+                    foreach($this->input->post() as $key => $answer){
+                        if($survei[$loop]['type'] != 'bar'){
+                            $this->db->insert('answer', [
+                                'id_user' => $data['this_user']['username'],
+                                'id_survei' => filter_var($key, FILTER_SANITIZE_NUMBER_INT),
+                                'answer' => $answer,
+                                'created_at' => time()
+                            ]);
+                        }else{
+                            if (is_numeric($answer)){
+                                // $detail = ($answer > 80 && $answer <=100) ? '81-100'
+                                //         : (($answer > 60 && $answer <=80) ? '61-100'
+                                //         : (($answer > 40 && $answer <=60) ? '41-60'
+                                //         : (($answer > 20 && $answer <=40) ? '21-40' : '0-20')));
+                                if($answer > 91 && $answer <=100) $detail='91-100';
+                                else if($answer > 81 && $answer <= 90) $detail='81-90';
+                                else if($answer > 71 && $answer <= 80) $detail='71-80';
+                                else if($answer > 61 && $answer <= 70) $detail='61-70';
+                                else if($answer > 51 && $answer <= 60) $detail='51-60';
+                                else if($answer > 41 && $answer <= 50) $detail='41-50';
+                                else if($answer > 31 && $answer <= 40) $detail='31-40';
+                                else if($answer > 21 && $answer <= 30) $detail='21-30';
+                                else if($answer > 11 && $answer <= 20) $detail='11-20';
+                                else $detail='0-10';
+                            }
+                            $this->db->insert('answer', [
+                                'id_user' => $data['this_user']['username'],
+                                'id_survei' => filter_var($key, FILTER_SANITIZE_NUMBER_INT),
+                                'answer' => $detail,
+                                'detail' => $answer,
+                                'created_at' => time()
+                            ]);
+                        }
+                        $loop++;
+                    }
+                    redirect('/');
+                }
             }
         }
+        $survei = $this->db->get_where('survei',['category' => $id_category, 'is_active' => '1'])->result_array();
         $this->globalData['withSidebar'] = false;
         $data = $this->globalData;
+        if($id_category === '9999'){
+            $data['another_survey'] = true;
+            $data['survey_options'] = $this->db->get_where('survei_option',['survei_id' => $id_category])->result_array();
+        }
         $data['survei'] = $survei;
         $data['notLogged'] = false;
         $data['category'] = $this->db->get_where('category', ['id' => $id_category])->row_array();

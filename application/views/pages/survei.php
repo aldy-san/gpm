@@ -16,23 +16,28 @@
             </div>
             <?php endif ?>
             <div class="page-heading text-center">
+                <?php if(isset($another_survey)): ?>
+                <h2 class="text-capitalize"><?= $survei[0]['question'] ?></h2>
+                <?php else: ?>
                 <h2 class="text-capitalize"><?= $notLogged ? $this->uri->segment(1) : $category['name']; ?></h2>
+                <?php endif ?>
             </div>
             <div class="page-content">
                 <section class="bootstrap-select">
                     <form
                         action="<?= base_url($this->uri->segment(1).'/survei/'.(!$notLogged ? $this->uri->segment(3) : '')) ?>"
                         method="POST">
-                        <?php 
-                            foreach($survei as $loop => $value) : 
+                        <?php
+                            if(!isset($another_survey)) :
+                            foreach($survei as $loop => $value) :
                         ?>
                         <div class="row my-3" data-aos="fade-up" data-aos-duration="1500">
                             <div class="col-12 p-4">
                                 <?= form_error('answer'.$value['id'],'<small class="text-danger">','</small>'); ?>
                                 <h4 class="mb-4"> <?= $value['question'] ?></h4>
-                                <?php 
-                                    if($value['type'] === 'selection'): 
-                                        foreach(explode(';',$value['selections']) as $key => $option) :    
+                                <?php
+                                    if($value['type'] === 'selection'):
+                                        foreach(explode(';',$value['selections']) as $key => $option) :
                                 ?>
                                 <div class="ms-2 my-2 form-check">
                                     <input class="form-check-input" type="radio" name="answer<?= $value['id'] ?>"
@@ -42,9 +47,9 @@
                                         <h5><?= $option ?></h5>
                                     </label>
                                 </div>
-                                <?php 
+                                <?php
                                         endforeach;
-                                    elseif($value['type'] === 'bar') : 
+                                    elseif($value['type'] === 'bar') :
                                 ?>
 
                                 <div class="col-md-12 d-flex justify-content-between">
@@ -60,9 +65,9 @@
                                         id="range<?= $bar ?>" name="answer<?= $value['id'] ?>">
                                 </div>
 
-                                <?php 
+                                <?php
                                     $bar++;
-                                    elseif($value['type'] === 'description') :  
+                                    elseif($value['type'] === 'description') :
                                 ?>
                                 <div class="form-group with-title mb-3">
                                     <textarea class="form-control" id="exampleFormControlTextarea1"
@@ -75,7 +80,25 @@
                             </div>
                         </div>
                         <?php endforeach; ?>
-                        <button class="btn btn-primary m-auto">Kirim</button>
+                        <?php else:?>
+                        <?php foreach($survey_options as $key => $value): ?>
+                        <div class="row my-3" data-aos="fade-up" data-aos-duration="1500">
+                            <div class="col-12 p-4">
+                                <?= form_error('answer'.$value['id'],'<small class="text-danger">','</small>'); ?>
+                                <label for="answer<?= $key ?>">
+                                    <h4 class="mb-4"> <?= $key+1;?>. <?= $value['name'];  ?></h4>
+                                </label>
+                                <div class="ms-2 my-2 form-check">
+                                    <input class="form-check-input" id="answer<?= $key ?>" value="<?= $value['id'] ?>"
+                                        type="radio" name="answer">
+                                    <img src="<?= base_url('assets/images/dosen/'.$value['image']) ?>" width="300">
+                                </div>
+                            </div>
+                        </div>
+                        <?php endforeach; ?>
+                        <input type="hidden" name='survey_dosen'>
+                        <?php endif ?>
+                        <button class=" btn btn-primary m-auto">Kirim</button>
                     </form>
                 </section>
             </div>

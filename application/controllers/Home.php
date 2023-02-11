@@ -7,7 +7,7 @@ class Home extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->db_master = $this->load->database('db_master', TRUE);
-        
+
         $this->globalData = [
             'withNavbar' => true,
             'withSidebar' => false,

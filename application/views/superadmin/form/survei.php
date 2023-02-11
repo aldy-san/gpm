@@ -40,16 +40,16 @@
                                 <?= form_error('category'); ?>
                             </div>
                         </div>-->
+                        <?php if($slug !== 'dosen'): ?>
                         <div class="form-group col-2">
                             <label for="type">Tipe</label>
                             <fieldset>
                                 <select id="form-type" class="form-select" name="type"
-                                    <?= $is_edit ? '' : 'disabled'; ?>>
-                                    <option value="bar"
-                                        <?= $data_slug && ($data_slug['type'] === 'bar') ? 'selected' : ''; ?>>Bar
+                                    <?= $is_edit  ? '' : 'disabled';  ?> <option value="bar"
+                                    <?= $data_slug && ($data_slug['type'] === 'bar') ? 'selected' : ''; ?>>Bar
                                     </option>
                                     <option value="selection"
-                                        <?= $data_slug && ($data_slug['type'] === 'selection') ? 'selected' : ''; ?>>
+                                        <?= $data_slug && ($data_slug['type'] === 'selection') ? 'selected' : '';?>>
                                         Selection</option>
                                     <option value="description"
                                         <?= $data_slug && ($data_slug['type'] === 'description') ? 'selected' : ''; ?>>
@@ -60,7 +60,7 @@
                         <div class="form-group col-2">
                             <label for="chart">Grafik</label>
                             <fieldset>
-                                <select class="form-select" name="chart" <?= $is_edit ? '' : 'disabled'; ?>>
+                                <select class="form-select" name="chart" <?= $is_edit  ? '' : 'disabled'; ?>>
                                     <option value="bar"
                                         <?= $data_slug && ($data_slug['chart'] === 'bar')? 'selected' : ''; ?>>Bar
                                     </option>
@@ -76,7 +76,7 @@
                             <input type="text" class="form-control <?= form_error('selections') ? 'is-invalid': ''; ?>"
                                 name="selections" id="selections" placeholder="Pilihan" autocomplete="off"
                                 value="<?= $data_slug ?  (set_value('selections') ?  set_value('selections') : $data_slug['selections']) : set_value('selections'); ?>"
-                                <?= $is_edit ? '' : 'disabled'; ?>>
+                                <?= $is_edit  ? '' : 'disabled'; ?>>
                             <div class="invalid-feedback">
                                 <?= form_error('selections'); ?>
                             </div>
@@ -86,7 +86,7 @@
                             <input type="text" class="form-control <?= form_error('bar_from') ? 'is-invalid': ''; ?>"
                                 name="bar_from" id="bar_from" placeholder="Bar From" autocomplete="off"
                                 value="<?= $data_slug ?  (set_value('bar_from') ?  set_value('bar_from') : $data_slug['bar_from']) : set_value('bar_from'); ?>"
-                                <?= $is_edit ? '' : 'disabled'; ?>>
+                                <?= $is_edit  ? '' : 'disabled'; ?>>
                             <div class="invalid-feedback">
                                 <?= form_error('bar_from'); ?>
                             </div>
@@ -96,11 +96,12 @@
                             <input type="text" class="form-control <?= form_error('bar_to') ? 'is-invalid': ''; ?>"
                                 name="bar_to" id="bar_to" placeholder="Bar To" autocomplete="off"
                                 value="<?= $data_slug ?  (set_value('bar_to') ?  set_value('bar_to') : $data_slug['bar_to']) : set_value('bar_to'); ?>"
-                                <?= $is_edit ? '' : 'disabled'; ?>>
+                                <?= $is_edit  ? '' : 'disabled'; ?>>
                             <div class="invalid-feedback">
                                 <?= form_error('bar_to'); ?>
                             </div>
                         </div>
+                        <?php endif ?>
                         <div class="form-group col-4">
                             <label for="is_active">Survei Aktif</label>
                             <fieldset>
