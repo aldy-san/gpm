@@ -77,6 +77,9 @@ $route['result/(:any)/(:num)'] = 'Home/result/$1/$2';
 $route['detail/(:any)'] = 'Home/detail/$1';
 $route['detail/(:any)/(:num)'] = 'Home/detail/$1';
 
+$route['constitution'] = 'Home/constitution';
+
+
 # -------------------------------SUPERADMIN--------------------------------
 $route['dashboard'] = 'Superadmin/index';
 // Survei Dosen Terbaik
@@ -95,6 +98,12 @@ $route['survei/(:any)/edit/(:num)'] = 'Superadmin/edit_survei/$1/$2';
 $route['survei/(:any)/detail/(:num)'] = 'Superadmin/detail_survei/$1/$2';
 $route['survei/(:any)/delete'] = 'Superadmin/delete_survei/$1';
 
+// constitution
+$route['manage-constitution'] = 'Superadmin/constitution';
+$route['manage-constitution/create'] = 'Superadmin/create_constitution';
+$route['manage-constitution/detail/(:num)'] = 'Superadmin/detail_constitution/$1';
+$route['manage-constitution/edit/(:num)'] = 'Superadmin/edit_constitution/$1';
+$route['manage-constitution/delete'] = 'Superadmin/delete_constitution';
 // Period
 $route['manage-period'] = 'Superadmin/period';
 $route['manage-period/create'] = 'Superadmin/create_period';

@@ -25,10 +25,10 @@ class Home extends CI_Controller {
                 foreach ($temp as $value) {
                     array_push($category_dosen_answered,$value['name']);
                 }
+                $this->globalData['category_dosen_avail'] = $category_dosen_avail;
+                $this->globalData['category_dosen_answered'] = $category_dosen_answered;
             }
         }
-        $this->globalData['category_dosen_avail'] = $category_dosen_avail;
-        $this->globalData['category_dosen_answered'] = $category_dosen_answered;
     }
 	public function logout()
 	{
@@ -251,4 +251,12 @@ class Home extends CI_Controller {
         $data['column_alias'] = ['nama_lengkap', 'jawaban'];
 		customView('template/table_page', $data);
 	}
+
+    public function constitution(){
+        $data = $this->globalData;
+        $data['withNavbar'] = true;
+        $data['withSidebar'] = false;
+        $data['peraturan'] = $this->db->get('constitution')->result_array();
+		customView('pages/not-logged/constitution', $data);
+    }
 }

@@ -44,9 +44,10 @@
                         <div class="form-group col-2">
                             <label for="type">Tipe</label>
                             <fieldset>
-                                <select id="form-type" class="form-select" name="type"
-                                    <?= $is_edit  ? '' : 'disabled';  ?> <option value="bar"
-                                    <?= $data_slug && ($data_slug['type'] === 'bar') ? 'selected' : ''; ?>>Bar
+                                <select id="form-type" class="form-select" name="type">
+                                    <?= $is_edit  ? '' : 'disabled';  ?>
+                                    <option value="bar"
+                                        <?= $data_slug && ($data_slug['type'] === 'bar') ? 'selected' : ''; ?>>Bar
                                     </option>
                                     <option value="selection"
                                         <?= $data_slug && ($data_slug['type'] === 'selection') ? 'selected' : '';?>>

@@ -29,7 +29,131 @@ class Superadmin extends CI_Controller {
         $data = $this->globalData;
 		customView('dosen/index', $data);
 	}
+    // Constitution ===========================================================================================
+    public function constitution()
+    {
+        //config
+        $data = $this->globalData;
+        $table = 'constitution';
+        $root_url = '/manage-constitution/';
+        $data['title'] = 'Peraturan';
+        $data['desc'] = '';
+        $data['create_url'] = $root_url.'create/';
+        $data['edit_url'] = $root_url.'edit/';
+        $data['detail_url'] = $root_url.'detail/';
+        $data['delete_url'] = $root_url.'delete/';
+        $data['download_url'] = '/sertifikat/';
+        $data['column_table'] = ['id','name'];
+        $data['column_alias'] = ['id','nama'];
 
+        // Config Pagination
+        $config['base_url'] = base_url($root_url);
+        $config['total_rows'] = $this->db->get($table)->num_rows();
+        $config['per_page'] = 10;
+        $config['start'] = $this->uri->segment(3);
+        $this->pagination->initialize($config);
+        $data['data_table'] = $this->db->get($table, $config['per_page'], $config['start'])->result_array();
+        customView('template/table_page', $data);
+    }
+    public function create_constitution()
+    {
+        // get slug
+        $data = $this->globalData;
+        $data['is_edit'] = true;
+        $data['data_slug'] = false;
+        if($this->input->post()){
+            $this->form_validation->set_rules('name','Nama Sertifikat','trim|required');
+			if(!$this->form_validation->run()){
+				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
+				$this->session->set_flashdata('alertType', 'danger');
+			} else {
+                $config['upload_path']	= './sertifikat';
+                $config['allowed_types'] = 'pdf';
+                $file = $_FILES['sertifikat']['name'];
+                $this->load->library('upload');
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload('sertifikat')) {
+                    //$error = array('error' => $this->upload->display_errors());
+                    //echo json_encode($error);
+                    //die();
+                    $file = '';
+                } else {
+                    $file = $this->upload->data('file_name');
+                }
+                $form = [
+                    'name' => $this->input->post('name'),
+                    'type' => $this->input->post('type'),
+                    'url' => $this->input->post('url'),
+                    'files' => $file,
+                ];
+                $this->db->insert('constitution', $form);
+                $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
+				$this->session->set_flashdata('alertType', 'success');
+                redirect('manage-constitution');
+            }
+        }
+        $data['title'] = 'Tambah Peraturan';
+        customView('superadmin/form/constitution', $data);
+    }
+    public function edit_constitution($id)
+    {
+        // get slug
+        $data = $this->globalData;
+        $data['is_edit'] = true;
+        $data['data_slug'] = false;
+        if($this->input->post()){
+            $this->form_validation->set_rules('name','Nama Sertifikat','trim|required');
+			if(!$this->form_validation->run()){
+				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
+				$this->session->set_flashdata('alertType', 'danger');
+			} else {
+                $config['upload_path']	= './sertifikat';
+                $config['allowed_types'] = 'pdf';
+                $file = $_FILES['sertifikat']['name'];
+                $this->load->library('upload');
+                $this->upload->initialize($config);
+                if (!$this->upload->do_upload('sertifikat')) {
+                    //$error = array('error' => $this->upload->display_errors());
+                    //echo json_encode($error);
+                    //die();
+                    $file = '';
+                } else {
+                    $file = $this->upload->data('file_name');
+                }
+                $form = [
+                    'name' => $this->input->post('name'),
+                    'type' => $this->input->post('type')
+                ];
+                if ($form['type'] === 'url'){
+                    $form['url'] = $this->input->post('url');
+                } else {
+                    $form['files'] = $file;
+                }
+                $this->db->where(['id' => $id])->update('constitution', $form);
+                $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
+				$this->session->set_flashdata('alertType', 'success');
+                redirect('manage-constitution');
+            }
+        }
+        $data['data_slug'] = $this->db->where(['id' => $id])->get('constitution')->row_array();
+        $data['title'] = 'Edit Peraturan';
+        customView('superadmin/form/constitution', $data);
+    }
+    public function detail_constitution($id)
+    {
+        $data = $this->globalData;
+        $data['data_slug'] = $this->db->where(['id' => $id])->get('constitution')->row_array();
+        $data['is_edit'] = false;
+        $data['title'] = 'Detail Peraturan '. $data['data_slug']['name'];
+        customView('superadmin/form/constitution', $data);
+    }
+    public function delete_constitution()
+    {
+        $this->db->where(['id' => $this->input->post('id')])->delete('constitution');
+        $this->session->set_flashdata('alertForm', 'Data berhasil dihapus');
+		$this->session->set_flashdata('alertType', 'success');
+        redirect('manage-constitution');
+    }
     // PERIODE ===========================================================================================
     public function period()
     {

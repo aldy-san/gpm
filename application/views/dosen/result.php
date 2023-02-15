@@ -2,7 +2,7 @@
     <h3>Hasil Survei</h3>
 </div>
 <div class="page-content">
-    <?php if (count($period) > 0): ?>
+    <?php if (count($period) > 0 || in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna'])): ?>
     <div class="d-flex justify-content-between align-items-end ">
         <div>
             <h5 id="total">Responden: . orang</h5>
