@@ -126,7 +126,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
     $("#period-title > span").text(name)
     // console.log(id_category)
     dataPopulation.forEach((item, index) => {
-        $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item + `/${id_category}` +
+        $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item + (id_category ? `/${id_category}` : '') +
             filter, async (
                 res) => {
                 var temp = JSON.parse(res)

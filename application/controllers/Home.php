@@ -218,6 +218,9 @@ class Home extends CI_Controller {
         } else if ($role === 'mitra'){
             $data['population'] = ['position', 'agency', 'scale', 'year_since', 'year_coop'];
             $data['titles'] = ['Position', 'Instansi', 'Skala', 'Tahun Berdiri', 'Tahun Kerjasama'];
+        }   else if ($role === 'pengguna'){
+            $data['population'] = ['year_since', 'scale'];
+            $data['titles'] = ['Tahun Berdiri', 'Tingkat'];
         }
 		customView('dosen/result', $data);
 	}

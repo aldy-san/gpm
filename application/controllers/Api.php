@@ -8,20 +8,22 @@ class Api extends CI_Controller {
         $result = $this->db->query('SELECT * FROM db_master.user')->result();
         echo json_encode($result);
     }
-    public function getTotalData($id){
+    public function getTotalData($id=false){
         $from = $this->input->get('from');
         $to = $this->input->get('to');
         $role = $this->input->get('role');
         $this->db->select('count(DISTINCT id_user) as total');
         $this->db->from('answer');
         //where
-        $this->db->where(['category.id' => $id]);
+        if ($id){
+            $this->db->where(['category.id' => $id]);
+        }
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
         }
         //join
         if (in_array($role, ['alumni', 'mitra', 'pengguna'])){
-            $this->db->join($role, $role.'.id = answer.id_user', 'left');
+            $this->db->join($role, $role.'.id = answer.id_user', 'right');
         } else {
             $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         }
@@ -55,7 +57,7 @@ class Api extends CI_Controller {
         } else if ($role == 'mitra'){
             $this->db->select('mitra.agency as username, answer.answer');
         } else if ($role == 'pengguna'){
-            $this->db->select('pengguna.email as username, answer.answer');
+            $this->db->select('*');
         } else {
             $this->db->select('user.nama_lengkap as username, answer.answer');
         }
@@ -74,7 +76,7 @@ class Api extends CI_Controller {
         echo json_encode($result);
     }
 
-    public function getChartDataByGroupBy($group_by, $id)
+    public function getChartDataByGroupBy($group_by, $id=false)
     {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
@@ -82,13 +84,15 @@ class Api extends CI_Controller {
         $this->db->select($group_by.' as grouped, count(DISTINCT id_user) as total');
         $this->db->from('answer');
         //where
-        $this->db->where(['category.id' => $id]);
+        if ($id){
+            $this->db->where(['category.id' => $id]);
+        }
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
         }
         //join
         if (in_array($role, ['alumni', 'mitra', 'pengguna'])){
-            $this->db->join($role, $role.'.id = answer.id_user', 'left');
+            $this->db->join($role, $role.'.id = answer.id_user', 'right');
         } else {
             $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         }

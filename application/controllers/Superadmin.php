@@ -580,6 +580,7 @@ class Superadmin extends CI_Controller {
                     'chart' => $this->input->post('chart'),
                     'is_active' => $this->input->post('is_active'),
                 ];
+                //var_dump($form);die;
             if (is_numeric($data['slug'])){
                 $form['category'] = $data['slug'];
             }else {
