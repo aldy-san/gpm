@@ -4,8 +4,13 @@
 <div class="page-content">
     <?php if (count($period) > 0 || in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna'])): ?>
     <div class="d-flex justify-content-between align-items-end ">
-        <div>
+        <div class="d-flex flex-column">
             <h5 id="total">Responden: . orang</h5>
+            <div class="custom-control custom-checkbox me-2">
+                <input id="check-all" type="checkbox" class="form-check-input form-check-primary form-check-glow"
+                    name="check-all" checked onclick="checkHandlerAll()">
+                <label for="check all">Select All</label>
+            </div>
         </div>
         <div class="d-flex">
             <?php if (!in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna'])): ?>
@@ -44,7 +49,12 @@
         <?php foreach ($population as $index=>$p): ?>
         <div id="result-population-<?= $index; ?>" class="col-12 col-lg-6">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex">
+                    <div class="custom-control custom-checkbox me-2">
+                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow"
+                            name="result-population-<?= $index; ?>" id="survei-activation" checked
+                            onclick="checkHandler('dataPopulation','#result-population-<?= $index; ?>')">
+                    </div>
                     <h4 class="text-capitalize"><?= $titles[$index]; ?></h4>
                 </div>
                 <div class="card-body">
@@ -61,7 +71,12 @@
         <?php foreach ($survei as $s): ?>
         <div id="result-<?= $s['id']; ?>" class="col-12 col-lg-6">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header d-flex">
+                    <div class="custom-control custom-checkbox me-2">
+                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow"
+                            name="result-<?= $s['id']; ?>" id="survei-activation" checked
+                            onclick="checkHandler('dataSurvei','#result-<?= $s['id']; ?>')">
+                    </div>
                     <h4><?= $s['question']; ?></h4>
                 </div>
                 <div class="card-body">
@@ -107,6 +122,10 @@ $('input[name="dates"]').daterangepicker({
     const e = new Date(end).getTime() / 1000
     executeGraphic(s, e, '', true)
 });
+var selectedExport = {
+    dataPopulation: [],
+    dataSurvei: [],
+};
 var dataSurvei = <?= json_encode($survei); ?>;
 var dataPopulation = <?= json_encode($population); ?>;
 var dataLabels = <?= json_encode($labels); ?>;
@@ -114,13 +133,60 @@ var period = <?= json_encode($period); ?>;
 var role = '<?= $this->uri->segment(2); ?>'
 var id_category = '<?= $this->uri->segment(3); ?>'
 
+dataPopulation.forEach((item, index) => {
+    selectedExport.dataPopulation.push('#result-population-' + index);
+})
+dataSurvei.forEach((item, index) => {
+    selectedExport.dataSurvei.push('#result-' + index);
+})
+
+function checkHandlerAll() {
+    if (selectedExport.dataPopulation.length && selectedExport.dataSurvei.length) {
+        selectedExport.dataPopulation = []
+        selectedExport.dataSurvei = []
+        $('input[name^="result-"]').prop('checked', false);
+    } else {
+        selectedExport.dataPopulation = []
+        selectedExport.dataSurvei = []
+        $('input[name^="result-"]').prop('checked', true);
+        dataPopulation.forEach((item, index) => {
+            selectedExport.dataPopulation.push('#result-population-' + index);
+        })
+        dataSurvei.forEach((item, index) => {
+            selectedExport.dataSurvei.push('#result-' + index);
+        })
+    }
+    checkExport()
+}
+
+function checkHandler(name, id) {
+    if (selectedExport[name].includes(id)) {
+        var index = selectedExport[name].indexOf(id);
+        if (index !== -1) {
+            selectedExport[name].splice(index, 1);
+        }
+    } else {
+        selectedExport[name].push(id);
+    }
+    selectedExport[name].sort()
+    checkExport()
+}
+
+function checkExport() {
+    console.log(selectedExport)
+    if (!selectedExport.dataPopulation.length && !selectedExport.dataSurvei.length) {
+        $('#btn-export').prop('disabled', true)
+    } else {
+        $('#btn-export').prop('disabled', false)
+    }
+}
+
 function executeGraphic(from, to, name, isUpdate = false) {
     let filter = (from) ? '?from=' + from : ''
     filter += (to) ? '&to=' + to : ''
     filter += '&role=<?= $this->uri->segment(2); ?>'
     $.get('<?=base_url('api/getTotalData/')?>' + id_category + filter, (res) => {
         var temp = JSON.parse(res)
-        console.log(temp[0])
         $("#total").text(`Responden: ${temp[0].total} orang`)
     })
     $("#period-title > span").text(name)
@@ -331,16 +397,16 @@ async function exportHandler() {
         floatPrecision: 16
     });
     const promises = []
-    dataPopulation.forEach((item, index) => {
-        promises.push(html2canvas($('#result-population-' + index)[0]))
+    selectedExport.dataPopulation.forEach((item, index) => {
+        promises.push(html2canvas($(item)[0]))
     })
-    dataSurvei.forEach((item, index) => {
-        promises.push(html2canvas($('#result-' + item.id)[0]))
+    selectedExport.dataSurvei.forEach((item, index) => {
+        promises.push(html2canvas($(item)[0]))
     })
-    //console.log(promises)
+    console.log(promises)
     await Promise.all(promises).then(res => {
             let idx = 0
-            dataPopulation.concat(dataSurvei).forEach((item, index) => {
+            selectedExport.dataPopulation.concat(selectedExport.dataSurvei).forEach((item, index) => {
                 var imgData = res[index].toDataURL('image-' + item.id + '/png');
                 var width = pdf.internal.pageSize.getWidth();
                 var height = pdf.internal.pageSize.getHeight();
@@ -354,14 +420,15 @@ async function exportHandler() {
                     x = width / 2
                     y = height / 2
                 }
-                if ((((idx + 1) % 4 === 1) && (idx !== 0)) || index === dataPopulation.length) {
+                if ((((idx + 1) % 4 === 1) && (idx !== 0)) || index === selectedExport.dataPopulation
+                    .length) {
                     pdf.addPage()
                 }
                 idx += 1;
-                if (index + 1 === dataPopulation.length) {
+                if (index + 1 === selectedExport.dataPopulation.length) {
                     idx = 0
                 }
-                pdf.addImage(imgData, 'PNG', x, y, width / 2, height / 2);
+                pdf.addImage(imgData, 'PNG', x, y, (width / 2) - 5, height / 2);
             })
         })
         .finally(() => {
