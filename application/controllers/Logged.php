@@ -82,7 +82,6 @@ class Logged extends CI_Controller {
 
     public function survei($id_category){
         $data = $this->globalData;
-
         if ($this->input->post()){
             if(isset($this->input->post()['survey_dosen'])){
                 $this->form_validation->set_rules('answer','Jawaban Dosen Terbaik','trim|required');
@@ -91,9 +90,9 @@ class Logged extends CI_Controller {
                 }else{
                     $form = [
                         'id_user' => $data['this_user']['username'],
-                        'id_survei' => 9999,
                         'answer' => $this->input->post()['answer'],
-                        'created_at' => time()
+                        'created_at' => time(),
+                        'survei_dosen' => 1
                     ];
                     $this->db->trans_start();
                     $this->db->insert('answer',$form);
@@ -154,9 +153,11 @@ class Logged extends CI_Controller {
         $survei = $this->db->get_where('survei',['category' => $id_category, 'is_active' => '1'])->result_array();
         $this->globalData['withSidebar'] = false;
         $data = $this->globalData;
-        if($id_category === '9999'){
+        if($id_category === 'dosen_terbaik'){
+            $survei = $this->db->get_where('survei_dosen',['id' => 1])->row();
             $data['another_survey'] = true;
-            $data['survey_options'] = $this->db->get_where('survei_option',['survei_id' => $id_category])->result_array();
+            $data['survey_options'] = $this->db->get('survei_option')->result_array();
+            $data['dosen'] = $this->db->get('survei_option')->result_array();
         }
         $data['survei'] = $survei;
         $data['notLogged'] = false;

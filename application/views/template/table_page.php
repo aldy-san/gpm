@@ -152,14 +152,6 @@
                                 <td>Dosen Terbaik</td>
                                 <td>Mahasiswa</td>
                                 <td>
-                                    <?php if($detail_url): ?>
-                                    <a href="<?= base_url($detail_url.'dosen-terbaik'); ?>"
-                                        class="ms-1 btn btn-info">Detail</a>
-                                    <?php endif ?>
-                                    <?php if($edit_url): ?>
-                                    <a href="<?= base_url($edit_url.$item['id']); ?>"
-                                        class="ms-1 btn btn-warning">Edit</a>
-                                    <?php endif ?>
                                     <?php if(isset($custom_url)): ?>
                                     <a href="<?= base_url($custom_url.'dosen-terbaik'); ?>"
                                         class="ms-1 btn btn-success">Survei</a>

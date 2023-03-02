@@ -351,8 +351,7 @@ class Superadmin extends CI_Controller {
     public function detail_category($id)
     {
         $data = $this->globalData;
-        if($id === "dosen_terbaik") $data['data_slug'] = $this->db->where(['name' => 'Dosen Terbaik'])->get('category')->row_array();
-        else $data['data_slug'] = $this->db->where(['id' => $id])->get('category')->row_array();
+        $data['data_slug'] = $this->db->where(['id' => $id])->get('category')->row_array();
         $data['is_edit'] = false;
         $data['title'] = 'Detail Kategory '. $data['data_slug']['name'];
         customView('superadmin/form/category', $data);
@@ -419,37 +418,34 @@ class Superadmin extends CI_Controller {
     }
     public function survei_dosen_terbaik(){
         $data = $this->globalData;
-        $table = 'survei';
+        // $table = 'survei';
         $url = '/survei/dosen-terbaik';
-        $where = ['category' => 9999];
-        $category = $this->db->get('category')->result_array();
-        $data['title'] = 'Survei '.findObjectBy('id', 9999, $category)['name'];
-
         $config['base_url'] = base_url($url);
-        $config['total_rows'] = $this->db->get_where($table, $where)->num_rows();
+        $data['survei_dosen'] = $this->db->get('survei_dosen')->result_array();
+        $data['dosen'] = $this->db->get('survei_option')->result_array();
+
+        // $config['total_rows'] = $this->db->get_where($table, $where)->num_rows();
 		$config['per_page'] = 10;
 		$config['start'] = $this->uri->segment(3);
-		$this->pagination->initialize($config);
-        // $data['data_table'] = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
-        // Config Template Table Page
-        $data['desc'] = '';
+		// $this->pagination->initialize($config);
+        // $data['desc'] = '';
         $data['create_url'] = $url.'/create/';
         $data['edit_url'] = $url.'/edit/';
         $data['detail_url'] = $url.'/detail/';
         $data['delete_url'] = $url.'/delete/';
+        $data['survei'] = $this->db->get('survei_option', $config['per_page'], $config['start'])->result_array();
 
-        $data['column_table'] = ['question', 'is_active'];
-        $data['column_alias'] = ['pertanyaan', 'aktif'];
-        $data['column_table_answer'] = ['name','image'];
-        $data['column_answer_alias'] = ['no','nama','foto'];
-        $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
-        $data['survei'] = $this->db->get_where('survei_option', ['survei_id' => 9999], $config['per_page'], $config['start'])->result_array();
-        $data['data_table'] = [];
-        foreach ($temp as $value) {
-            $value['category'] = findObjectBy('id', $value['category'], $category)['name'];
-            $value['is_active'] = $value['is_active'] ? 'Ya' : 'Tidak';
-            array_push($data['data_table'],$value);
-        }
+        // $data['column_table'] = ['name'];
+        // $data['column_alias'] = ['pertanyaan'];
+        // $data['column_table_answer'] = ['name','image'];
+        // $data['column_answer_alias'] = ['no','nama','foto'];
+        // $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
+        // $data['data_table'] = [];
+        // foreach ($temp as $value) {
+        //     $value['category'] = findObjectBy('id', $value['category'], $category)['name'];
+        //     $value['is_active'] = $value['is_active'] ? 'Ya' : 'Tidak';
+        //     array_push($data['data_table'],$value);
+        // }
         customView('superadmin/form/dosen_terbaik',$data);
     }
     public function create_dosen(){
@@ -551,7 +547,33 @@ class Superadmin extends CI_Controller {
 		$this->session->set_flashdata('alertType', 'success');
         redirect('survei/dosen-terbaik');
     }
-
+    public function edit_survei_dosen(){
+        $data = $this->globalData;
+        $questions = $this->db->where('id',1)->get('survei_dosen')->result_array();
+        $data['title'] = "Edit Survei Dosen";
+        $data['is_edit'] = true;
+        $data['question'] = $this->db->where('id',1)->get('survei_dosen')->row();
+        if($this->input->post()){
+            $this->form_validation->set_rules('name','Nama Dosen','trim|required');
+			if(!$this->form_validation->run()){
+				$this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
+				$this->session->set_flashdata('alertType', 'danger');
+			} else {
+                $form = [
+                    'name' => $this->input->post('name'),
+                ];
+                $this->db->trans_start();
+                $this->db->where(['id' => 1])->update('survei_dosen', $form);
+                $this->db->trans_complete();
+                $this->session->set_flashdata('alertForm', 'Data berhasil diubah');
+				$this->session->set_flashdata('alertType', 'success');
+                redirect('survei/dosen-terbaik');
+            }
+        }
+        // var_dump($data['question']->name); die;
+        // $data['data_slug'] = $this->db->where(['category' => 9999])->get('survei')->row_array();
+        customView('superadmin/form/survei', $data);
+    }
     public function create_survei($slug)
     {
         // get slug

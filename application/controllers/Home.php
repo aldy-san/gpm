@@ -208,7 +208,7 @@ class Home extends CI_Controller {
 
         $data['population'] = [];
         $data['labels'] = [];
-        if ($role === 'mahasiswa') {
+        if ($role === 'mahasiswa' || $role === 'dosen') {
             $data['population'] = ['jenis_kelamin', 'jenjang', 'kode_prodi', 'tahun_masuk'];
             $data['titles'] = ['Jenis Kelamin', 'Jenjang', 'Prodi', 'Tahun Masuk'];
             $data['labels'] = [false, 'jenjang', 'prodi', false];

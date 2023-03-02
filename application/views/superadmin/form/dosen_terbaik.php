@@ -2,28 +2,12 @@
     <div class="page-title">
         <div class="row">
             <div class="col-12 mb-3">
-                <h3><?= $title ?></h3>
-                <p class="text-subtitle text-muted"><?= $desc?></p>
+                <h3>Dosen Terbaik</h3>
             </div>
         </div>
     </div>
 
     <section class="section">
-        <?php if(isset($activation)): ?>
-        <div class="card col-2">
-            <div class="p-3">
-                <div class="form-check">
-                    <div class="custom-control custom-checkbox">
-                        <input type="checkbox" class="form-check-input form-check-primary form-check-glow"
-                            name="customCheck" id="survei-activation"
-                            <?= $is_survei_active['is_active'] ? 'checked': ''; ?>>
-                        <label class="form-check-label" for="survei-activation">Aktivasi
-                            Survei</label>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <?php endif; ?>
         <div class="card">
             <?php if($edit_url): ?>
             <div class="card-header">
@@ -34,39 +18,19 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <?php foreach ($column_table as $key => $col): ?>
-                            <?php if(isset($column_alias)): ?>
-                            <th class="text-capitalize text-nowrap"><?= $column_alias[$key]; ?></th>
-                            <?php else : ?>
-                            <th class="text-capitalize text-nowrap"><?= join(' ', explode('_', $col)); ?></th>
-                            <?php endif; ?>
-                            <?php endforeach; ?>
+                            <th class="text-capitalize text-nowrap">Pertanyaan</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($data_table as $index => $item): ?>
-                        <tr>
-                            <?php if($title === 'Kategori Survei' ) : ?>
-                            <td class="text-capitalize">
-                                <?= $index+1 ?>
-                            </td>
-                            <?php endif ?>
-                            <?php foreach ($column_table as $col): ?>
-                            <?php if(isset($column_badge) && in_array($col, $column_badge)): ?>
-                            <td class="text-capitalize">
-                                <span
-                                    class="<?= $item[$col] === 'Ya' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?= $item[$col] ?></span>
-                            </td>
-                            <?php else : ?>
-                            <td class="text-capitalize">
-                                <?= $item[$col] ?>
-                            </td>
-                            <?php endif; ?>
-                            <?php endforeach; ?>
-                        </tr>
+                        <?php foreach($survei_dosen as $sd): ?>
+                        <td class="text-capitalize">
+                            <?= $sd['name'] ?>
+                        </td>
                         <?php endforeach; ?>
+                        </tr>
                     </tbody>
                 </table>
+
                 <?= $this->pagination->create_links(); ?>
                 <!--Basic Modal -->
                 <div class="modal fade text-left" id="deleteModal" tabindex="-1" role="dialog"
@@ -113,9 +77,9 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <?php foreach ($column_answer_alias as $key => $col): ?>
-                            <th class="text-capitalize text-nowrap"><?= $col; ?></th>
-                            <?php endforeach; ?>
+                            <th class="text-capitalize text-nowrap">No.</th>
+                            <th class="text-capitalize text-nowrap">Nama Dosen</th>
+                            <th class="text-capitalize text-nowrap">Foto</th>
                             <?php if($detail_url || $edit_url || $delete_url): ?>
                             <th>Aksi</th>
                             <?php endif; ?>
@@ -127,20 +91,16 @@
                             <td class="text-capitalize">
                                 <?= $index+1 ?>.
                             </td>
-                            <?php foreach ($column_table_answer as $col): ?>
-                            <?php if($col === 'image'): ?>
+                            <td class="text-capitalize">
+                                <?= $item['name'] ?>
+                            </td>
+
                             <td class="text-capitalize">
                                 <div class="avatar avatar-xl me-3">
-                                    <img src="<?= base_url('assets/images/dosen/'.$item[$col]) ?>"
-                                        alt="<?= $item[$col] ?>">
+                                    <img src="<?= base_url('assets/images/dosen/'.$item['image']) ?>"
+                                        alt="<?= $item['image'] ?>">
                                 </div>
                             </td>
-                            <?php else : ?>
-                            <td class="text-capitalize">
-                                <?= $item[$col] ?>
-                            </td>
-                            <?php endif; ?>
-                            <?php endforeach; ?>
                             <?php if($detail_url || $edit_url || $delete_url): ?>
                             <td>
                                 <div class="d-flex">
@@ -158,15 +118,6 @@
                                         onclick="$('#form-delete input').attr('value','<?= $item['id']; ?>')">
                                         Delete
                                     </button>
-                                    <?php if(isset($custom_url)): ?>
-                                    <a href="<?= base_url($custom_url.$item['id']); ?>"
-                                        class="ms-1 btn btn-success">Survei</a>
-                                    <?php endif ?>
-                                    <?php endif ?>
-                                    <?php if(isset($download_url)): ?>
-                                    <a href="<?= base_url($download_url.$item['files']); ?>"
-                                        class="ms-1 btn btn-success">Lihat
-                                        File</a>
                                     <?php endif ?>
                                 </div>
                             </td>

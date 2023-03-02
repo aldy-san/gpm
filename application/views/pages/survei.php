@@ -17,7 +17,7 @@
             <?php endif ?>
             <div class="page-heading text-center">
                 <?php if(isset($another_survey)): ?>
-                <h2 class="text-capitalize"><?= $survei[0]['question'] ?></h2>
+                <h2 class="text-capitalize"><?= $survei->name ?></h2>
                 <?php else: ?>
                 <h2 class="text-capitalize"><?= $notLogged ? $this->uri->segment(1) : $category['name']; ?></h2>
                 <?php endif ?>
@@ -81,7 +81,7 @@
                         </div>
                         <?php endforeach; ?>
                         <?php else:?>
-                        <?php foreach($survey_options as $key => $value): ?>
+                        <?php foreach($dosen as $key => $value): ?>
                         <div class="row my-3" data-aos="fade-up" data-aos-duration="1500">
                             <div class="col-12 p-4">
                                 <?= form_error('answer'.$value['id'],'<small class="text-danger">','</small>'); ?>

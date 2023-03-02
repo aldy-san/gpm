@@ -85,7 +85,8 @@ $route['dashboard'] = 'Superadmin/index';
 // Survei Dosen Terbaik
 $route['survei/dosen-terbaik'] = 'Superadmin/survei_dosen_terbaik';
 $route['survei/dosen-terbaik/create'] = 'Superadmin/create_dosen/9999';
-$route['survei/dosen-terbaik/edit'] = 'Superadmin/edit_survei/dosen-terbaik/9999';
+$route['survei/dosen-terbaik/edit'] = 'Superadmin/edit_survei_dosen';
+// $route['survei/dosen-terbaik/update'] = 'Superadmin/update_survei_dosen';
 $route['survei/dosen-terbaik/detail/(:num)'] = 'Superadmin/detail_dosen/$1';
 $route['survei/dosen-terbaik/edit-dosen/(:num)'] = 'Superadmin/edit_dosen/$1';
 $route['survei/dosen-terbaik/delete'] = 'Superadmin/delete_dosen';
@@ -114,7 +115,6 @@ $route['manage-period/delete'] = 'Superadmin/delete_period';
 $route['manage-category'] = 'Superadmin/category';
 $route['manage-category/create'] = 'Superadmin/create_category';
 $route['manage-category/detail/(:num)'] = 'Superadmin/detail_category/$1';
-$route['manage-category/detail/dosen-terbaik'] = 'Superadmin/detail_category/dosen_terbaik';
 $route['manage-category/edit/(:num)'] = 'Superadmin/edit_category/$1';
 $route['manage-category/delete'] = 'Superadmin/delete_category';
 
@@ -145,6 +145,7 @@ $route['tendik/dashboard'] = 'Tendik/index';
 # -----------------------------------SURVEI---------------------------------
 
 $route['dosen/survei/(:num)'] = 'Logged/survei/$1';
+$route['mahasiswa/survei/dosen-terbaik'] = 'Logged/survei/dosen_terbaik';
 $route['mahasiswa/survei/(:num)'] = 'Logged/survei/$1';
 $route['tendik/survei/(:num)'] = 'Logged/survei/$1';
 $route['(:any)/survei'] = 'Home/survei/$1';

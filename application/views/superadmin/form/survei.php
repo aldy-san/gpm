@@ -9,6 +9,7 @@
     <section class="section mt-4">
         <div class="card">
             <div class="card-body">
+                <?php if($title !== 'Edit Survei Dosen'): ?>
                 <form
                     action="<?= $data_slug ? base_url('/survei/'.$slug.($sub_slug ? '-'.$sub_slug : '').'/edit/'.$this->uri->segment(4)) : base_url('/survei/'.$slug.($sub_slug ? '-'.$sub_slug : '').'/create'); ?>"
                     method="POST">
@@ -131,6 +132,22 @@
                     <button type="submit" class="btn btn-primary ">Simpan</button>
                     <?php endif; ?>
                 </form>
+                <?php else: ?>
+                <form action="<?= base_url('/survei/dosen-terbaik/edit') ?>" method="POST">
+                    <div class="row">
+                        <div class="form-group col-12">
+                            <label for="name">Pertanyaan</label>
+                            <input type="text" class="form-control <?= form_error('name') ? 'is-invalid': ''; ?>"
+                                name="name" id="name" placeholder="Pertanyaan" autocomplete="off"
+                                value="<?= $question->name ?>">
+                            <div class="invalid-feedback">
+                                <?= form_error('name'); ?>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary ">Simpan</button>
+                </form>
+                <?php endif; ?>
             </div>
         </div>
     </section>

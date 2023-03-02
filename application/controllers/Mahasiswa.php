@@ -12,7 +12,7 @@ class Mahasiswa extends CI_Controller {
         foreach ($temp as $value) {
             array_push($category_mahasiswa_answered,$value['name']);
         }
-        $another_survey_answered = $this->db->get_where('answer',['id_user' => $this_user['username'],'id_survei' => 9999])->result_array();
+        $another_survey_answered = $this->db->get_where('answer',['id_user' => $this_user['username'],'survei_dosen' => 1])->result_array();
         $this->globalData = [
             'withNavbar' => false,
             'withSidebar' => true,

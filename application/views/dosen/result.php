@@ -2,7 +2,7 @@
     <h3>Hasil Survei</h3>
 </div>
 <div class="page-content">
-    <?php if (count($period) > 0 || in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna'])): ?>
+    <?php if (count($period) > 0 || in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna','dosen'])): ?>
     <div class="d-flex justify-content-between align-items-end ">
         <div class="d-flex flex-column">
             <h5 id="total">Responden: . orang</h5>
@@ -13,7 +13,7 @@
             </div>
         </div>
         <div class="d-flex">
-            <?php if (!in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna'])): ?>
+            <?php if (!in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna','dosen'])): ?>
             <div class="btn-group dropdown me-2">
                 <button type="button" class="btn btn-outline-primary">Periode</button>
                 <button id="period-title" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
