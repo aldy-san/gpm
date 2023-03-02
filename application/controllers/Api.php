@@ -167,4 +167,30 @@ class Api extends CI_Controller {
         $this->db->where('name', $name);
         $this->db->update('survei_activation');
     }
+
+    public function getTotalDataDosen(){
+        $from = $this->input->get('from');
+        $to = $this->input->get('to');
+
+        $this->db->select('count(id_user) as total');
+        $this->db->from('survei_dosen_answer');
+        if($from && $to){
+            $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
+        $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
+    public function getDataDosen(){
+        $from = $this->input->get('from');
+        $to = $this->input->get('to');
+
+        $this->db->select('id_dosen, id_user');
+        $this->db->from('survei_dosen_answer');
+        if($from && $to){
+            $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
+        $this->db->join('db_master.user', 'user.username = survei_dosen_answer.id_dosen', 'left');
+        $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
 }

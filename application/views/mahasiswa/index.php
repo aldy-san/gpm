@@ -10,8 +10,7 @@
                     <h5>Survei Dosen Terbaik</h5>
                 </div>
                 <div class="card-body">
-                    <a href="<?= base_url('mahasiswa/survei/9999'); ?>"
-                        class="btn btn-primary <?= $another_survey_answered ? 'disabled' : '' ?>">Mulai
+                    <a href="<?= base_url('mahasiswa/survei_dosen'); ?>" class="btn btn-primary ">Mulai
                         Mengisi Survei</a>
                 </div>
             </div>

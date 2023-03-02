@@ -76,19 +76,13 @@ $route['result/(:any)'] = 'Home/result/$1';
 $route['result/(:any)/(:num)'] = 'Home/result/$1/$2';
 $route['detail/(:any)'] = 'Home/detail/$1';
 $route['detail/(:any)/(:num)'] = 'Home/detail/$1';
+$route['survei_dosen_result'] = 'Home/survei_dosen_result';
 
 $route['constitution'] = 'Home/constitution';
 
 
 # -------------------------------SUPERADMIN--------------------------------
 $route['dashboard'] = 'Superadmin/index';
-// Survei Dosen Terbaik
-$route['survei/dosen-terbaik'] = 'Superadmin/survei_dosen_terbaik';
-$route['survei/dosen-terbaik/create'] = 'Superadmin/create_dosen/9999';
-$route['survei/dosen-terbaik/edit'] = 'Superadmin/edit_survei/dosen-terbaik/9999';
-$route['survei/dosen-terbaik/detail/(:num)'] = 'Superadmin/detail_dosen/$1';
-$route['survei/dosen-terbaik/edit-dosen/(:num)'] = 'Superadmin/edit_dosen/$1';
-$route['survei/dosen-terbaik/delete'] = 'Superadmin/delete_dosen';
 
 // Survei
 $route['survei/(:any)'] = 'Superadmin/survei/$1';
@@ -132,15 +126,10 @@ $route['repository/delete'] = 'Logged/delete_repository';
 
 # -----------------------------------Mahasiswa---------------------------------
 $route['mahasiswa/dashboard'] = 'Mahasiswa/index';
+$route['mahasiswa/survei_dosen'] = 'Logged/survei_dosen';
 
 # -----------------------------------Tendik---------------------------------
 $route['tendik/dashboard'] = 'Tendik/index';
-// $route['tendik/repository'] = 'Logged/repository';
-// $route['tendik/repository/all'] = 'Logged/all_repository';
-// $route['tendik/repository/create'] = 'Logged/create_repository';
-// $route['tendik/repository/detail/(:num)'] = 'Logged/detail_repository/$1';
-// $route['tendik/repository/edit/(:num)'] = 'Logged/edit_repository/$1';
-// $route['tendik/repository/delete'] = 'Logged/delete_repository';
 
 # -----------------------------------SURVEI---------------------------------
 

@@ -200,13 +200,18 @@
                                     <span>Pengguna</span>
                                 </a>
                             </li>
+                            <li class="sidebar-item">
+                                <a href="<?= base_url('survei_dosen_result'); ?>" class='sidebar-link btn'>
+                                    <i class="bi bi-grid"></i>
+                                    <span>Dosen Terbaik</span>
+                                </a>
+                            </li>
                             <?php endif;?>
 
                             <?php  if (isset($this_user) && getRole($this_user['level']) === 'mahasiswa') :?>
                             <li class="sidebar-title">Isi Survei</li>
                             <li class="sidebar-item">
-                                <a href="<?= base_url('mahasiswa/survei/9999'); ?>"
-                                    class='sidebar-link btn <?= $another_survey_answered ? 'disabled' : '' ?>'>
+                                <a href="<?= base_url('mahasiswa/survei_dosen'); ?>" class='sidebar-link btn'>
                                     <i class="bi bi-question-octagon"></i>
                                     <span>Survei Dosen Terbaik</span>
                                 </a>

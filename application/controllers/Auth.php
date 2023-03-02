@@ -88,7 +88,7 @@ class Auth extends CI_Controller {
 		$data = $this->globalData;
 		$data['captcha'] = $this->_getCaptcha();
 		$this->session->set_userdata('captcha_word', $data['captcha']['word']);
-		$data['survei_not_logged'] = $this->db->get('survei_activation')->result_array();
+		$data['survei_not_logged'] = $this->db->get_where('survei_activation', ['name !=' => 'dosen'])->result_array();
 		$data['survei_not_logged_color'] = ['success', 'info', 'warning'];
 		customView('auth/login', $data);
 	}

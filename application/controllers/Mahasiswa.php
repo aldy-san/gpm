@@ -12,15 +12,13 @@ class Mahasiswa extends CI_Controller {
         foreach ($temp as $value) {
             array_push($category_mahasiswa_answered,$value['name']);
         }
-        $another_survey_answered = $this->db->get_where('answer',['id_user' => $this_user['username'],'id_survei' => 9999])->result_array();
         $this->globalData = [
             'withNavbar' => false,
             'withSidebar' => true,
             'this_user' => $this_user,
             'category_mahasiswa_avail' => $category_mahasiswa,
             'category_mahasiswa_answered' => $category_mahasiswa_answered,
-            'title' => false,
-            'another_survey_answered' => $another_survey_answered
+            'title' => false
         ];
         if (getRole($this->globalData['this_user']['level']) !== 'mahasiswa') {
             $this->session->set_flashdata('alertForm', 'Role anda tidak memiliki akses untuk halaman tersebut');

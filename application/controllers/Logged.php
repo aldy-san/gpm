@@ -82,28 +82,9 @@ class Logged extends CI_Controller {
 
     public function survei($id_category){
         $data = $this->globalData;
+        $survei = $this->db->get_where('survei',['category' => $id_category, 'is_active' => '1'])->result_array();
 
         if ($this->input->post()){
-            if(isset($this->input->post()['survey_dosen'])){
-                $this->form_validation->set_rules('answer','Jawaban Dosen Terbaik','trim|required');
-                if(!$this->form_validation->run()){
-                    $this->session->set_flashdata('alertForm', 'Mohon isi form dengan benar');
-                }else{
-                    $form = [
-                        'id_user' => $data['this_user']['username'],
-                        'id_survei' => 9999,
-                        'answer' => $this->input->post()['answer'],
-                        'created_at' => time()
-                    ];
-                    $this->db->trans_start();
-                    $this->db->insert('answer',$form);
-                    $this->db->trans_complete();
-                    $this->session->set_flashdata('alertForm', 'Berhasil Mengisi Survei Dosen Terbaik');
-					$this->session->set_flashdata('alertType', 'success');
-                    redirect('/mahasiswa/dashboard');
-                }
-            }
-            else{
                 //$this->db->select('id,bar_length');
                 foreach($survei as $num => $sur){
                     $this->form_validation->set_rules('answer'.$sur['id'],'answer '.($num+1),'trim|required');
@@ -149,15 +130,9 @@ class Logged extends CI_Controller {
                     }
                     redirect('/');
                 }
-            }
         }
-        $survei = $this->db->get_where('survei',['category' => $id_category, 'is_active' => '1'])->result_array();
         $this->globalData['withSidebar'] = false;
         $data = $this->globalData;
-        if($id_category === '9999'){
-            $data['another_survey'] = true;
-            $data['survey_options'] = $this->db->get_where('survei_option',['survei_id' => $id_category])->result_array();
-        }
         $data['survei'] = $survei;
         $data['notLogged'] = false;
         $data['category'] = $this->db->get_where('category', ['id' => $id_category])->row_array();
@@ -340,5 +315,23 @@ class Logged extends CI_Controller {
         $this->session->set_flashdata('alertForm', 'Data berhasil dihapus');
 		$this->session->set_flashdata('alertType', 'success');
         redirect('repository');
+    }
+
+    public function survei_dosen(){
+        $data = $this->globalData;
+        $data['withNavbar'] = false;
+        $data['withSidebar'] = false;
+        $data['list_dosen'] = $this->db_master->get_where('user', ['level' => 11])->result_array();
+
+        if ($this->input->post()){
+            var_dump($this->input->post());
+            $this->db->insert('survei_dosen_answer', [
+                'id_user' => $this->session->userdata('user')['username'],
+                'id_dosen' => $this->input->post('answer'),
+                'created_at' => time()
+            ]);
+            redirect('dashboard');
+        }
+        customView('mahasiswa/survei_dosen', $data);
     }
 }

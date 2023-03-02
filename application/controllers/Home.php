@@ -262,4 +262,12 @@ class Home extends CI_Controller {
         $data['peraturan'] = $this->db->get('constitution')->result_array();
 		customView('pages/not-logged/constitution', $data);
     }
+
+    public function survei_dosen_result(){
+        $data = $this->globalData;
+        $data['withNavbar'] = false;
+        $data['withSidebar'] = true;
+        $data['list_dosen'] = $this->db_master->order_by("username", "asc")->get_where('user', ['level' => 11])->result_array();
+        customView('pages/survei_dosen_result', $data);
+    }
 }
