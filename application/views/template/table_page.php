@@ -33,10 +33,18 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
+                            <?php if($title === 'Kategori Survei' ) : ?>
+                            <th class="text-capitalize">
+                                No
+                            </th>
+                            <?php endif ?>
                             <?php foreach ($column_table as $key => $col): ?>
-
                             <?php if(isset($column_alias)): ?>
-                            <th class="text-capitalize text-nowrap"><?= $column_alias[$key]; ?></th>
+                            <?php if($title === 'Kategori Survei' ) : ?>
+                            <th class="text-capitalize text-nowrap"><?= $column_alias[$key+1]; ?> </th>
+                            <?php else : ?>
+                            <th class="text-capitalize text-nowrap"><?= $column_alias[$key]; ?> </th>
+                            <?php endif; ?>
                             <?php else : ?>
                             <th class="text-capitalize text-nowrap"><?= join(' ', explode('_', $col)); ?></th>
                             <?php endif; ?>
@@ -150,20 +158,17 @@
                             <tr>
                                 <td>1. </td>
                                 <td>Dosen Terbaik</td>
-                                <td>Mahasiswa</td>
                                 <td>
-                                    <?php if($detail_url): ?>
-                                    <a href="<?= base_url($detail_url.'dosen-terbaik'); ?>"
-                                        class="ms-1 btn btn-info">Detail</a>
-                                    <?php endif ?>
-                                    <?php if($edit_url): ?>
-                                    <a href="<?= base_url($edit_url.$item['id']); ?>"
-                                        class="ms-1 btn btn-warning">Edit</a>
-                                    <?php endif ?>
-                                    <?php if(isset($custom_url)): ?>
-                                    <a href="<?= base_url($custom_url.'dosen-terbaik'); ?>"
-                                        class="ms-1 btn btn-success">Survei</a>
-                                    <?php endif ?>
+                                    <div class="form-check">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox"
+                                                class="form-check-input form-check-primary form-check-glow"
+                                                name="customCheck" id="survei-activation-dosen"
+                                                <?= $is_survei_dosen_active['is_active'] ? 'checked': ''; ?>>
+                                            <label class="form-check-label" for="survei-activation-dosen">Aktivasi
+                                                Survei</label>
+                                        </div>
+                                    </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -181,6 +186,36 @@ document.getElementById('survei-activation').addEventListener('click', (e) => {
     const val = e.target.checked ? 1 : 0
     $.post('<?=base_url('api/updateSurveiActivation/')?>', {
             name: '<?= $activation; ?>',
+            value: val
+        }, () => {
+            Toastify({
+                text: "Aktivasi survei berhasil diganti",
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "#4fbe87",
+            }).showToast();
+        })
+        .catch((err) => {
+            Toastify({
+                text: err,
+                duration: 3000,
+                close: true,
+                gravity: "top",
+                position: "center",
+                backgroundColor: "#e74c3c",
+            }).showToast();
+        })
+
+})
+</script>
+<script type="text/javascript">
+document.getElementById('survei-activation-dosen').addEventListener('click', (e) => {
+    console.log(e.target.checked)
+    const val = e.target.checked ? 1 : 0
+    $.post('<?=base_url('api/updateSurveiActivation/')?>', {
+            name: 'dosen',
             value: val
         }, () => {
             Toastify({

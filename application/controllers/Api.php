@@ -57,7 +57,7 @@ class Api extends CI_Controller {
         } else if ($role == 'mitra'){
             $this->db->select('mitra.agency as username, answer.answer');
         } else if ($role == 'pengguna'){
-            $this->db->select('pengguna.agency, answer.answer');
+            $this->db->select('pengguna.email as username, answer.answer');
         } else {
             $this->db->select('user.nama_lengkap as username, answer.answer');
         }

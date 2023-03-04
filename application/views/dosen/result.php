@@ -370,6 +370,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
             $.get('<?=base_url('api/getListDataByIdSurvei/')?>' + item.id + filter, (res2) => {
                 var temp = JSON.parse(res2);
                 var inner = ''
+                console.log(temp)
                 temp.forEach(item2 => {
                     inner += '<tr>'
                     inner += '<td>' + item2.username + '</td>'

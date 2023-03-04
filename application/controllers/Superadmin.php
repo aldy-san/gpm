@@ -284,6 +284,7 @@ class Superadmin extends CI_Controller {
         $data['custom_url'] = '/survei/';
         $data['column_table'] = ['name', 'role'];
         $data['column_alias'] = ['no','nama kategori', 'role'];
+        $data['is_survei_dosen_active'] = $this->db->get_where('survei_activation', ['name' => 'dosen'])->row_array();
 
         // Config Pagination
 		$config['base_url'] = base_url($root_url);
