@@ -18,8 +18,10 @@ class Mahasiswa extends CI_Controller {
             'this_user' => $this_user,
             'category_mahasiswa_avail' => $category_mahasiswa,
             'category_mahasiswa_answered' => $category_mahasiswa_answered,
-            'title' => false
-        ];
+            'title' => false,
+            'is_survei_dosen_active' => $this->db->get_where('survei_activation', ['name' => 'dosen'])->row_array(),
+            'check_survei_dosen_answer' => $this->db->get_where('survei_dosen_answer', ['id_user' => $this->session->userdata('user')['username'], 'created_at >=' => time() - 1296000, 'created_at <=' => time() + 1296000])->row_array()
+        ]; 
         if (getRole($this->globalData['this_user']['level']) !== 'mahasiswa') {
             $this->session->set_flashdata('alertForm', 'Role anda tidak memiliki akses untuk halaman tersebut');
             $this->session->set_flashdata('alertType', 'danger');

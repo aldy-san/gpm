@@ -324,7 +324,6 @@ class Logged extends CI_Controller {
         $data['list_dosen'] = $this->db_master->get_where('user', ['level' => 11])->result_array();
 
         if ($this->input->post()){
-            var_dump($this->input->post());
             $this->db->insert('survei_dosen_answer', [
                 'id_user' => $this->session->userdata('user')['username'],
                 'id_dosen' => $this->input->post('answer'),
