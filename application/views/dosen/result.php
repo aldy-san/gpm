@@ -41,6 +41,7 @@
                 </div>
                 <b>Exports</b>
             </button>
+            <small id="loadExport" class="ms-2 my-auto"></small>
         </div>
     </div>
     <?php if (count($population) > 0): ?>
@@ -68,16 +69,16 @@
     <?php if (count($survei) > 0): ?>
     <section class="row mt-3">
         <h4>Survei Data</h4>
-        <?php foreach ($survei as $s): ?>
-        <div id="result-<?= $s['id']; ?>" class="col-12 col-lg-6">
+        <?php foreach ($survei as $index => $s): ?>
+        <div id="result-<?= $index; ?>" class="col-12 col-lg-6">
             <div class="card">
                 <div class="card-header d-flex">
                     <div class="custom-control custom-checkbox me-2">
                         <input type="checkbox" class="form-check-input form-check-primary form-check-glow"
-                            name="result-<?= $s['id']; ?>" id="survei-activation" checked
-                            onclick="checkHandler('dataSurvei','#result-<?= $s['id']; ?>')">
+                            name="result-<?= $index; ?>" id="survei-activation" checked
+                            onclick="checkHandler('dataSurvei','#result-<?= $index; ?>')">
                     </div>
-                    <h4><?= $s['question']; ?></h4>
+                    <h4><?= $s['question']; ?> </h4>
                 </div>
                 <div class="card-body">
                     <?php if ($s['type'] !== 'description'): ?>
@@ -132,7 +133,7 @@ var dataLabels = <?= json_encode($labels); ?>;
 var period = <?= json_encode($period); ?>;
 var role = '<?= $this->uri->segment(2); ?>'
 var id_category = '<?= $this->uri->segment(3); ?>'
-
+var allExportData = []
 dataPopulation.forEach((item, index) => {
     selectedExport.dataPopulation.push('#result-population-' + index);
 })
@@ -168,12 +169,15 @@ function checkHandler(name, id) {
     } else {
         selectedExport[name].push(id);
     }
-    selectedExport[name].sort()
+    selectedExport[name].sort(function(x, y) {
+        var xp = Number(x.split('-')[1]);
+        var yp = Number(y.split('-')[1]);
+        return xp == yp ? 0 : xp < yp ? -1 : 1
+    })
     checkExport()
 }
 
 function checkExport() {
-    console.log(selectedExport)
     if (!selectedExport.dataPopulation.length && !selectedExport.dataSurvei.length) {
         $('#btn-export').prop('disabled', true)
     } else {
@@ -203,7 +207,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                     labels: ['No Data'],
                     colors: ['#000'],
                     chart: {
-                        height: 250,
+                        height: 200,
                         type: "pie",
                     },
                     stroke: {
@@ -239,7 +243,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                             series: totals.length > 0 ? totals.map(item => Number(item)) :
                                 temp.map(item => Number(item.total)),
                             chart: {
-                                height: 250,
+                                height: 200,
                                 type: "pie",
                             },
                             colors: ['#1abc9c', '#3498db', '#2ecc71', '#9b59b6', '#f1c40f',
@@ -297,7 +301,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                     labels: ['No Data'],
                     colors: ['#000'],
                     chart: {
-                        height: 250,
+                        height: 200,
                         type: "pie",
                     },
                     stroke: {
@@ -309,7 +313,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                         options = {
                             series: series,
                             chart: {
-                                height: 250,
+                                height: 200,
                                 type: "pie",
                             },
                             colors: ['#1abc9c', '#3498db', '#2ecc71', '#9b59b6', '#f1c40f',
@@ -345,7 +349,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                         })
                         options = {
                             chart: {
-                                height: 238,
+                                height: 188,
                                 type: 'bar'
                             },
                             colors: undefined,
@@ -384,9 +388,25 @@ function executeGraphic(from, to, name, isUpdate = false) {
     })
 }
 
-async function exportHandler() {
-    $('#btn-export .bi-save').toggleClass('d-none')
-    $('#btn-export .spinner-border').toggleClass('d-none')
+function getDataUri(selected, index = 0) {
+    if (index > selected.length - 1) {
+        return
+    }
+    html2canvas($(selected[index])[0]).then(res => {
+        allExportData.push(res.toDataURL('image-' + index + '/png'))
+        getDataUri(selected, index + 1)
+    }).finally(() => {
+        $('#loadExport').text(`${index+1}/${selected.length}`)
+        if (index > selected.length - 2) {
+            $('#loadExport').text(``)
+            getPdf()
+            return
+        }
+    })
+}
+
+function getPdf() {
+    //console.log(allExportData)
     const {
         jsPDF
     } = window.jspdf
@@ -397,46 +417,43 @@ async function exportHandler() {
         putOnlyUsedFonts: true,
         floatPrecision: 16
     });
-    const promises = []
-    selectedExport.dataPopulation.forEach((item, index) => {
-        promises.push(html2canvas($(item)[0]))
+    let idx = 0
+    allExportData.forEach((item, index) => {
+        var imgData = item;
+        var height = pdf.internal.pageSize.getHeight();
+        var width = pdf.internal.pageSize.getWidth();
+        var x = 0,
+            y = 0;
+        if ((idx + 1) % 4 === 2) {
+            x = width / 2
+        } else if ((idx + 1) % 4 === 3) {
+            y = height / 2
+        } else if ((idx + 1) % 4 === 0) {
+            x = width / 2
+            y = height / 2
+        }
+        if ((((idx + 1) % 4 === 1) && (idx !== 0)) || index === selectedExport.dataPopulation
+            .length) {
+            pdf.addPage()
+        }
+        idx += 1;
+        if (index + 1 === selectedExport.dataPopulation.length) {
+            idx = 0
+        }
+        console.log(imgData, 'PNG', x, y, (width / 2) - 10, height / 2);
+        pdf.addImage(imgData, 'PNG', x, y, 138, 80);
     })
-    selectedExport.dataSurvei.forEach((item, index) => {
-        promises.push(html2canvas($(item)[0]))
-    })
-    console.log(promises)
-    await Promise.all(promises).then(res => {
-            let idx = 0
-            selectedExport.dataPopulation.concat(selectedExport.dataSurvei).forEach((item, index) => {
-                var imgData = res[index].toDataURL('image-' + item.id + '/png');
-                var width = pdf.internal.pageSize.getWidth();
-                var height = pdf.internal.pageSize.getHeight();
-                var x = 0,
-                    y = 0;
-                if ((idx + 1) % 4 === 2) {
-                    x = width / 2
-                } else if ((idx + 1) % 4 === 3) {
-                    y = height / 2
-                } else if ((idx + 1) % 4 === 0) {
-                    x = width / 2
-                    y = height / 2
-                }
-                if ((((idx + 1) % 4 === 1) && (idx !== 0)) || index === selectedExport.dataPopulation
-                    .length) {
-                    pdf.addPage()
-                }
-                idx += 1;
-                if (index + 1 === selectedExport.dataPopulation.length) {
-                    idx = 0
-                }
-                pdf.addImage(imgData, 'PNG', x, y, (width / 2) - 5, height / 2);
-            })
-        })
-        .finally(() => {
-            pdf.save('test.pdf')
-            $('#btn-export .bi-save').toggleClass('d-none')
-            $('#btn-export .spinner-border').toggleClass('d-none')
-        })
+    pdf.save('test.pdf')
+    $('#btn-export .bi-save').toggleClass('d-none')
+    $('#btn-export .spinner-border').toggleClass('d-none')
+}
+async function exportHandler() {
+    $('#btn-export .bi-save').toggleClass('d-none')
+    $('#btn-export .spinner-border').toggleClass('d-none')
+
+    allExportData = []
+
+    getDataUri(selectedExport.dataPopulation.concat(selectedExport.dataSurvei))
 }
 //executeGraphic('0', '1', 'tes')
 

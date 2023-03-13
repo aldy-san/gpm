@@ -47,7 +47,7 @@ class Api extends CI_Controller {
         $result = $this->db->get()->result();
         echo json_encode($result);
     }
-    public function getListDataByIdSurvei($id, $limit = 4)
+    public function getListDataByIdSurvei($id, $limit = 2)
     {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
