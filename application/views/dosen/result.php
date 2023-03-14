@@ -293,6 +293,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                     ]
                 }
                 let series = selections.map(selection => {
+                    console.log(temp)
                     var obj = temp.find(item2 => item2.answer === selection)
                     return Number(obj?.total) || 0
                 })
@@ -440,8 +441,7 @@ function getPdf() {
         if (index + 1 === selectedExport.dataPopulation.length) {
             idx = 0
         }
-        console.log(imgData, 'PNG', x, y, (width / 2) - 10, height / 2);
-        pdf.addImage(imgData, 'PNG', x, y, 138, 80);
+        pdf.addImage(imgData, 'PNG', x, y, 155, 90);
     })
     pdf.save('test.pdf')
     $('#btn-export .bi-save').toggleClass('d-none')
