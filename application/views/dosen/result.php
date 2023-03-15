@@ -83,6 +83,10 @@
                 <div class="card-body">
                     <?php if ($s['type'] !== 'description'): ?>
                     <div id="chart-<?=$s['id']; ?>"></div>
+                    <div class="d-flex flex-column">
+                        <h6>Rata-rata: <b id="avg-<?=$s['id']; ?>"></b></h6>
+                        <h6>Kesimpulan: <b id="sum-<?=$s['id']; ?>"></b></h6>
+                    </div>
                     <?php else: ?>
                     <table class="table table-striped">
                         <thead>
@@ -285,6 +289,8 @@ function executeGraphic(from, to, name, isUpdate = false) {
             $.get('<?=base_url('api/getChartDataByIdSurvei/')?>' + item.id + filter, (
                 res2) => {
                 var temp = JSON.parse(res2)
+                var sum = 0
+                var total = 0
                 let selections = item.selections.split(';')
                 if (item.type === 'bar') {
                     // selections = ['0-20', '21-40', '61-80', '81-100', '41-60']
@@ -293,10 +299,26 @@ function executeGraphic(from, to, name, isUpdate = false) {
                     ]
                 }
                 let series = selections.map(selection => {
-                    console.log(temp)
                     var obj = temp.find(item2 => item2.answer === selection)
+                    sum += Number(obj?.sum || 0)
+                    total += Number(obj?.total || 0)
                     return Number(obj?.total) || 0
                 })
+                //console.log('avg:', sum / total)
+                //console.log(sum, total)
+                var avg = (sum / total).toFixed(1)
+                var summary = ''
+                $(`#avg-${item.id}`).text(avg)
+                if (avg >= 0 && avg < 25) {
+                    summary = 'Tidak Baik'
+                } else if (avg >= 25 && avg < 50) {
+                    summary = 'Kurang Baik'
+                } else if (avg >= 50 && avg < 75) {
+                    summary = 'Baik'
+                } else {
+                    summary = 'Sangat Baik'
+                }
+                $(`#sum-${item.id}`).text(summary)
                 var options = {
                     series: [1],
                     labels: ['No Data'],
@@ -375,7 +397,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
             $.get('<?=base_url('api/getListDataByIdSurvei/')?>' + item.id + filter, (res2) => {
                 var temp = JSON.parse(res2);
                 var inner = ''
-                console.log(temp)
+                //console.log(temp)
                 temp.forEach(item2 => {
                     inner += '<tr>'
                     inner += '<td>' + item2.username + '</td>'

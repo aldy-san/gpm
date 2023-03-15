@@ -37,7 +37,7 @@ class Api extends CI_Controller {
     {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
-        $this->db->select('answer, count(*) as total');
+        $this->db->select('answer, count(*) as total, sum(detail) as sum');
         $this->db->from('answer');
         $this->db->where(['id_survei' => $id]);
         if($from && $to){
