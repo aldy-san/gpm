@@ -42,7 +42,7 @@ class Superadmin extends CI_Controller {
         $data['edit_url'] = $root_url.'edit/';
         $data['detail_url'] = $root_url.'detail/';
         $data['delete_url'] = $root_url.'delete/';
-        $data['download_url'] = '/sertifikat/';
+        //$data['download_url'] = '/sertifikat/';
         $data['column_table'] = ['id','name'];
         $data['column_alias'] = ['id','nama'];
 

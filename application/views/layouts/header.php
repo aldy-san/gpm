@@ -68,7 +68,7 @@
                                     <span><?= isset($this_user) ? 'Beranda' : 'Login' ?></span>
                                 </a>
                             </li>
-                            <?php if (isset($this_user)):?>
+                            <?php if (isset($this_user) && getRole($this_user['level']) !== 'superadmin'):?>
                             <li
                                 class="sidebar-item <?= $this->uri->segment(1) === 'repository' && !$this->uri->segment(3) ?'active' :''?>">
                                 <a href="<?= base_url('repository'); ?>" class='sidebar-link'>
