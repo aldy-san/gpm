@@ -104,6 +104,7 @@ $route['manage-constitution/delete'] = 'Superadmin/delete_constitution';
 $route['manage-period'] = 'Superadmin/period';
 $route['manage-period/create'] = 'Superadmin/create_period';
 $route['manage-period/detail/(:num)'] = 'Superadmin/detail_period/$1';
+$route['manage-period/analisis/(:num)'] = 'Superadmin/analisis/$1';
 $route['manage-period/edit/(:num)'] = 'Superadmin/edit_period/$1';
 $route['manage-period/delete'] = 'Superadmin/delete_period';
 // Category Survey

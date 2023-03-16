@@ -167,6 +167,8 @@ class Superadmin extends CI_Controller {
         $data['edit_url'] = $root_url.'edit/';
         $data['detail_url'] = $root_url.'detail/';
         $data['delete_url'] = $root_url.'delete/';
+        $data['custom_url'] = '/manage-period/analisis/';
+        $data['custom_url_name'] = 'Analisis';
         $data['column_table'] = ['id','name', 'category', 'period_from', 'period_to'];
         $data['column_alias'] = ['id','nama', 'kategori', 'dari tanggal', 'sampai tanggal'];
 
@@ -282,6 +284,7 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = $root_url.'detail/';
         $data['delete_url'] = $root_url.'delete/';
         $data['custom_url'] = '/survei/';
+        $data['custom_url_name'] = 'Survei';
         $data['column_table'] = ['name', 'role'];
         $data['column_alias'] = ['no','nama kategori', 'role'];
         $data['is_survei_dosen_active'] = $this->db->get_where('survei_activation', ['name' => 'dosen'])->row_array();
@@ -402,8 +405,8 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = '/survei/'.$slug.'/detail/';
         $data['delete_url'] = '/survei/'.$slug.'/delete/';
         if (is_numeric($data['slug'])){
-            $data['column_table'] = ['question', 'type', 'selections', 'bar_from', 'bar_to', 'chart', 'category', 'is_active'];
-            $data['column_alias'] = ['pertanyaan', 'tipe', 'pilihan', 'bar from', 'bar to', 'grafik', 'kategori', 'aktif'];
+            $data['column_table'] = ['question', 'type','klasifikasi', 'chart', 'category', 'is_active'];
+            $data['column_alias'] = ['pertanyaan', 'tipe','klasifikasi', 'grafik', 'kategori', 'aktif'];
             $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
             $data['data_table'] = [];
             foreach ($temp as $value) {
@@ -445,6 +448,8 @@ class Superadmin extends CI_Controller {
                     'bar_to' => $this->input->post('bar_to') ? $this->input->post('bar_to') : '100%',
                     'bar_length' => 100,
                     'chart' => $this->input->post('chart'),
+                    'klasifikasi' => $this->input->post('klasifikasi'),
+                    'analisis' => $this->input->post('analisis'),
                     'is_active' => $this->input->post('is_active'),
                 ];
                 //var_dump($form);die;
@@ -509,6 +514,8 @@ class Superadmin extends CI_Controller {
                         'bar_length' => 100,
                         'chart' => $this->input->post('chart'),
                         'category' => $slug,
+                        'klasifikasi' => $this->input->post('klasifikasi'),
+                        'analisis' => $this->input->post('analisis'),
                         'is_active' => $this->input->post('is_active'),
                     ];
                     $this->db->where(['id' => $id])->update('survei', $form);
@@ -535,5 +542,19 @@ class Superadmin extends CI_Controller {
         $this->session->set_flashdata('alertForm', 'Data berhasil dihapus');
 		$this->session->set_flashdata('alertType', 'success');
         redirect('/survei/'.$slug);
+    }
+
+    public function analisis($slug){
+        $data = $this->globalData;
+        if($this->input->post('description')){
+            $form = [
+                'description' => $this->input->post('description'),
+                'type' => $this->input->post('type'),
+                'id_period' => $data['slug'],
+                'updated_at' => time(),
+            ];
+            $this->db->insert('analisis', $form);
+        }
+        customView('superadmin/analisis', $data);
     }
 }

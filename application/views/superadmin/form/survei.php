@@ -40,7 +40,6 @@
                                 <?= form_error('category'); ?>
                             </div>
                         </div>-->
-                        <?php if($slug !== 'dosen'): ?>
                         <div class="form-group col-2">
                             <label for="type">Tipe</label>
                             <fieldset>
@@ -82,7 +81,7 @@
                                 <?= form_error('selections'); ?>
                             </div>
                         </div>
-                        <div class="form-group col-4 bar-type">
+                        <div class="form-group col-2 bar-type">
                             <label for="bar_from">Bar From</label>
                             <input type="text" class="form-control <?= form_error('bar_from') ? 'is-invalid': ''; ?>"
                                 name="bar_from" id="bar_from" placeholder="Bar From" autocomplete="off"
@@ -92,7 +91,7 @@
                                 <?= form_error('bar_from'); ?>
                             </div>
                         </div>
-                        <div class="form-group col-4 bar-type">
+                        <div class="form-group col-2 bar-type">
                             <label for="bar_to">Bar To</label>
                             <input type="text" class="form-control <?= form_error('bar_to') ? 'is-invalid': ''; ?>"
                                 name="bar_to" id="bar_to" placeholder="Bar To" autocomplete="off"
@@ -102,7 +101,42 @@
                                 <?= form_error('bar_to'); ?>
                             </div>
                         </div>
-                        <?php endif ?>
+                        <div class="form-group col-4">
+                            <label for="klasifikasi">Klasifikasi</label>
+                            <input type="text" class="form-control <?= form_error('klasifikasi') ? 'is-invalid': ''; ?>"
+                                name="klasifikasi" id="klasifikasi" placeholder="Pilihan" autocomplete="off"
+                                value="<?= $data_slug ?  (set_value('klasifikasi') ?  set_value('klasifikasi') : $data_slug['klasifikasi']) : set_value('klasifikasi'); ?>"
+                                <?= $is_edit  ? '' : 'disabled'; ?>>
+                            <div class="invalid-feedback">
+                                <?= form_error('klasifikasi'); ?>
+                            </div>
+                        </div>
+                        <div class="form-group col-4">
+                            <label for="analisis">Analisis</label>
+                            <fieldset>
+                                <select class="form-select" name="analisis" <?= $is_edit  ? '' : 'disabled'; ?>>
+                                    <option value="keunggulan"
+                                        <?= $data_slug && ($data_slug['analisis'] === 'keunggulan')? 'selected' : ''; ?>>
+                                        keunggulan
+                                    </option>
+                                    <option value="kelemahan"
+                                        <?= $data_slug && ($data_slug['analisis'] === 'kelemahan')? 'selected' : ''; ?>>
+                                        kelemahan</option>
+                                    <option value="peluang"
+                                        <?= $data_slug && ($data_slug['analisis'] === 'peluang')? 'selected' : ''; ?>>
+                                        peluang</option>
+                                    <option value="peluang"
+                                        <?= $data_slug && ($data_slug['analisis'] === 'peluang')? 'selected' : ''; ?>>
+                                        peluang</option>
+                                    <option value="temuan"
+                                        <?= $data_slug && ($data_slug['analisis'] === 'temuan')? 'selected' : ''; ?>>
+                                        temuan</option>
+                                    <option value="strategi"
+                                        <?= $data_slug && ($data_slug['analisis'] === 'strategi')? 'selected' : ''; ?>>
+                                        strategi</option>
+                                </select>
+                            </fieldset>
+                        </div>
                         <div class="form-group col-4">
                             <label for="is_active">Survei Aktif</label>
                             <fieldset>

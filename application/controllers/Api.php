@@ -37,12 +37,13 @@ class Api extends CI_Controller {
     {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
-        $this->db->select('answer, count(*) as total, sum(detail) as sum');
+        $this->db->select('answer, count(*) as total, sum(detail) as sum, survei.klasifikasi');
         $this->db->from('answer');
         $this->db->where(['id_survei' => $id]);
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
         }
+        $this->db->join('survei', 'survei.id = answer.id_survei', 'left');
         $this->db->group_by('answer');
         $result = $this->db->get()->result();
         echo json_encode($result);

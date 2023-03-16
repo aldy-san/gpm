@@ -307,15 +307,16 @@ function executeGraphic(from, to, name, isUpdate = false) {
                 //console.log(sum, total)
                 var avg = (sum / total).toFixed(1)
                 var summary = ''
+                console.log(temp[0].klasifikasi, temp)
                 $(`#avg-${item.id}`).text(avg)
                 if (avg >= 0 && avg < 25) {
-                    summary = 'Tidak Baik'
+                    summary = 'Tidak ' + temp[0].klasifikasi
                 } else if (avg >= 25 && avg < 50) {
-                    summary = 'Kurang Baik'
+                    summary = 'Kurang ' + temp[0].klasifikasi
                 } else if (avg >= 50 && avg < 75) {
-                    summary = 'Baik'
+                    summary = '' + temp[0].klasifikasi
                 } else {
-                    summary = 'Sangat Baik'
+                    summary = 'Sangat ' + temp[0].klasifikasi
                 }
                 $(`#sum-${item.id}`).text(summary)
                 var options = {
@@ -330,6 +331,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                         width: 0
                     },
                 };
+                console.log(temp.length, series)
                 if (temp.length > 0) {
                     if (item.chart === 'pie') {
                         options = {
