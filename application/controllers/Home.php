@@ -254,7 +254,63 @@ class Home extends CI_Controller {
         $data['column_alias'] = ['nama_lengkap', 'jawaban'];
 		customView('template/table_page', $data);
 	}
+    public function responden($role,$category){
+        $data = $this->globalData;
+        $data['period'] = $this->db->order_by("period_from", "desc")->get_where('period', ['category' => $category])->result_array();
+        if(!$this->input->get('period')){
+            redirect(current_url().'/?period='.$data['period'][0]['id']);
+        } else{
+            $data['current_period'] = $this->db->get_where('period', ['id' => $this->input->get('period')])->row_array();
+        }
+        if($this->input->get('search')){
+            $where = "level = 1 AND (nama_lengkap LIKE '%".$this->input->get('search')."%'"." OR nama_prodi LIKE '%".$this->input->get('search')."%'"." OR nama_jenjang LIKE '%".$this->input->get('search')."%')";
+        }
+        else{
+            $where = ['level' => '1'];
+        }
+        $data['withNavbar'] = false;
+        $data['withSidebar'] = true;
+        $data['slug'] = $category;
+        $data['sub_slug'] = false;
+        $table = 'user';
+        // Config Pagination
+		$config['base_url'] = base_url('/result/'.$role.'/'.$category.'/responden'.'/');
+        $config['total_rows'] = $this->db_master->join('db_master.prodi','user.kode_prodi=prodi.kode_prodi')->join('db_master.jenjang','user.jenjang=jenjang.id_jenjang')->get_where($table,$where)->num_rows();;
+        $config['per_page'] = 10;
+		$config['start'] = $this->uri->segment(5);
+        $config['use_page_numbers'] = TRUE;
+        $this->pagination->initialize($config);
+        $offset =  $this->input->get('per_page') ?  ($this->input->get('per_page')-1)*$config['per_page'] : 0;
 
+        $temp = $this->db_master->join('db_master.prodi','user.kode_prodi=prodi.kode_prodi')->join('db_master.jenjang','user.jenjang=jenjang.id_jenjang')->get_where($table,$where,$config['per_page'],$config['start'])->result_array();
+        $data['data_table'] = [];
+        $this->db->distinct();
+        $this->db->select('id_user');
+        $this->db->from('answer');
+        $this->db->join('db_master.user','user.username=answer.id_user');
+        $this->db->join('survei', 'survei.id=id_survei');
+        $this->db->where(['survei.category' => $category, 'created_at >=' => $data['current_period']['period_from'], 'created_at <=' => $data['current_period']['period_to']]);
+        $fill_survey = $this->db->get()->result();
+        foreach($temp as $index => $value){
+            if (strpos($value['nama_lengkap'],'-') !== false) {
+                $nama = substr($value['nama_lengkap'], 0, strrpos($value['nama_lengkap'], '-'));
+            } else $nama = $value['nama_lengkap'];
+                array_push($data['data_table'],[
+                    'username' => $value['username'],
+                    'nama' => $nama,
+                    'prodi' => $value['nama_prodi'],
+                    'jenjang' => $value['nama_jenjang'],
+                    'status' => (in_array($value['username'],$fill_survey)) ? 'Ya' : 'Tidak',
+                ]);
+        }
+        $data['survei'] = $this->db->get_where('survei', ['id' => $category])->row_array();
+        $data['title'] = 'Responden';
+        $data['column_table'] = ['username', 'nama', 'prodi', 'jenjang','status'];
+        // $data['column_alias'] = ['no', 'nama','status'];
+        $data['column_badge'] = ['status'];
+
+		customView('superadmin/form/responden', $data);
+    }
     public function constitution(){
         $data = $this->globalData;
         $data['withNavbar'] = true;
