@@ -13,8 +13,12 @@
             </div>
         </div>
         <div class="d-flex">
+            <div class="form-group me-2 mb-0">
+                <label for="question">Tanggal</label>
+                <input class="form-control" name="dates" type="text">
+            </div>
             <?php if (!in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna'])): ?>
-            <div class="btn-group dropdown me-2">
+            <div class="btn-group dropdown me-2 mt-auto">
                 <button type="button" class="btn btn-outline-primary">Periode</button>
                 <button id="period-title" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
@@ -28,13 +32,8 @@
                     <?php endforeach; ?>
                 </div>
             </div>
-            <?php else: ?>
-            <div class="form-group me-2 mb-0">
-                <label for="question">Tanggal</label>
-                <input class="form-control" name="dates" type="text">
-            </div>
             <?php endif; ?>
-            <button id="btn-export" onclick="exportHandler()" class="btn btn-success d-flex align-items-center">
+            <button id="btn-export" onclick="exportHandler()" class="btn btn-success d-flex align-items-center mt-auto">
                 <i class="bi bi-save me-2"></i>
                 <div class="spinner-border spinner-border-sm me-2 d-none" role="status">
                     <span class="visually-hidden">Loading...</span>
