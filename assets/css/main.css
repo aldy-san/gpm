@@ -35,3 +35,6 @@ p {
 	width: 45px;
 	outline: none;
 }
+textarea {
+	resize: none !important;
+}

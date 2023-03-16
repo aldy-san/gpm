@@ -1,20 +1,24 @@
 <div class="page-heading">
     <div class="page-title">
         <div class="d-flex justify-content-between align-items-end">
-            <div class="col-6 mb-3">
+            <div class="col-3 mb-3">
                 <h3><?= $title ?></h3>
             </div>
-            <div class="btn-group dropdown me-2">
-                <button type="button" class="btn btn-outline-primary">Periode</button>
-                <button id="period-title" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
-                    <span class="sr-only"><?= $current_period['name'] ?></span>
-                </button>
-                <div class="dropdown-menu mt-2 shadow-sm">
-                    <!--<button class="dropdown-item" onclick="executeGraphic(0,1,'tes',true)">tes</button>-->
-                    <?php foreach($period as $p): ?>
-                    <button onclick="changePeriod('<?= $p['id'] ?>')" class="dropdown-item"><?= $p['name']; ?></button>
-                    <?php endforeach; ?>
+            <div class="d-flex ">
+                <div class="btn-group dropdown me-2 mb-auto">
+                    <button type="button" class="btn btn-outline-primary">Periode</button>
+                    <button id="period-title" type="button"
+                        class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                        <span class="sr-only"><?= $current_period['name'] ?></span>
+                    </button>
+                    <div class="dropdown-menu mt-2 shadow-sm">
+                        <!--<button class="dropdown-item" onclick="executeGraphic(0,1,'tes',true)">tes</button>-->
+                        <?php foreach($period as $p): ?>
+                        <button onclick="changePeriod('<?= $p['id'] ?>')"
+                            class="dropdown-item"><?= $p['name']; ?></button>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
                 <div class="form-group ms-3">
                     <input onkeydown="search(this)" type="text" class="form-control" id="searchName" name="search"
@@ -79,29 +83,58 @@
     <script type="text/javascript">
     function search(ele) {
         if (event.key === 'Enter') {
-            console.log(urlHandler())
-            window.location = urlHandler() + "&search=" + ele.value;
+            window.location = updateQueryStringParameter(urlHandler(), 'search', ele.value)
         }
     }
 
-    function changePeriod(ele) {
-        console.log(urlHandler())
-        window.location = urlHandler() + "?period=" + ele;
+    function changePeriod(val) {
+        const url = updateQueryStringParameter(urlHandler(), 'period', val)
+        window.location = url.includes('search=') ? removeURLParameter(url, 'search') : url
     }
 
     function urlHandler() {
         var url = window.location.href
         if (url.split('/')[8].split('?')[0]) {
-            // console.log(url.split('/')[8].split('?'))
             url = url.split('/')
             temp = url[8].split('?')
             temp.shift()
             url[8] = "?" + temp.join('')
-            // url[8].split('?').shift()
         } else {
             return url
         }
         url = url.join('/')
         return url
+    }
+
+
+    function updateQueryStringParameter(uri, key, value) {
+        var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+        var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+        if (uri.match(re)) {
+            return uri.replace(re, '$1' + key + "=" + value + '$2');
+        } else {
+            return uri + separator + key + "=" + value;
+        }
+    }
+
+    function removeURLParameter(url, parameter) {
+        //prefer to use l.search if you have a location/link object
+        var urlparts = url.split('?');
+        if (urlparts.length >= 2) {
+
+            var prefix = encodeURIComponent(parameter) + '=';
+            var pars = urlparts[1].split(/[&;]/g);
+
+            //reverse iteration as may be destructive
+            for (var i = pars.length; i-- > 0;) {
+                //idiom for string.startsWith
+                if (pars[i].lastIndexOf(prefix, 0) !== -1) {
+                    pars.splice(i, 1);
+                }
+            }
+
+            return urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
+        }
+        return url;
     }
     </script>

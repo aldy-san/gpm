@@ -93,7 +93,7 @@
                                     </button>
                                     <?php if(isset($custom_url)): ?>
                                     <a href="<?= base_url($custom_url.$item['id']); ?>"
-                                        class="ms-1 btn btn-success">Survei</a>
+                                        class="ms-1 btn btn-success"><?= $custom_url_name; ?></a>
                                     <?php endif ?>
                                     <?php endif ?>
                                     <?php if(isset($download_url)): ?>
