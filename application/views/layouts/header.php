@@ -85,6 +85,15 @@
                                     <span>Semua Repositori</span>
                                 </a>
                             </li>
+                            <?php if ($this_user['level'] === '10'): ?>
+                            <li
+                                class="sidebar-item <?= $this->uri->segment(1) === 'analisis-periode' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('analisis-periode'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-calendar-range"></i>
+                                    <span>Analisis Periode</span>
+                                </a>
+                            </li>
+                            <?php endif ?>
                             <?php endif ?>
                             <?php if (count($category_dosen_avail) > 0): ?>
                             <li class="sidebar-title">Isi Survei</li>

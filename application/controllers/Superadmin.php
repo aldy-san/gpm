@@ -178,7 +178,7 @@ class Superadmin extends CI_Controller {
 		$config['per_page'] = 10;
 		$config['start'] = $this->uri->segment(3);
 		$this->pagination->initialize($config);
-        $temp = $this->db->get($table, $config['per_page'], $config['start'])->result_array();
+        $temp = $this->db->order_by('id DESC')->get($table, $config['per_page'], $config['start'])->result_array();
         $data['data_table'] = [];
         $category = $this->db->get('category')->result_array();
         foreach ($temp as $value) {
@@ -548,7 +548,7 @@ class Superadmin extends CI_Controller {
         $data = $this->globalData;
         $data['list_type'] = ['keunggulan', 'kelemahan', 'ancaman', 'peluang', 'temuan', 'strategi'];
         if (!in_array($type, $data['list_type'])){
-            redirect(base_url().'/manage-period/analisis/'.$slug.'/keunggulan');
+            redirect(base_url().'manage-period/analisis/'.$slug.'/keunggulan');
         }
         if($this->input->post('description')){
             $this->form_validation->set_rules('description','Deskripsi','trim|required');
@@ -584,12 +584,16 @@ class Superadmin extends CI_Controller {
         ];
         if ($this->input->post('description')){
             $form['description'] = $this->input->post('description');
+            if ($this->db->get_where('analisis', ['id' => $this->input->post('id')])->row_array()['status'] === 'revised'){
+                $form['status'] = 'submitted';
+            }
             $this->db->where(['id' => $this->input->post('id')])->update('analisis', $form);
             $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
         }
         if ($this->input->post('status')){
             $form['status'] = $this->input->post('status');
             $this->db->where(['id_period' => $slug])->update('analisis', $form);
+            $this->db->where(['id' => $slug])->update('period', ['status' => $this->input->post('status')]);
             $this->session->set_flashdata('alertForm', 'Data berhasil diajukan');
         }
 		$this->session->set_flashdata('alertType', 'success');

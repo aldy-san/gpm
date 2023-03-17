@@ -111,6 +111,7 @@ $route['manage-period/analisis/(:num)'] = 'Superadmin/analisis/$1'; // just for 
 $route['manage-period/analisis/(:num)/(:any)'] = 'Superadmin/analisis/$1/$2';
 $route['manage-period/analisis/edit/(:num)/(:any)'] = 'Superadmin/edit_analisis/$1/$2';
 $route['manage-period/analisis/delete/(:num)'] = 'Superadmin/delete_analisis/$1';
+
 // Category Survey
 $route['manage-category'] = 'Superadmin/category';
 $route['manage-category/create'] = 'Superadmin/create_category';
@@ -130,6 +131,11 @@ $route['repository/detail/(:num)'] = 'Logged/detail_repository/$1';
 $route['repository/edit/(:num)'] = 'Logged/edit_repository/$1';
 $route['repository/delete'] = 'Logged/delete_repository';
 
+$route['analisis-periode'] = 'Dosen/analisis_periode';
+// Analisis
+$route['analisis-periode/analisis/(:num)'] = 'Dosen/analisis/$1'; // just for redirect
+$route['analisis-periode/analisis/(:num)/(:any)'] = 'Dosen/analisis/$1/$2';
+$route['analisis-periode/analisis/edit/(:num)/(:any)'] = 'Dosen/edit_analisis/$1/$2';
 
 # -----------------------------------Mahasiswa---------------------------------
 $route['mahasiswa/dashboard'] = 'Mahasiswa/index';

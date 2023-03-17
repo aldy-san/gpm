@@ -36,13 +36,17 @@
             <?php foreach ($list_type as $item): ?>
             <div class="me-2">
                 <a href="<?= base_url('/manage-period/analisis/'.$this->uri->segment(3).'/'.$item); ?>"
-                    class="btn btn-primary text-capitalize"><?= $item; ?></a>
+                    class="btn text-capitalize <?= $item === $this->uri->segment(4) ? 'btn-primary' : 'btn-secondary'; ?>"><?= $item; ?></a>
             </div>
             <?php endforeach; ?>
         </div>
         <div class="card">
             <div class="card-body">
-                <h4>Data Analisis</h4>
+                <h4>Data Analisis
+                    <?php if($check_status === 'accepted'): ?>
+                    <span class="badge bg-success">Telah Disetujui</span>
+                    <?php endif; ?>
+                </h4>
                 <form
                     action="<?= base_url('/manage-period/analisis/'.$this->uri->segment(3).'/'.$this->uri->segment(4)); ?>"
                     method="POST">
@@ -82,13 +86,13 @@
                             <span class="text-capitalize badge bg-success"> <?= $item['status']; ?></span>
                             <?php elseif($item['status'] === 'submitted'): ?>
                             <span class="text-capitalize badge bg-warning"> <?= $item['status']; ?></span>
-                            <?php elseif($item['status'] === 'cancelled'): ?>
+                            <?php elseif($item['status'] === 'revised'): ?>
                             <span class="text-capitalize badge bg-danger"> <?= $item['status']; ?></span>
                             <?php endif;?>
                         </td>
                         <td><?= gmdate("d F Y", $item['updated_at']); ?></td>
                         <td>
-                            <?php if($item['status'] === 'draft'): ?>
+                            <?php if($item['status'] === 'draft' || $item['status'] === 'revised' ): ?>
                             <button type="button" class="ms-1 btn btn-warning" data-bs-toggle="modal"
                                 data-bs-target="#editModal"
                                 onclick="openEdit('<?= $item['id']; ?>', '<?= $item['description']; ?>')">
@@ -105,7 +109,7 @@
                     <?php endforeach; ?>
                 </tbody>
             </table>
-            <div class="d-flex flex-column col-12">
+            <div class="d-flex flex-column col-12 mt-4">
                 <ul class="ms-0 ps-3">
                     <li>
                         <p>Jika <b>semua komponen analisis</b> sudah diisi dan siap untuk diajukan, silahkan klik tombol
@@ -116,18 +120,12 @@
                         <p>Analisis yang sudah diajukan tidak dapat diubah/ditambahkan/dihapus</p>
                     </li>
                 </ul>
-                <form id="form-delete"
-                    action="<?= base_url('/manage-period/analisis/edit/'.$this->uri->segment(3).'/'.$this->uri->segment(4)); ?>"
-                    method="POST">
-                    <input id="input-id" type="hidden" name="id" value="">
-                    <input type="hidden" name="status" value="submitted">
-                    <input type="hidden" name="type" value="<?= $this->uri->segment(4); ?>">
-                    <button class="btn btn-success me-auto d-flex align-items-center"
-                        <?= $check_status === 'draft' ? '' : 'disabled' ?>>
-                        <i class="bi bi-shift-fill me-2"></i>
-                        <span class="mb-0 mt-1">AJUKAN PENGESAHAN</span>
-                    </button>
-                </form>
+                <button class="btn btn-success me-auto d-flex align-items-center"
+                    <?= $check_status === 'draft' ? '' : 'disabled' ?> data-bs-toggle="modal"
+                    data-bs-target="#validasiModal">
+                    <i class="bi bi-check-square me-2"></i>
+                    <span class="mb-0 mt-1">AJUKAN PENGESAHAN</span>
+                </button>
 
             </div>
         </div>
@@ -195,6 +193,38 @@
                             <button type="submit" class="btn btn-primary">Simpan</button>
                         </div>
                     </form>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade text-left" id="validasiModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1"
+            aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="myModalLabel1">Validasi Data</h5>
+                        <button type="button" class="close rounded-pill" data-bs-dismiss="modal" aria-label="Close">
+                            <i data-feather="x"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Apakah anda yakin memvalidasi semua data analisis ini?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn" data-bs-dismiss="modal">
+                            <i class="bx bx-x d-block d-sm-none"></i>
+                            <span class="d-none d-sm-block">Close</span>
+                        </button>
+                        <form
+                            action="<?= base_url('/manage-period/analisis/edit/'.$this->uri->segment(3).'/'.$this->uri->segment(4)); ?>"
+                            method="POST">
+                            <input id="input-id" type="hidden" name="id" value="">
+                            <input type="hidden" name="status" value="submitted">
+                            <input type="hidden" name="type" value="<?= $this->uri->segment(4); ?>">
+                            <button class="btn btn-primary me-auto d-flex align-items-center">
+                                <span class="mb-0 mt-1">Yes</span>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

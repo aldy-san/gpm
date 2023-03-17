@@ -49,7 +49,7 @@
                             <th class="text-capitalize text-nowrap"><?= join(' ', explode('_', $col)); ?></th>
                             <?php endif; ?>
                             <?php endforeach; ?>
-                            <?php if($detail_url || $edit_url || $delete_url): ?>
+                            <?php if($detail_url || $edit_url || $delete_url || isset($custom_url) || isset($download_url)): ?>
                             <th>Aksi</th>
                             <?php endif; ?>
                         </tr>
@@ -74,33 +74,33 @@
                             </td>
                             <?php endif; ?>
                             <?php endforeach; ?>
-                            <?php if($detail_url || $edit_url || $delete_url || isset($download_url)): ?>
+                            <?php if($detail_url || $edit_url || $delete_url || isset($custom_url) || isset($download_url)): ?>
                             <td>
                                 <div class="d-flex">
                                     <?php if($detail_url): ?>
                                     <a href="<?= base_url($detail_url.$item['id']); ?>"
                                         class="ms-1 btn btn-info">Detail</a>
-                                    <?php endif ?>
+                                    <?php endif; ?>
                                     <?php if($edit_url): ?>
                                     <a href="<?= base_url($edit_url.$item['id']); ?>"
                                         class="ms-1 btn btn-warning">Edit</a>
-                                    <?php endif ?>
+                                    <?php endif; ?>
                                     <?php if($delete_url): ?>
                                     <button type="button" class="ms-1 btn btn-danger" data-bs-toggle="modal"
                                         data-bs-target="#deleteModal"
                                         onclick="$('#form-delete input').attr('value','<?= $item['id']; ?>')">
                                         Delete
                                     </button>
+                                    <?php endif; ?>
                                     <?php if(isset($custom_url)): ?>
                                     <a href="<?= base_url($custom_url.$item['id']); ?>"
                                         class="ms-1 btn btn-success"><?= $custom_url_name; ?></a>
-                                    <?php endif ?>
-                                    <?php endif ?>
+                                    <?php endif; ?>
                                     <?php if(isset($download_url)): ?>
                                     <a href="<?= base_url($download_url.$item['files']); ?>"
                                         class="ms-1 btn btn-success">Lihat
                                         File</a>
-                                    <?php endif ?>
+                                    <?php endif; ?>
                                 </div>
                             </td>
                             <?php endif ?>
