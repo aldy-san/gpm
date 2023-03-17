@@ -405,8 +405,8 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = '/survei/'.$slug.'/detail/';
         $data['delete_url'] = '/survei/'.$slug.'/delete/';
         if (is_numeric($data['slug'])){
-            $data['column_table'] = ['question', 'type','klasifikasi', 'chart', 'category', 'is_active'];
-            $data['column_alias'] = ['pertanyaan', 'tipe','klasifikasi', 'grafik', 'kategori', 'aktif'];
+            $data['column_table'] = ['question', 'type','klasifikasi', 'analisis', 'chart', 'category', 'is_active'];
+            $data['column_alias'] = ['pertanyaan', 'tipe','klasifikasi', 'analisis', 'grafik', 'kategori', 'aktif'];
             $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
             $data['data_table'] = [];
             foreach ($temp as $value) {
@@ -546,7 +546,8 @@ class Superadmin extends CI_Controller {
 
     public function analisis($slug, $type = false){
         $data = $this->globalData;
-        if (!in_array($type, ['keunggulan', 'kelemahan', 'ancaman', 'peluang', 'temuan', 'strategi'])){
+        $data['list_type'] = ['keunggulan', 'kelemahan', 'ancaman', 'peluang', 'temuan', 'strategi'];
+        if (!in_array($type, $data['list_type'])){
             redirect(base_url().'/manage-period/analisis/'.$slug.'/keunggulan');
         }
         if($this->input->post('description')){
@@ -563,13 +564,39 @@ class Superadmin extends CI_Controller {
             }
         }
         $data['data_table'] = $this->db->get_where('analisis', ['id_period' => $slug, 'type' => $type])->result_array();
+        $data['check_status'] = $this->db->get_where('analisis', ['id_period' => $slug])->row_array();
+        $data['check_status'] = $data['check_status'] ? $data['check_status']['status'] : 'draft';
+        $this->db->select('answer, nama_lengkap, survei.id');
+        $this->db->from('period');
+        $this->db->where(['analisis' => $type, 'period.id' => $slug]);
+        $this->db->join('category', 'period.category=category.id');
+        $this->db->join('survei', 'survei.category=category.id');
+        $this->db->join('answer', 'answer.id_survei=survei.id');
+        $this->db->join('db_master.user', 'answer.id_user=user.username');
+        $data['data_info'] = $this->db->limit(5)->get()->result_array();
+
+        //echo json_encode($data['data_info']);die;
         customView('superadmin/analisis', $data);
+    }
+    public function edit_analisis($slug, $type = false){
+        $form = [
+            'updated_at' => time(),
+        ];
+        if ($this->input->post('description')){
+            $form['description'] = $this->input->post('description');
+            $this->db->where(['id' => $this->input->post('id')])->update('analisis', $form);
+            $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
+        }
+        if ($this->input->post('status')){
+            $form['status'] = $this->input->post('status');
+            $this->db->where(['id_period' => $slug])->update('analisis', $form);
+            $this->session->set_flashdata('alertForm', 'Data berhasil diajukan');
+        }
+		$this->session->set_flashdata('alertType', 'success');
+        redirect('/manage-period/analisis/'.$slug.'/'.$this->input->post('type'));
     }
     public function delete_analisis($slug)
     {
-        //var_dump($this->input->post('id'));
-        //var_dump($this->input->post('type'));
-        //var_dump($slug);die;
         $this->db->where(['id' => $this->input->post('id')])->delete('analisis');
         $this->session->set_flashdata('alertForm', 'Data berhasil dihapus');
 		$this->session->set_flashdata('alertType', 'success');

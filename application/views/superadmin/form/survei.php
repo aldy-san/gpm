@@ -115,6 +115,10 @@
                             <label for="analisis">Analisis</label>
                             <fieldset>
                                 <select class="form-select" name="analisis" <?= $is_edit  ? '' : 'disabled'; ?>>
+                                    <option value=""
+                                        <?= $data_slug && ($data_slug['analisis'] === '')? 'selected' : ''; ?>>
+                                        -- --
+                                    </option>
                                     <option value="keunggulan"
                                         <?= $data_slug && ($data_slug['analisis'] === 'keunggulan')? 'selected' : ''; ?>>
                                         keunggulan
