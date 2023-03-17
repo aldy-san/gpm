@@ -122,9 +122,9 @@
                                     <option value="kelemahan"
                                         <?= $data_slug && ($data_slug['analisis'] === 'kelemahan')? 'selected' : ''; ?>>
                                         kelemahan</option>
-                                    <option value="peluang"
-                                        <?= $data_slug && ($data_slug['analisis'] === 'peluang')? 'selected' : ''; ?>>
-                                        peluang</option>
+                                    <option value="ancaman"
+                                        <?= $data_slug && ($data_slug['analisis'] === 'ancaman')? 'selected' : ''; ?>>
+                                        ancaman</option>
                                     <option value="peluang"
                                         <?= $data_slug && ($data_slug['analisis'] === 'peluang')? 'selected' : ''; ?>>
                                         peluang</option>

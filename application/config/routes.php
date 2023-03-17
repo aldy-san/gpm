@@ -104,9 +104,13 @@ $route['manage-constitution/delete'] = 'Superadmin/delete_constitution';
 $route['manage-period'] = 'Superadmin/period';
 $route['manage-period/create'] = 'Superadmin/create_period';
 $route['manage-period/detail/(:num)'] = 'Superadmin/detail_period/$1';
-$route['manage-period/analisis/(:num)'] = 'Superadmin/analisis/$1';
 $route['manage-period/edit/(:num)'] = 'Superadmin/edit_period/$1';
 $route['manage-period/delete'] = 'Superadmin/delete_period';
+// Analisis
+$route['manage-period/analisis/(:num)'] = 'Superadmin/analisis/$1'; // just for redirect
+$route['manage-period/analisis/(:num)/(:any)'] = 'Superadmin/analisis/$1/$2';
+$route['manage-period/analisis/edit/(:num)/(:any)'] = 'Superadmin/edit_analisis/$1/$2';
+$route['manage-period/analisis/delete/(:num)'] = 'Superadmin/delete_analisis/$1';
 // Category Survey
 $route['manage-category'] = 'Superadmin/category';
 $route['manage-category/create'] = 'Superadmin/create_category';
