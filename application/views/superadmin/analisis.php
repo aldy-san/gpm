@@ -252,19 +252,79 @@ function openEdit(id, val) {
 }
 
 function getPdf() {
+    $.get('<?= base_url('api/getDataAnalisis/'.$this->uri->segment(3)); ?>', (res) => {
+        var data = JSON.parse(res)
+        const cols = ['keunggulan', 'kelemahan', 'ancaman', 'peluang', 'temuan', 'strategi']
+        console.log(data)
+        const rows = []
+        var check_no = 0
+        cols.forEach(type => {
+            var check_no = 0
+            data.forEach((item, i) => {
+                if (check_no >= rows.length) {
+                    var temp = {
+                        "keunggulan": '',
+                        "kelemahan": '',
+                        "ancaman": '',
+                        "peluang": '',
+                        "temuan": '',
+                        "strategi": '',
+                    }
+                    rows.push(temp)
+                }
+                if (item.type === type) {
+                    rows[check_no][item.type] = item.description
+                    check_no++
+                }
+            });
+        });
+        console.log(rows)
+        generateTable(cols, rows)
+    })
+}
+
+function generateTable(col, row) {
     const {
         jsPDF
     } = window.jspdf
-    const pdf = new jsPDF({
-        unit: 'mm',
-        format: 'a4',
-        putOnlyUsedFonts: true,
-        floatPrecision: 16
+
+    const doc = new jsPDF({
+        orientation: "p", //set orientation
+        unit: "pt", //set unit for document
+        format: "a4" //set document standard
     });
-    pdf.setFont("Times New Roman");
-    pdf.setFontSize(20);
-    pdf.text("I. Pendahuluan", 25, 25);
-    pdf.setFontSize(16);
-    pdf.save("a4.pdf");
+    doc.setFont("Times New Roman");
+
+    const margin = 0.5; // inches on a 8.5 x 11 inch sheet.
+    const verticalOffset = margin;
+    var columns = [];
+    col.forEach(item => {
+        columns.push({
+            title: item[0].toUpperCase() + item.substring(1),
+            dataKey: item
+        })
+    });
+    var rows = row
+    doc.autoTable(columns, rows, {
+        theme: 'plain',
+        styles: {
+            lineColor: 51,
+            lineWidth: 1,
+        },
+        headStyles: {
+            lineColor: 51,
+            lineWidth: 1,
+            fontStyle: 'bold',
+            fillColor: 230,
+            textColor: 51,
+        },
+        margin: {
+            top: 60
+        },
+        addPageContent: function(data) {
+            doc.text("asd", 40, 30);
+        }
+    });
+    doc.save(`tes.pdf`);
 }
 </script>

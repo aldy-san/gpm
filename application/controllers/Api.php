@@ -194,4 +194,9 @@ class Api extends CI_Controller {
         $result = $this->db->get()->result();
         echo json_encode($result);
     }
+
+    public function getDataAnalisis($slug){
+        $result = $this->db->get_where('analisis', ['id_period' => $slug])->result();
+        echo json_encode($result);
+    }
 }
