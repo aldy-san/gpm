@@ -40,7 +40,7 @@
                             <?php endif ?>
                             <?php foreach ($column_table as $key => $col): ?>
                             <?php if(isset($column_alias)): ?>
-                            <?php if($title === 'Kategori Survei' ) : ?>
+                            <?php if($title === 'Kategori Survei'): ?>
                             <th class="text-capitalize text-nowrap"><?= $column_alias[$key+1]; ?> </th>
                             <?php else : ?>
                             <th class="text-capitalize text-nowrap"><?= $column_alias[$key]; ?> </th>

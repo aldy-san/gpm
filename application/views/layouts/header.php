@@ -70,7 +70,7 @@
                             </li>
                             <?php if (isset($this_user) && getRole($this_user['level']) !== 'superadmin'):?>
                             <li
-                                class="sidebar-item <?= $this->uri->segment(1) === 'repository' && !$this->uri->segment(3) ?'active' :''?>">
+                                class="sidebar-item <?= $this->uri->segment(1) === 'repository' && $this->uri->segment(2) !== 'all' ?'active' :''?>">
                                 <a href="<?= base_url('repository'); ?>" class='sidebar-link'>
                                     <i class="bi bi-folder2-open"></i>
                                     <span>Repositori Saya</span>
@@ -79,7 +79,7 @@
                             <?php endif ?>
                             <?php if (isset($this_user) && getRole($this_user['level']) === 'dosen') :?>
                             <?php if (in_array($this_user['level'], [8, 9, 10])) :?>
-                            <li class="sidebar-item <?= $this->uri->segment(3) === 'all' ?'active' :''?>">
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'all' ?'active' :''?>">
                                 <a href="<?= base_url('repository/all'); ?>" class='sidebar-link'>
                                     <i class="bi bi-folder2-open"></i>
                                     <span>Semua Repositori</span>

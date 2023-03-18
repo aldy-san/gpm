@@ -155,7 +155,7 @@ class Logged extends CI_Controller {
         $data['delete_url'] = false;
         $data['download_url'] = '/sertifikat/';
         $data['column_table'] = ['id','name', 'institution', 'from_date','end_date', 'level','nama_lengkap','category'];
-        $data['column_alias'] = ['id','nama', 'Nama Lembaga', 'Tanggal', 'Tingkat','nama lengkap','Kategori'];
+        $data['column_alias'] = ['id','nama', 'Nama Lembaga', 'Tanggal Mulai', 'Tanggal Berakhir', 'Tingkat','nama lengkap','Kategori'];
 
         // Config Pagination
 		$config['base_url'] = base_url($root_url);
