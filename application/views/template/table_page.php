@@ -66,7 +66,7 @@
                             <?php if(isset($column_badge) && in_array($col, $column_badge)): ?>
                             <td class="text-capitalize">
                                 <span
-                                    class="<?= $item[$col] === 'Ya' ? 'badge bg-success' : 'badge bg-danger'; ?>"><?= $item[$col] ?></span>
+                                    class="<?= in_array($item[$col], ['submitted', 'Ya']) ? 'badge bg-success' : 'badge bg-danger'; ?>"><?= $item[$col] ?></span>
                             </td>
                             <?php else : ?>
                             <td class="text-capitalize">

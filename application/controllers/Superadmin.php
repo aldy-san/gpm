@@ -564,8 +564,7 @@ class Superadmin extends CI_Controller {
             }
         }
         $data['data_table'] = $this->db->get_where('analisis', ['id_period' => $slug, 'type' => $type])->result_array();
-        $data['check_status'] = $this->db->get_where('analisis', ['id_period' => $slug])->row_array();
-        $data['check_status'] = $data['check_status'] ? $data['check_status']['status'] : 'draft';
+        $data['check_status'] = $this->db->get_where('period', ['id' => $slug])->row_array()['status'];
         $this->db->select('answer, nama_lengkap, survei.id');
         $this->db->from('period');
         $this->db->where(['analisis' => $type, 'period.id' => $slug]);
@@ -584,9 +583,9 @@ class Superadmin extends CI_Controller {
         ];
         if ($this->input->post('description')){
             $form['description'] = $this->input->post('description');
-            if ($this->db->get_where('analisis', ['id' => $this->input->post('id')])->row_array()['status'] === 'revised'){
-                $form['status'] = 'submitted';
-            }
+            //if ($this->db->get_where('analisis', ['id' => $this->input->post('id')])->row_array()['status'] === 'revised'){
+            //    $form['status'] = 'submitted';
+            //}
             $this->db->where(['id' => $this->input->post('id')])->update('analisis', $form);
             $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
         }

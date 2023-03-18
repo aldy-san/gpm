@@ -45,7 +45,7 @@ class Dosen extends CI_Controller {
         $data = $this->globalData;
         $table = 'period';
         $root_url = '/analisis-period/';
-        $data['title'] = 'Periode';
+        $data['title'] = 'Analisis Periode';
         $data['desc'] = '';
         $data['detail_url'] = false;
         $data['create_url'] = false;
@@ -58,13 +58,14 @@ class Dosen extends CI_Controller {
 
         // Config Pagination
 		$config['base_url'] = base_url($root_url);
-        $config['total_rows'] = $this->db->get_where($table, ['status' => 'submitted'])->num_rows();
+        $config['total_rows'] = $this->db->get_where($table, 'status = "submitted" OR status = "revised"')->num_rows();
 		$config['per_page'] = 10;
 		$config['start'] = $this->uri->segment(3);
 		$this->pagination->initialize($config);
-        $temp = $this->db->get_where($table, ['status' => 'submitted'], $config['per_page'], $config['start'])->result_array();
+        $temp = $this->db->get_where($table, 'status = "submitted" OR status = "revised"', $config['per_page'], $config['start'])->result_array();
         $data['data_table'] = [];
         $category = $this->db->get('category')->result_array();
+        $data['column_badge'] = ['status'];
         foreach ($temp as $value) {
             $value['category'] = findObjectBy('id', $value['category'], $category)['name'];
             $value['period_from'] = gmdate("d-m-Y", $value['period_from']);
@@ -81,8 +82,7 @@ class Dosen extends CI_Controller {
             redirect(base_url().'analisis-periode/analisis/'.$slug.'/keunggulan');
         }
         $data['data_table'] = $this->db->get_where('analisis', ['id_period' => $slug, 'type' => $type])->result_array();
-        $data['check_status'] = $this->db->get_where('analisis', ['id_period' => $slug])->row_array();
-        $data['check_status'] = $data['check_status'] ? $data['check_status']['status'] : 'draft';
+        $data['check_status'] = $this->db->get_where('period', ['id' => $slug])->row_array()['status'];
         $this->db->select('answer, nama_lengkap, survei.id');
         $this->db->from('period');
         $this->db->where(['analisis' => $type, 'period.id' => $slug]);
@@ -104,7 +104,7 @@ class Dosen extends CI_Controller {
         if ($this->input->post('status') === 'revised'){
             $form['status'] = $this->input->post('status');
             $this->db->where(['id' => $this->input->post('id')])->update('analisis', $form);
-            //$this->db->where(['id' => $slug])->update('period', ['status' => $this->input->post('status')]);
+            $this->db->where(['id' => $slug])->update('period', ['status' => $this->input->post('status')]);
             $this->session->set_flashdata('alertForm', 'Data berhasil direvisi');
         }
 		$this->session->set_flashdata('alertType', 'success');

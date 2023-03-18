@@ -42,11 +42,26 @@
         </div>
         <div class="card">
             <div class="card-body">
-                <h4>Data Analisis
+                <div class="d-flex justify-content-between">
+                    <h4>Data Analisis
+                        <?php if($check_status === 'accepted'): ?>
+                        <span class="badge bg-success ms-3">Telah Disetujui</span>
+                        <?php elseif($check_status === 'submitted'): ?>
+                        <span class="badge bg-warning ms-3">Sedang Diajukan</span>
+                        <?php elseif($check_status === 'revised'): ?>
+                        <span class="badge bg-danger ms-3">Harus Direvisi</span>
+                        <?php endif; ?>
+                    </h4>
                     <?php if($check_status === 'accepted'): ?>
-                    <span class="badge bg-success">Telah Disetujui</span>
+                    <button class="btn btn-primary d-flex" onclick="getPdf()">
+                        <i class="bi bi-download me-3 my-auto"></i>
+                        <span class="mt-1">
+                            Export Data Analisis
+                        </span>
+                    </button>
                     <?php endif; ?>
-                </h4>
+                </div>
+                <?php if($check_status === 'draft' || $check_status === 'revised'): ?>
                 <form
                     action="<?= base_url('/manage-period/analisis/'.$this->uri->segment(3).'/'.$this->uri->segment(4)); ?>"
                     method="POST">
@@ -54,13 +69,12 @@
                         <div class="form-group col-12">
                             <label class="mb-2" for="name">Analisis</label>
                             <textarea class="form-control" name="description" rows="5"
-                                placeholder="Masukkan analisis..." style='resize:none'
-                                <?= $check_status === 'draft' ? '' : 'disabled' ?>></textarea>
+                                placeholder="Masukkan analisis..." style='resize:none'></textarea>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"
-                        <?= $check_status === 'draft' ? '' : 'disabled' ?>>Tambah</button>
+                    <button type="submit" class="btn btn-primary">Tambah</button>
                 </form>
+                <?php endif; ?>
             </div>
         </div>
         <div class="card p-4">
@@ -121,8 +135,8 @@
                     </li>
                 </ul>
                 <button class="btn btn-success me-auto d-flex align-items-center"
-                    <?= $check_status === 'draft' ? '' : 'disabled' ?> data-bs-toggle="modal"
-                    data-bs-target="#validasiModal">
+                    <?= $check_status === 'draft' || $check_status === 'revised' ? '' : 'disabled' ?>
+                    data-bs-toggle="modal" data-bs-target="#validasiModal">
                     <i class="bi bi-check-square me-2"></i>
                     <span class="mb-0 mt-1">AJUKAN PENGESAHAN</span>
                 </button>
@@ -235,5 +249,22 @@
 function openEdit(id, val) {
     $('#form-edit #input-id').attr('value', id);
     $('#form-edit textarea').val(val);
+}
+
+function getPdf() {
+    const {
+        jsPDF
+    } = window.jspdf
+    const pdf = new jsPDF({
+        unit: 'mm',
+        format: 'a4',
+        putOnlyUsedFonts: true,
+        floatPrecision: 16
+    });
+    pdf.setFont("Times New Roman");
+    pdf.setFontSize(20);
+    pdf.text("I. Pendahuluan", 25, 25);
+    pdf.setFontSize(16);
+    pdf.save("a4.pdf");
 }
 </script>

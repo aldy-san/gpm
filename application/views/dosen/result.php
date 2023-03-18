@@ -6,10 +6,11 @@
     <div class="d-flex justify-content-between align-items-end ">
         <div class="d-flex flex-column">
             <h5 id="total">Responden: . orang</h5>
+            <a href="<?= current_url().'/responden'; ?>" class="mb-2">Lihat responden</a>
             <div class="custom-control custom-checkbox me-2">
                 <input id="check-all" type="checkbox" class="form-check-input form-check-primary form-check-glow"
                     name="check-all" checked onclick="checkHandlerAll()">
-                <label for="check all">Select All</label>
+                <label for="check all">Pilih semua</label>
             </div>
         </div>
         <div class="d-flex">
@@ -307,16 +308,21 @@ function executeGraphic(from, to, name, isUpdate = false) {
                 //console.log(sum, total)
                 var avg = (sum / total).toFixed(1)
                 var summary = ''
-                console.log(temp[0].klasifikasi, temp)
-                $(`#avg-${item.id}`).text(avg)
-                if (avg >= 0 && avg < 25) {
-                    summary = 'Tidak ' + temp[0].klasifikasi
-                } else if (avg >= 25 && avg < 50) {
-                    summary = 'Kurang ' + temp[0].klasifikasi
-                } else if (avg >= 50 && avg < 75) {
-                    summary = '' + temp[0].klasifikasi
+                //console.log(temp)
+                if (temp.length) {
+                    $(`#avg-${item.id}`).text(avg)
+                    if (avg >= 0 && avg < 25) {
+                        summary = 'Tidak ' + temp[0].klasifikasi
+                    } else if (avg >= 25 && avg < 50) {
+                        summary = 'Kurang ' + temp[0].klasifikasi
+                    } else if (avg >= 50 && avg < 75) {
+                        summary = '' + temp[0].klasifikasi
+                    } else {
+                        summary = 'Sangat ' + temp[0].klasifikasi
+                    }
                 } else {
-                    summary = 'Sangat ' + temp[0].klasifikasi
+                    summary = 'Belum ada data'
+                    $(`#avg-${item.id}`).text('Belum ada data')
                 }
                 $(`#sum-${item.id}`).text(summary)
                 var options = {
@@ -331,7 +337,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                         width: 0
                     },
                 };
-                console.log(temp.length, series)
+                //console.log(temp.length, series)
                 if (temp.length > 0) {
                     if (item.chart === 'pie') {
                         options = {
