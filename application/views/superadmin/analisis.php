@@ -246,6 +246,10 @@
 </div>
 
 <script type="text/javascript">
+const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September',
+    'Oktober', 'November', 'Desember'
+]
+
 function openEdit(id, val) {
     $('#form-edit #input-id').attr('value', id);
     $('#form-edit textarea').val(val);
@@ -254,58 +258,204 @@ function openEdit(id, val) {
 function getPdf() {
     $.get('<?= base_url('api/getDataAnalisis/'.$this->uri->segment(3)); ?>', (res) => {
         var data = JSON.parse(res)
-        const cols = ['keunggulan', 'kelemahan', 'ancaman', 'peluang', 'temuan', 'strategi']
-        console.log(data)
-        const rows = []
-        var check_no = 0
-        cols.forEach(type => {
-            var check_no = 0
-            data.forEach((item, i) => {
-                if (check_no >= rows.length) {
-                    var temp = {
-                        "keunggulan": '',
-                        "kelemahan": '',
-                        "ancaman": '',
-                        "peluang": '',
-                        "temuan": '',
-                        "strategi": '',
-                    }
-                    rows.push(temp)
-                }
-                if (item.type === type) {
-                    rows[check_no][item.type] = item.description
-                    check_no++
-                }
-            });
+
+        var date = new Date()
+        var date = parseDate(date)
+        // INIT PDF
+        const {
+            jsPDF
+        } = window.jspdf
+
+        const doc = new jsPDF({
+            orientation: "l", //set orientation
+            unit: "pt", //set unit for document
+            format: "a4" //set document standard
         });
-        console.log(rows)
-        generateTable(cols, rows)
+        doc.setFont("Times New Roman");
+
+        var margin = 0.2
+        const verticalOffset = margin;
+        // END INIT PDF
+        // INFORMATION TABLE
+        // I. PENDAHALUAN
+        doc.autoTable(generateDataKey(['0', '1']), [
+            ['Jurusan', 'Teknik Elektro dan Informatika'],
+            ['Nama Ketua Jurusan', 'Aji Prasetya Wibawa , ST, M.MT., Ph.D'],
+            ['Tanggal Audit', date],
+            ['Auditor', 'Muhammad Afnan Habibi, S.T., M.T., M.Eng']
+        ], {
+            ...defaultOptions(),
+            headStyles: {
+                lineColor: 255,
+                textColor: 255,
+                lineWidth: 1,
+            },
+            margin: {
+                top: 55
+            },
+            didDrawPage: function(data) {
+                doc.text("I. PENDAHULUAN", 40, 60);
+            }
+        })
+        // II. TUJUAN AUDIT
+        doc.autoTable(generateDataKey(['0', '1']), [
+            ['1', 'Mengetahui kesesuaian atau ketidaksesuaian dalam pelaksanaan standar departemen.'],
+            ['2', 'Mengevaluasi efektifitas penerapan sistem yang diimplementasikan dalam departemen.'],
+            ['3',
+                'Mengidentifikasi peluang perbaikan untuk meningkatkan kinerja sivitas akademik departemen.'
+            ],
+        ], {
+            ...defaultOptions(),
+            headStyles: {
+                lineColor: 255,
+                textColor: 255,
+                lineWidth: 1,
+            },
+            margin: {
+                top: 55
+            },
+            didDrawPage: function(data) {
+                doc.text("II. TUJUAN AUDIT", 40, 190);
+            }
+        })
+        // III. JADWAL AUDIT
+        const from_date = new Date(<?= $period['period_from']; ?>)
+        const to_date = new Date(<?= $period['period_to']; ?>)
+        doc.autoTable(generateDataKey(['0', '1']), [
+            ['Waktu', 'Kegiatan Audit'],
+            [`${parseDate(from_date * 1000)} - ${parseDate(to_date * 1000)}`,
+                'AUDIT MUTU INTERNAL JURUSAN TEKNIK ELEKTRO DAN INFORMATIKA'
+            ]
+        ], {
+            ...defaultOptions(),
+            headStyles: {
+                lineColor: 255,
+                textColor: 255,
+                lineWidth: 1,
+            },
+            margin: {
+                top: 55
+            },
+            didDrawPage: function(data) {
+                doc.text("III. JADWAL AUDIT", 40, 295);
+            }
+        })
+        doc.addPage()
+
+        // DATA TABLE
+        const swotTable = generateTable(['keunggulan', 'kelemahan', 'ancaman', 'peluang'], data)
+        const noteTable = generateTable(['temuan', 'strategi'], data)
+        doc.autoTable(swotTable.columns, swotTable.rows, {
+            ...swotTable.options,
+            didDrawPage: function(data) {
+                doc.text("IV. ANALISIS SWOT", 40, 60);
+            }
+        })
+        doc.addPage()
+        doc.autoTable(noteTable.columns, noteTable.rows, {
+            ...noteTable.options,
+            didDrawPage: function(data) {
+                doc.text("V. CATATAN GPM", 40, 60);
+            }
+        })
+        // END TABLE
+        doc.addPage()
+        // VI. BERITA ACARA
+        doc.autoTable(generateDataKey(['0']), [
+            [
+                `Pada tanggal ${date} telah dilaksanakan audit mutu Gugus Penjamin Mutu (GPM) oleh tim auditor unit GPM di Jurusan Teknik Elektro dan Informatika Fakultas Teknik Universitas Negeri Malang`
+            ],
+            [
+                'Berita acara ini di diketahui oleh Ketua Jurusan Jurusan Teknik Elektro dan Informatika setelah divalidasi dan disetujui.'
+            ],
+        ], {
+            ...defaultOptions(),
+            headStyles: {
+                lineColor: 255,
+                textColor: 255,
+                lineWidth: 1,
+            },
+            styles: {
+                lineColor: 255,
+                fontSize: 13,
+            },
+            margin: {
+                top: 55
+            },
+            didDrawPage: function(data) {
+                doc.text("VI. BERITA ACARA", 40, 60);
+            }
+        })
+        doc.autoTable(generateDataKey(['0', '1']), [
+            ['Nama Ketua Jurusan', 'Aji Prasetya Wibawa , ST, M.MT., Ph.D'],
+            ['Tanggal Audit', date],
+            ['Status', 'Disetujui'],
+        ], {
+            ...defaultOptions(),
+            headStyles: {
+                lineColor: 255,
+                textColor: 255,
+                lineWidth: 1,
+            },
+            styles: {
+                lineWidth: 1.5,
+                lineColor: 0,
+                fontStyle: 'bold',
+            },
+            margin: {
+                top: 0
+            }
+        })
+        doc.save(`tes.pdf`);
     })
 }
 
-function generateTable(col, row) {
-    const {
-        jsPDF
-    } = window.jspdf
+function parseDate(date) {
+    const temp = new Date(date)
+    return `${temp.getDate()} ${months[temp.getMonth()+1]} ${temp.getFullYear()}`
+}
 
-    const doc = new jsPDF({
-        orientation: "p", //set orientation
-        unit: "pt", //set unit for document
-        format: "a4" //set document standard
-    });
-    doc.setFont("Times New Roman");
-
-    const margin = 0.5; // inches on a 8.5 x 11 inch sheet.
-    const verticalOffset = margin;
-    var columns = [];
-    col.forEach(item => {
+function generateDataKey(cols) {
+    const columns = []
+    cols.forEach(item => {
         columns.push({
             title: item[0].toUpperCase() + item.substring(1),
             dataKey: item
         })
     });
-    var rows = row
-    doc.autoTable(columns, rows, {
+    return columns
+}
+
+function generateTable(cols, data) {
+    var columns = []
+    const rows = []
+    var check_no = 0
+    columns = generateDataKey(cols)
+    cols.forEach(type => {
+        var check_no = 0
+        data.forEach((item, i) => {
+            if (check_no >= rows.length) {
+                var temp = {}
+                cols.forEach(tempType => {
+                    temp[tempType] = ''
+                });
+                rows.push(temp)
+            }
+            if (item.type === type) {
+                rows[check_no][item.type] = item.description
+                check_no++
+            }
+        });
+    });
+    return {
+        columns: columns,
+        rows: rows,
+        options: defaultOptions()
+    }
+}
+//doc.save(`tes.pdf`);
+function defaultOptions() {
+    return {
         theme: 'plain',
         styles: {
             lineColor: 51,
@@ -319,12 +469,8 @@ function generateTable(col, row) {
             textColor: 51,
         },
         margin: {
-            top: 60
-        },
-        addPageContent: function(data) {
-            doc.text("asd", 40, 30);
+            top: 75
         }
-    });
-    doc.save(`tes.pdf`);
+    }
 }
 </script>

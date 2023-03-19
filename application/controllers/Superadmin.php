@@ -573,16 +573,16 @@ class Superadmin extends CI_Controller {
         $this->db->join('answer', 'answer.id_survei=survei.id');
         $this->db->join('db_master.user', 'answer.id_user=user.username');
         $data['data_info'] = $this->db->limit(5)->get()->result_array();
-
+        $data['period'] = $this->db->get_where('period', ['id' => $slug])->row_array();
+        //var_dump($data['period']);die;
         //echo json_encode($data['data_info']);die;
         customView('superadmin/analisis', $data);
     }
     public function edit_analisis($slug, $type = false){
-        $form = [
-            'updated_at' => time(),
-        ];
+        $form = [];
         if ($this->input->post('description')){
             $form['description'] = $this->input->post('description');
+            $form['updated_at'] = time();
             //if ($this->db->get_where('analisis', ['id' => $this->input->post('id')])->row_array()['status'] === 'revised'){
             //    $form['status'] = 'submitted';
             //}
