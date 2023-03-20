@@ -279,7 +279,7 @@ class Logged extends CI_Controller {
                 if (!$this->upload->do_upload('sertifikat')) {
                     $error = array('error' => $this->upload->display_errors());
                     echo json_encode($error);
-                    die();
+                    //die();
                 } else {
                     $file = $this->upload->data('file_name');
                 }
@@ -290,9 +290,11 @@ class Logged extends CI_Controller {
                     'end_date' => strtotime($this->input->post('end_date')),
                     'level' => $this->input->post('level'),
                     'category' => $this->input->post('category'),
-                    'files' => $file,
                     'id_user' => $data['this_user']['username']
                 ];
+                if ($file){
+                    $form['file'] = $file;
+                }
                 $this->db->where(['id' => $id])->update('repository', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');
 				$this->session->set_flashdata('alertType', 'success');
