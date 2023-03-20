@@ -42,7 +42,7 @@
                             <span class="text-capitalize badge bg-danger"> <?= $item['status']; ?></span>
                             <?php endif;?>
                         </td>
-                        <td><?= gmdate("d F Y", $item['updated_at']); ?></td>
+                        <td><?= gmdate("d F Y", $item['updated_at']+25200); ?></td>
                         <td>
                             <?php if($item['status'] !== 'accepted'): ?>
                             <button type="button" class="ms-1 btn btn-danger" data-bs-toggle="modal"

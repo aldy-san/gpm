@@ -167,8 +167,8 @@ class Logged extends CI_Controller {
 
         $data['data_table'] = [];
         foreach ($temp as $value) {
-            $value['from_date'] = gmdate("d M, Y", $value['from_date']);
-            $value['end_date'] = gmdate("d M, Y", $value['end_date']);
+            $value['from_date'] = gmdate("d M, Y", $value['from_date']+25200);
+            $value['end_date'] = gmdate("d M, Y", $value['end_date']+25200);
             array_push($data['data_table'],$value);
         }
         customView('template/table_page', $data);
@@ -198,8 +198,8 @@ class Logged extends CI_Controller {
         $temp = $this->db->get_where($table, ['id_user' => $data['this_user']['username']], $config['per_page'], $config['start'])->result_array();
         $data['data_table'] = [];
         foreach ($temp as $value) {
-            $value['from_date'] = gmdate("d M, Y", $value['from_date']);
-            $value['end_date'] = gmdate("d M, Y", $value['end_date']);
+            $value['from_date'] = gmdate("d M, Y", $value['from_date']+25200);
+            $value['end_date'] = gmdate("d M, Y", $value['end_date']+25200);
             array_push($data['data_table'],$value);
         }
         customView('template/table_page', $data);

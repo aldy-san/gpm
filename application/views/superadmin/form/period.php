@@ -28,7 +28,7 @@
                             <label for="period_from">Dari tanggal</label>
                             <input type="date" class="form-control <?= form_error('period_from') ? 'is-invalid': ''; ?>"
                                 name="period_from" id="period_from" placeholder="period_from" autocomplete="off"
-                                value="<?= $data_slug ?  (set_value('period_from') ?  set_value('period_from') :  gmdate("Y-m-d", $data_slug['period_from'])) : set_value('period_from'); ?>"
+                                value="<?= $data_slug ?  (set_value('period_from') ?  set_value('period_from') :  gmdate("Y-m-d", $data_slug['period_from']+25200)) : set_value('period_from'); ?>"
                                 <?= $is_edit? '' : 'disabled'; ?>>
                             <div class="invalid-feedback">
                                 <?= form_error('period_from'); ?>
@@ -38,7 +38,7 @@
                             <label for="period_to">Sampai tanggal</label>
                             <input type="date" class="form-control <?= form_error('period_to') ? 'is-invalid': ''; ?>"
                                 name="period_to" id="period_to" placeholder="period_to" autocomplete="off"
-                                value="<?= $data_slug ?  (set_value('period_to') ?  set_value('period_to') : gmdate("Y-m-d", $data_slug['period_to']) ) : set_value('period_to'); ?>"
+                                value="<?= $data_slug ?  (set_value('period_to') ?  set_value('period_to') : gmdate("Y-m-d", $data_slug['period_to']+25200) ) : set_value('period_to'); ?>"
                                 <?= $is_edit? '' : 'disabled'; ?>>
                             <div class="invalid-feedback">
                                 <?= form_error('period_to'); ?>

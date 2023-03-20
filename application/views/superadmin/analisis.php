@@ -61,6 +61,11 @@
                     </button>
                     <?php endif; ?>
                 </div>
+                <div class="d-flex flex-column">
+                    <h6>Survei - <?= $period['name']; ?></h6>
+                    <h6><?= gmdate("d F Y", $period['period_from']+25200) ?> -
+                        <?= gmdate("d F Y", $period['period_to']+25200) ?></h6>
+                </div>
                 <?php if($check_status === 'draft' || $check_status === 'revised'): ?>
                 <form
                     action="<?= base_url('/manage-period/analisis/'.$this->uri->segment(3).'/'.$this->uri->segment(4)); ?>"
@@ -104,7 +109,7 @@
                             <span class="text-capitalize badge bg-danger"> <?= $item['status']; ?></span>
                             <?php endif;?>
                         </td>
-                        <td><?= gmdate("d F Y", $item['updated_at']); ?></td>
+                        <td><?= gmdate("d F Y", $item['updated_at']+25200); ?></td>
                         <td>
                             <?php if($item['status'] === 'draft' || $item['status'] === 'revised' ): ?>
                             <button type="button" class="ms-1 btn btn-warning" data-bs-toggle="modal"
@@ -412,7 +417,7 @@ function getPdf() {
 
 function parseDate(date) {
     const temp = new Date(date)
-    return `${temp.getDate()} ${months[temp.getMonth()+1]} ${temp.getFullYear()}`
+    return `${temp.getDate()} ${months[temp.getMonth()]} ${temp.getFullYear()}`
 }
 
 function generateDataKey(cols) {

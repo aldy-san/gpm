@@ -68,8 +68,8 @@ class Dosen extends CI_Controller {
         $data['column_badge'] = ['status'];
         foreach ($temp as $value) {
             $value['category'] = findObjectBy('id', $value['category'], $category)['name'];
-            $value['period_from'] = gmdate("d-m-Y", $value['period_from']);
-            $value['period_to'] = gmdate("d-m-Y", $value['period_to']);
+            $value['period_from'] = gmdate("d-m-Y", $value['period_from']+25200);
+            $value['period_to'] = gmdate("d-m-Y", $value['period_to']+25200);
             array_push($data['data_table'],$value);
         }
         customView('template/table_page', $data);

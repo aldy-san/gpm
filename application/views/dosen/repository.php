@@ -39,7 +39,7 @@
                             <label for="from_date">Tanggal Mulai Sertifikat</label>
                             <input type="date" class="form-control <?= form_error('from_date') ? 'is-invalid': ''; ?>"
                                 name="from_date" id="from_date" placeholder="from date" autocomplete="off"
-                                value="<?= $data_slug ?  (set_value('from_date') ?  set_value('from_date') :  gmdate("Y-m-d", $data_slug['from_date'])) : set_value('from_date'); ?>"
+                                value="<?= $data_slug ?  (set_value('from_date') ?  set_value('from_date') :  gmdate("Y-m-d", $data_slug['from_date']+25200)) : set_value('from_date'); ?>"
                                 <?= $is_edit? '' : 'disabled'; ?>>
                             <div class="invalid-feedback">
                                 <?= form_error('from_date'); ?>
@@ -49,7 +49,7 @@
                             <label for="end_date">Tanggal Akhir Sertifikat</label>
                             <input type="date" class="form-control <?= form_error('end_date') ? 'is-invalid': ''; ?>"
                                 name="end_date" id="end_date" placeholder="end date" autocomplete="off"
-                                value="<?= $data_slug ?  (set_value('end_date') ?  set_value('end_date') :  gmdate("Y-m-d", $data_slug['end_date'])) : set_value('end_date'); ?>"
+                                value="<?= $data_slug ?  (set_value('end_date') ?  set_value('end_date') :  gmdate("Y-m-d", $data_slug['end_date']+25200)) : set_value('end_date'); ?>"
                                 <?= $is_edit? '' : 'disabled'; ?>>
                             <div class="invalid-feedback">
                                 <?= form_error('end_date'); ?>
