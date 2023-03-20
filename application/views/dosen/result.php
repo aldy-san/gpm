@@ -6,7 +6,9 @@
     <div class="d-flex justify-content-between align-items-end ">
         <div class="d-flex flex-column">
             <h5 id="total">Responden: . orang</h5>
+            <?php if (!in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna'])): ?>
             <a href="<?= current_url().'/responden'; ?>" class="mb-2">Lihat responden</a>
+            <?php endif; ?>
             <div class="custom-control custom-checkbox me-2">
                 <input id="check-all" type="checkbox" class="form-check-input form-check-primary form-check-glow"
                     name="check-all" checked onclick="checkHandlerAll()">
