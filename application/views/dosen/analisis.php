@@ -69,7 +69,7 @@
                             untuk melakukan validasi. </p>
                     </li>
                 </ul>
-                <?php if($item['status'] === 'revised'): ?>
+                <?php if($period['status'] === 'revised'): ?>
                 <small class="text-danger mb-2  ">*Masih ada komponen yang perlu direvisi, lakukan validasi jika revisi
                     sudah
                     selesai atau benar</small>
