@@ -121,7 +121,7 @@ FilePond.registerPlugin(
 // Filepond: Basic
 const pond = FilePond.create(document.querySelector('.basic-filepond'), {
     allowFileEncode: false,
-    required: true,
+    required: <?= !$is_edit; ?>,
     storeAsFile: true,
     acceptedFileTypes: ['application/pdf'],
     allowFileSizeValidation: true,
