@@ -220,7 +220,7 @@
 
                             <?php  if (isset($this_user) && getRole($this_user['level']) === 'mahasiswa') :?>
                             <li class="sidebar-title">Isi Survei</li>
-                            <?php if($is_survei_dosen_active['is_active'] && !$check_survei_dosen_answer): ?>
+                            <?php if($is_survei_dosen_active['is_active'] && !$check_survei_dosen_answer && getRole($this_user['level']) === 'mahasiswa'): ?>
                             <li class="sidebar-item">
                                 <a href="<?= base_url('mahasiswa/survei_dosen'); ?>" class='sidebar-link btn'>
                                     <i class="bi bi-question-octagon"></i>

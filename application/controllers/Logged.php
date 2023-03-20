@@ -45,6 +45,8 @@ class Logged extends CI_Controller {
             'category_dosen' => $this->M_survei->getCategory('dosen', false),
             'category_mahasiswa' => $this->M_survei->getCategory('mahasiswa', false),
             'category_tendik' => $this->M_survei->getCategory('tendik', false),
+            'is_survei_dosen_active' => $this->db->get_where('survei_activation', ['name' => 'dosen'])->row_array(),
+            'check_survei_dosen_answer' => $this->db->get_where('survei_dosen_answer', ['id_user' => $this->session->userdata('user')['username'], 'created_at >=' => time() - 1296000, 'created_at <=' => time() + 1296000])->row_array()
         ];
     }
 
