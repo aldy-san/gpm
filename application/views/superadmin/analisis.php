@@ -411,7 +411,7 @@ function getPdf() {
                 top: 0
             }
         })
-        doc.save(`tes.pdf`);
+        doc.save(`<?= $period['name']; ?>.pdf`);
     })
 }
 

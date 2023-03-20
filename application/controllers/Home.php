@@ -121,7 +121,7 @@ class Home extends CI_Controller {
 
     public function survei($role){
         $data = $this->globalData;
-        $survei = $this->db->get_where('survei',['role' => $role])->result_array();
+        $survei = $this->db->get_where('survei',['role' => $role, 'is_active' => '1'])->result_array();
         if ($this->input->post()){
             $this->db->select('id,bar_length');
             foreach($survei as $num => $sur){

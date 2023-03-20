@@ -474,7 +474,7 @@ function getPdf() {
         }
         pdf.addImage(imgData, 'PNG', x, y, 155, 90);
     })
-    pdf.save('test.pdf')
+    pdf.save('Hasil Survei.pdf')
     $('#btn-export .bi-save').toggleClass('d-none')
     $('#btn-export .spinner-border').toggleClass('d-none')
 }
