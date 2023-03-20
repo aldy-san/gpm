@@ -57,7 +57,7 @@
                     </div>
                     <?php if($is_edit) :?>
                     <button type="submit" class="btn btn-primary ">Simpan</button>
-                    <?php if($data_slug['files']) :?>
+                    <?php if($data_slug) :?>
                     <a href="<?= base_url('/sertifikat/'.$data_slug['files']); ?>" class="ms-1 btn btn-success">Lihat
                         File Saat Ini</a>
                     <?php endif; ?>
