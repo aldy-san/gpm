@@ -106,11 +106,11 @@ class Api extends CI_Controller {
     }
     public function getMonev()
     {
-        $monev_id = array(1, 2, 3);
+        //$monev_id = array(1, 2, 3);
         //$db_master = $this->load->database('db_master', TRUE);
         $this->db->select('AVG(detail) as avg');
         $this->db->from('answer');
-        $this->db->where_in('survei.category', $monev_id);
+        //$this->db->where_in('survei.category', $monev_id);
         $this->db->where(['survei.type' => 'bar']);
         $this->db->join('survei', 'survei.id=id_survei');
         $result = $this->db->get()->result();
@@ -118,10 +118,10 @@ class Api extends CI_Controller {
     }
     public function getMonevProdiPerPeriod()
     {
-        $monev_id = array(1, 2, 3);
+        //$monev_id = array(1, 2, 3);
         $this->db->select("user.kode_prodi, jenjang, AVG(detail) as avg, FROM_UNIXTIME(answer.created_at , '%Y') AS year, QUARTER(from_unixtime(answer.created_at)) as quarter");
         $this->db->from('answer');
-        $this->db->where_in('survei.category', $monev_id);
+        //$this->db->where_in('survei.category', $monev_id);
         $this->db->where(['survei.type' => 'bar']);
         $this->db->join('survei', 'survei.id=id_survei');
         $this->db->join('db_master.user', 'user.username=answer.id_user');
