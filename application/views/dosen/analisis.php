@@ -3,6 +3,11 @@
         <div class="row">
             <div class="col-12 col-md-6 order-md-1 order-last">
                 <h3>Analisis - <span class="text-capitalize"><?= $this->uri->segment(4); ?></span></h3>
+                <div class="d-flex flex-column">
+                    <h6>Survei - <?= $period['name']; ?></h6>
+                    <h6><?= gmdate("d F Y", $period['period_from']+25200) ?> -
+                        <?= gmdate("d F Y", $period['period_to']+25200) ?></h6>
+                </div>
             </div>
         </div>
     </div>
@@ -44,7 +49,7 @@
                         </td>
                         <td><?= gmdate("d F Y", $item['updated_at']+25200); ?></td>
                         <td>
-                            <?php if($item['status'] !== 'accepted'): ?>
+                            <?php if($item['status'] === 'submitted'): ?>
                             <button type="button" class="ms-1 btn btn-danger" data-bs-toggle="modal"
                                 data-bs-target="#editModal"
                                 onclick="openEdit('<?= $item['id']; ?>', '<?= $item['description']; ?>')">
@@ -64,6 +69,11 @@
                             untuk melakukan validasi. </p>
                     </li>
                 </ul>
+                <?php if($item['status'] === 'revised'): ?>
+                <small class="text-danger mb-2  ">*Masih ada komponen yang perlu direvisi, lakukan validasi jika revisi
+                    sudah
+                    selesai atau benar</small>
+                <?php endif; ?>
                 <button class="btn btn-success me-auto d-flex align-items-center"
                     <?= $check_status !== 'accepted' ? '' : 'disabled' ?> data-bs-toggle="modal"
                     data-bs-target="#validasiModal">

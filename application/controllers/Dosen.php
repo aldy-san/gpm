@@ -91,6 +91,7 @@ class Dosen extends CI_Controller {
         $this->db->join('answer', 'answer.id_survei=survei.id');
         $this->db->join('db_master.user', 'answer.id_user=user.username');
         $data['data_info'] = $this->db->limit(5)->get()->result_array();
+        $data['period'] = $this->db->get_where('period', ['id' => $slug])->row_array();
 
         customView('dosen/analisis', $data);
     }
