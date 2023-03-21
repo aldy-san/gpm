@@ -251,7 +251,7 @@ class Home extends CI_Controller {
         $data['detail_url'] = false;
         $data['delete_url'] = false;
         $data['column_table'] = ['nama_lengkap', 'answer'];
-        $data['column_alias'] = ['nama_lengkap', 'jawaban'];
+        $data['column_alias'] = ['Nama Lengkap', 'Jawaban'];
 		customView('template/table_page', $data);
 	}
     public function responden($role,$category){
