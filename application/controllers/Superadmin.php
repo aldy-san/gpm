@@ -574,6 +574,7 @@ class Superadmin extends CI_Controller {
         $this->db->join('db_master.user', 'answer.id_user=user.username');
         $data['data_info'] = $this->db->limit(5)->get()->result_array();
         $data['period'] = $this->db->get_where('period', ['id' => $slug])->row_array();
+        $data['kadep'] = $this->db_master->get_where('user', ['level' => 10])->row_array();
         //var_dump($data['period']);die;
         //echo json_encode($data['data_info']);die;
         customView('superadmin/analisis', $data);

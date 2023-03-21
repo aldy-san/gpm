@@ -285,7 +285,7 @@ function getPdf() {
         // I. PENDAHALUAN
         doc.autoTable(generateDataKey(['0', '1']), [
             ['Jurusan', 'Teknik Elektro dan Informatika'],
-            ['Nama Ketua Jurusan', 'Aji Prasetya Wibawa , ST, M.MT., Ph.D'],
+            ['Nama Ketua Jurusan', '<?= $kadep['nama_lengkap']; ?>'],
             ['Tanggal Audit', date],
             ['Auditor', 'Muhammad Afnan Habibi, S.T., M.T., M.Eng']
         ], {
@@ -392,7 +392,7 @@ function getPdf() {
             }
         })
         doc.autoTable(generateDataKey(['0', '1']), [
-            ['Nama Ketua Jurusan', 'Aji Prasetya Wibawa , ST, M.MT., Ph.D'],
+            ['Nama Ketua Jurusan', '<?= $kadep['nama_lengkap']; ?>'],
             ['Tanggal Audit', date],
             ['Status', 'Disetujui'],
         ], {
