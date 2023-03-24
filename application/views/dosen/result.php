@@ -223,7 +223,7 @@ function executeGraphic(from, to, name, isUpdate = false) {
                         enable: false
                     }
                 };
-                var labels = temp.map(item => item.grouped)
+                var labels = temp.map(item => item.grouped ? item.grouped : 'No Data')
                 var totals = []
                 $.get('<?=base_url('api/getTable/')?>' + dataLabels[index], (res2) => {
                     var temp2 = JSON.parse(res2)
