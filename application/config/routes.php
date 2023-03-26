@@ -96,12 +96,14 @@ $route['survei/(:any)/delete'] = 'Superadmin/delete_survei/$1';
 
 // constitution
 $route['manage-constitution'] = 'Superadmin/constitution';
+$route['manage-constitution/(:num)'] = 'Superadmin/constitution';
 $route['manage-constitution/create'] = 'Superadmin/create_constitution';
 $route['manage-constitution/detail/(:num)'] = 'Superadmin/detail_constitution/$1';
 $route['manage-constitution/edit/(:num)'] = 'Superadmin/edit_constitution/$1';
 $route['manage-constitution/delete'] = 'Superadmin/delete_constitution';
 // Period
 $route['manage-period'] = 'Superadmin/period';
+$route['manage-period/(:num)'] = 'Superadmin/period';
 $route['manage-period/create'] = 'Superadmin/create_period';
 $route['manage-period/detail/(:num)'] = 'Superadmin/detail_period/$1';
 $route['manage-period/edit/(:num)'] = 'Superadmin/edit_period/$1';
@@ -114,6 +116,7 @@ $route['manage-period/analisis/delete/(:num)'] = 'Superadmin/delete_analisis/$1'
 
 // Category Survey
 $route['manage-category'] = 'Superadmin/category';
+$route['manage-category/(:num)'] = 'Superadmin/category';
 $route['manage-category/create'] = 'Superadmin/create_category';
 $route['manage-category/detail/(:num)'] = 'Superadmin/detail_category/$1';
 $route['manage-category/detail/dosen-terbaik'] = 'Superadmin/detail_category/dosen_terbaik';
@@ -125,6 +128,7 @@ $route['dosen/dashboard'] = 'Dosen/index';
 
 // Repository
 $route['repository'] = 'Logged/repository';
+$route['repository/(:num)'] = 'Logged/repository';
 $route['repository/all'] = 'Logged/all_repository';
 $route['repository/create'] = 'Logged/create_repository';
 $route['repository/detail/(:num)'] = 'Logged/detail_repository/$1';

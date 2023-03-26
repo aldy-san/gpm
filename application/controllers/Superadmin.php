@@ -176,7 +176,7 @@ class Superadmin extends CI_Controller {
 		$config['base_url'] = base_url($root_url);
         $config['total_rows'] = $this->db->get($table)->num_rows();
 		$config['per_page'] = 10;
-		$config['start'] = $this->uri->segment(3);
+		$config['start'] = $this->uri->segment(2);
 		$this->pagination->initialize($config);
         $temp = $this->db->order_by('id DESC')->get($table, $config['per_page'], $config['start'])->result_array();
         $data['data_table'] = [];
@@ -294,7 +294,7 @@ class Superadmin extends CI_Controller {
 		$config['base_url'] = base_url($root_url);
         $config['total_rows'] = $this->db->get($table)->num_rows();
 		$config['per_page'] = 10;
-		$config['start'] = $this->uri->segment(3);
+		$config['start'] = $this->uri->segment(2);
 		$this->pagination->initialize($config);
         $data['data_table'] = $this->db->get_where($table,['name !=' => 'Dosen Terbaik'],$config['per_page'], $config['start'])->result_array();
         // var_dump($data['data_table']); die();
