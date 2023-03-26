@@ -130,6 +130,7 @@ $route['dosen/dashboard'] = 'Dosen/index';
 $route['repository'] = 'Logged/repository';
 $route['repository/(:num)'] = 'Logged/repository';
 $route['repository/all'] = 'Logged/all_repository';
+$route['repository/all/(:num)'] = 'Logged/all_repository';
 $route['repository/create'] = 'Logged/create_repository';
 $route['repository/detail/(:num)'] = 'Logged/detail_repository/$1';
 $route['repository/edit/(:num)'] = 'Logged/edit_repository/$1';
