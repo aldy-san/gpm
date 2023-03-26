@@ -284,6 +284,7 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = $root_url.'detail/';
         $data['delete_url'] = $root_url.'delete/';
         $data['custom_url'] = '/survei/';
+        $data['custom_url_end'] = '/0';
         $data['custom_url_name'] = 'Survei';
         $data['column_table'] = ['name', 'role'];
         $data['column_alias'] = ['no','nama kategori', 'role'];
