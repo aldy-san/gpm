@@ -195,7 +195,7 @@ class Logged extends CI_Controller {
 		$config['base_url'] = base_url($root_url);
         $config['total_rows'] = $this->db->get($table)->num_rows();
 		$config['per_page'] = 10;
-		$config['start'] = $this->uri->segment(3);
+		$config['start'] = $this->uri->segment(2);
 		$this->pagination->initialize($config);
         $temp = $this->db->get_where($table, ['id_user' => $data['this_user']['username']], $config['per_page'], $config['start'])->result_array();
         $data['data_table'] = [];

@@ -50,7 +50,7 @@ class Superadmin extends CI_Controller {
         $config['base_url'] = base_url($root_url);
         $config['total_rows'] = $this->db->get($table)->num_rows();
         $config['per_page'] = 10;
-        $config['start'] = $this->uri->segment(3);
+        $config['start'] = $this->uri->segment(2);
         $this->pagination->initialize($config);
         $data['data_table'] = $this->db->get($table, $config['per_page'], $config['start'])->result_array();
         customView('template/table_page', $data);
