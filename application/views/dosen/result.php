@@ -85,9 +85,12 @@
                 <div class="card-body">
                     <?php if ($s['type'] !== 'description'): ?>
                     <div id="chart-<?=$s['id']; ?>"></div>
-                    <div class="d-flex flex-column">
-                        <h6>Rata-rata: <b id="avg-<?=$s['id']; ?>"></b></h6>
-                        <h6>Kesimpulan: <b id="sum-<?=$s['id']; ?>"></b></h6>
+                    <div class="d-flex flex-column" style="color:white;">
+                        <h6 class="<?= $s['type'] === 'selection' ? 'text-white': ''?>">
+                            Rata-rata: <b id="avg-<?=$s['id']; ?>"></b>
+                        </h6>
+                        <h6 class="<?= $s['type'] === 'selection' ? 'text-white': ''?>">Kesimpulan: <b
+                                id="sum-<?=$s['id']; ?>"></b></h6>
                     </div>
                     <?php else: ?>
                     <table class="table table-striped">

@@ -36,7 +36,8 @@
                                 ?>
                                 <div class="ms-2 my-2 form-check">
                                     <input class="form-check-input" type="radio" name="answer<?= $value['id'] ?>"
-                                        id="answer-<?= $value['id'] ?>-option-<?= $key+1 ?>" value="<?= $option ?>">
+                                        id="answer-<?= $value['id'] ?>-option-<?= $key+1 ?>" value="<?= $option ?>"
+                                        <?= set_value('asnwer'.$value['id']) === $option ? 'checked' : ''; ?>>
                                     <label class="form-check-label text-dark"
                                         for="answer-<?= $value['id'] ?>-option-<?= $key+1 ?>">
                                         <h5><?= $option ?></h5>
@@ -51,13 +52,15 @@
                                     <label for="range<?= $bar ?>"
                                         class="form-label text-capitalize"><?= $value['bar_from'] ?></label>
                                     <input type="number" style="margin-left: 2rem !important;"
-                                        class="text-center border-0" id="input-range<?= $bar ?>" max="100" value="50">
+                                        class="text-center border-0" id="input-range<?= $bar ?>" max="100"
+                                        value="<?= set_value('answer'.$value['id']) ?  set_value('answer'.$value['id']) : 50; ?>">
                                     <label for="range<?= $bar ?>"
                                         class="form-label text-capitalize"><?= $value['bar_to'] ?></label>
                                 </div>
                                 <div class="col-md-12 ">
                                     <input type="range" class="form-range" min="0" max="<?= $value['bar_length'] ?>"
-                                        id="range<?= $bar ?>" name="answer<?= $value['id'] ?>">
+                                        id="range<?= $bar ?>" name="answer<?= $value['id'] ?>"
+                                        value="<?= set_value('answer'.$value['id']) ?  set_value('answer'.$value['id']) : 50; ?>">
                                 </div>
 
                                 <?php
