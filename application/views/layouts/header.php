@@ -124,6 +124,12 @@
                                     <span>Kelola Periode</span>
                                 </a>
                             </li>
+                            <li class="sidebar-item <?= $this->uri->segment(2) === 'all' ?'active' :''?>">
+                                <a href="<?= base_url('repository/all'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-folder2-open"></i>
+                                    <span>Semua Repositori</span>
+                                </a>
+                            </li>
                             <li
                                 class="sidebar-item <?= $this->uri->segment(1) === 'manage-category' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('manage-category'); ?>" class='sidebar-link'>

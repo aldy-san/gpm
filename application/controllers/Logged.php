@@ -148,7 +148,7 @@ class Logged extends CI_Controller {
         //config
         $data = $this->globalData;
         $table = 'repository';
-        $root_url = 'repository/';
+        $root_url = 'repository/all';
         $data['title'] = 'Semua Repositori';
         $data['desc'] = '';
         $data['create_url'] = false;
@@ -156,24 +156,31 @@ class Logged extends CI_Controller {
         $data['detail_url'] = false;
         $data['delete_url'] = false;
         $data['download_url'] = '/sertifikat/';
-        $data['column_table'] = ['id','name', 'institution', 'from_date','end_date', 'level','nama_lengkap','category'];
-        $data['column_alias'] = ['id','nama', 'Nama Lembaga', 'Tanggal Mulai', 'Tanggal Berakhir', 'Tingkat','nama lengkap','Kategori'];
+        $data['column_table'] = ['id','name', 'institution', 'from_date','end_date', 'tingkat','nama_lengkap','category', 'nama_jenjang', 'nama_prodi', 'nama_level'];
+        $data['column_alias'] = ['id','nama', 'Nama Lembaga', 'Tanggal Mulai', 'Tanggal Berakhir', 'Tingkat','nama lengkap','Kategori', 'Jenjang', 'Prodi', 'Kategori'];
 
         // Config Pagination
+        $where = [];
+        if ($this->input->get('search')){
+            $search = $this->input->get('search');
+            $where = "nama_lengkap LIKE '%".$search."%'";
+            $where .= " OR nama_prodi LIKE '%".$search."%'";
+            $where .= " OR nama_jenjang LIKE '%".$search."%'";
+            $where .= " OR nama_level LIKE '%".$search."%'";
+        }
 		$config['base_url'] = base_url($root_url);
-        $config['total_rows'] = $this->db->get($table)->num_rows();
+        $config['total_rows'] = $this->db->join('db_master.user', 'user.username=id_user')->join('db_master.prodi','user.kode_prodi=prodi.kode_prodi')->join('db_master.jenjang','user.jenjang=jenjang.id_jenjang')->join('db_master.level','user.level=id_level')->get_where($table, $where)->num_rows();
 		$config['per_page'] = 10;
 		$config['start'] = $this->uri->segment(3);
 		$this->pagination->initialize($config);
-        $temp = $this->db->join('db_master.user', 'user.username=id_user')->get($table, $config['per_page'], $config['start'])->result_array();
-
+        $temp = $this->db->select('*, repository.level as tingkat')->join('db_master.user', 'user.username=id_user')->join('db_master.prodi','user.kode_prodi=prodi.kode_prodi')->join('db_master.jenjang','user.jenjang=jenjang.id_jenjang')->join('db_master.level','user.level=id_level')->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
         $data['data_table'] = [];
         foreach ($temp as $value) {
             $value['from_date'] = gmdate("d M, Y", $value['from_date']+25200);
             $value['end_date'] = gmdate("d M, Y", $value['end_date']+25200);
             array_push($data['data_table'],$value);
         }
-        customView('template/table_page', $data);
+        customView('pages/logged/all-repository', $data);
     }
     public function repository()
     {

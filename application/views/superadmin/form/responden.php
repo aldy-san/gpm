@@ -22,7 +22,7 @@
                 </div>
                 <div class="form-group ms-3">
                     <input onkeydown="search(this)" type="text" class="form-control" id="searchName" name="search"
-                        placeholder="Search Name">
+                        placeholder="Search" value="<?= $this->input->get('search'); ?>">
                 </div>
             </div>
         </div>
@@ -83,27 +83,28 @@
     <script type="text/javascript">
     function search(ele) {
         if (event.key === 'Enter') {
-            window.location = updateQueryStringParameter(urlHandler(), 'search', ele.value)
+            var url = window.location.href.split('/')
+            const segment = "<?= $this->uri->segment(5); ?>"
+            if (segment) {
+                url = RemoveLastDirectoryPartOf(window.location.href)
+            } else {
+                url = url.join('/')
+            }
+            window.location = updateQueryStringParameter(url, 'search', ele.value)
         }
     }
 
     function changePeriod(val) {
-        const url = updateQueryStringParameter(urlHandler(), 'period', val)
-        window.location = url.includes('search=') ? removeURLParameter(url, 'search') : url
-    }
-
-    function urlHandler() {
-        var url = window.location.href
-        if (url.split('/')[8].split('?')[0]) {
-            url = url.split('/')
-            temp = url[8].split('?')
-            temp.shift()
-            url[8] = "?" + temp.join('')
+        var url = window.location.href.split('/')
+        const segment = "<?= $this->uri->segment(5); ?>"
+        if (segment) {
+            url = RemoveLastDirectoryPartOf(window.location.href)
         } else {
-            return url
+            url = url.join('/')
         }
-        url = url.join('/')
-        return url
+        url = updateQueryStringParameter(url, 'period', val)
+        console.log(url)
+        window.location = updateQueryStringParameter(url, 'search', '')
     }
 
 
@@ -136,5 +137,12 @@
             return urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
         }
         return url;
+    }
+
+    function RemoveLastDirectoryPartOf(the_url) {
+        var the_arr = the_url.split('/');
+        var param = the_arr.pop();
+
+        return (the_arr.join('/') + '?' + param.split('?')[1]);
     }
     </script>

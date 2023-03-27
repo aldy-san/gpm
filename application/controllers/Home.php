@@ -275,12 +275,12 @@ class Home extends CI_Controller {
         $table = 'user';
         // Config Pagination
 		$config['base_url'] = base_url('/result/'.$role.'/'.$category.'/responden'.'/');
-        $config['total_rows'] = $this->db_master->join('db_master.prodi','user.kode_prodi=prodi.kode_prodi')->join('db_master.jenjang','user.jenjang=jenjang.id_jenjang')->get_where($table,$where)->num_rows();;
+        $config['total_rows'] = $this->db_master->join('db_master.prodi','user.kode_prodi=prodi.kode_prodi')->join('db_master.jenjang','user.jenjang=jenjang.id_jenjang')->get_where($table,$where)->num_rows();
         $config['per_page'] = 10;
 		$config['start'] = $this->uri->segment(5);
         $config['use_page_numbers'] = TRUE;
         $this->pagination->initialize($config);
-        $offset =  $this->input->get('per_page') ?  ($this->input->get('per_page')-1)*$config['per_page'] : 0;
+        $offset =  $this->input->get('per_page') ? ($this->input->get('per_page')-1)*$config['per_page'] : 0;
 
         $temp = $this->db_master->join('db_master.prodi','user.kode_prodi=prodi.kode_prodi')->join('db_master.jenjang','user.jenjang=jenjang.id_jenjang')->get_where($table,$where,$config['per_page'],$config['start'])->result_array();
         $data['data_table'] = [];
@@ -290,7 +290,11 @@ class Home extends CI_Controller {
         $this->db->join('db_master.user','user.username=answer.id_user');
         $this->db->join('survei', 'survei.id=id_survei');
         $this->db->where(['survei.category' => $category, 'created_at >=' => $data['current_period']['period_from'], 'created_at <=' => $data['current_period']['period_to']]);
-        $fill_survey = $this->db->get()->result();
+        $temp_fill_survey = $this->db->get()->result_array();
+        $fill_survey = [];
+        foreach($temp_fill_survey as $index => $value){
+            array_push($fill_survey, $value['id_user']);
+        }
         foreach($temp as $index => $value){
             if (strpos($value['nama_lengkap'],'-') !== false) {
                 $nama = substr($value['nama_lengkap'], 0, strrpos($value['nama_lengkap'], '-'));
