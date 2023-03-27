@@ -138,7 +138,7 @@ class Logged extends CI_Controller {
         $data['survei'] = $survei;
         $data['notLogged'] = false;
         $data['category'] = $this->db->get_where('category', ['id' => $id_category])->row_array();
-        $data['bar_count'] = $this->db->get_where('survei',['type' => 'bar', 'role' => getRole($this->globalData['this_user']['level'])])->num_rows();
+        $data['bar_count'] = $this->db->get_where('survei',['type' => 'bar', 'category' => $id_category, 'is_active' => '1'])->num_rows();
         $data['bar'] = 1;
         customView('pages/survei', $data);
     }
