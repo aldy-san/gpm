@@ -12,6 +12,8 @@ class Api extends CI_Controller {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
         $role = $this->input->get('role');
+        $jenjang = $this->input->get('jenjang');
+        $prodi = $this->input->get('prodi');
         $this->db->select('count(DISTINCT id_user) as total');
         $this->db->from('answer');
         //where
@@ -20,6 +22,9 @@ class Api extends CI_Controller {
         }
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
+        if($jenjang && $prodi){
+            $this->db->where(['user.jenjang' => $jenjang, 'user.kode_prodi' => $prodi]);
         }
         //join
         if (in_array($role, ['alumni', 'mitra', 'pengguna'])){
@@ -37,12 +42,22 @@ class Api extends CI_Controller {
     {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
+        $role = $this->input->get('role');
+        $jenjang = $this->input->get('jenjang');
+        $prodi = $this->input->get('prodi');
         $this->db->select('answer, count(*) as total, sum(detail) as sum, survei.klasifikasi');
         $this->db->from('answer');
         $this->db->where(['id_survei' => $id]);
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
         }
+        if($jenjang && $prodi){
+            $this->db->where(['user.jenjang' => $jenjang, 'user.kode_prodi' => $prodi]);
+        }
+        if (!in_array($role, ['alumni', 'mitra', 'pengguna'])){
+            $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
+        }
+
         $this->db->join('survei', 'survei.id = answer.id_survei', 'left');
         $this->db->group_by('answer');
         $result = $this->db->get()->result();
@@ -53,6 +68,8 @@ class Api extends CI_Controller {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
         $role = $this->input->get('role');
+        $jenjang = $this->input->get('jenjang');
+        $prodi = $this->input->get('prodi');
         if ($role == 'alumni'){
             $this->db->select('alumni.name as username, answer.answer');
         } else if ($role == 'mitra'){
@@ -66,6 +83,9 @@ class Api extends CI_Controller {
         $this->db->where(['id_survei' => $id]);
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
+        if($jenjang && $prodi){
+            $this->db->where(['user.jenjang' => $jenjang, 'user.kode_prodi' => $prodi]);
         }
         if (in_array($role, ['alumni', 'mitra', 'pengguna'])){
             $this->db->join($role, $role.'.id = answer.id_user', 'left');
@@ -82,6 +102,8 @@ class Api extends CI_Controller {
         $from = $this->input->get('from');
         $to = $this->input->get('to');
         $role = $this->input->get('role');
+        $jenjang = $this->input->get('jenjang');
+        $prodi = $this->input->get('prodi');
         $this->db->select($group_by.' as grouped, count(DISTINCT id_user) as total');
         $this->db->from('answer');
         //where
@@ -90,6 +112,9 @@ class Api extends CI_Controller {
         }
         if($from && $to){
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
+        if($jenjang && $prodi){
+            $this->db->where(['user.jenjang' => $jenjang, 'user.kode_prodi' => $prodi]);
         }
         //join
         if (in_array($role, ['alumni', 'mitra', 'pengguna'])){

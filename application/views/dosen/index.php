@@ -127,8 +127,8 @@ async function generateMonev() {
             let series = data.map(item => {
                 return {
                     ...item,
-                    yearS: item.year + ' - ' + ((item.quarter == '1' || item.quarter == '2') ? 'Gasal' :
-                        'Genap')
+                    yearS: item.year + ' - ' + ((item.quarter == '1' || item.quarter == '2') ? 'Genap' :
+                        'Gasal')
                 }
             })
             const groupedYearS = series.reduce((group, item) => {
@@ -139,25 +139,32 @@ async function generateMonev() {
                 group[yearS].push(item);
                 return group;
             }, {})
-            console.log(groupedYearS)
-            series = prodi.map(p => {
-                const tempData = []
-                Object.keys(groupedYearS).map(item => {
-                    const ps = groupedYearS[item].find(g => g.kode_prodi === p.kode_prodi && g
-                        .jenjang === p.id_jenjang)
-                    console.log(ps)
-                    if (ps) {
-                        tempData.push(Number(ps.avg).toFixed(0))
-                    } else {
-                        tempData.push(0)
+            //console.log(groupedYearS)
+            const ValidProdi = ['D4 Teknologi Rekayasa Sistem Elektronika',
+                'D4 Teknologi Rekayasa Pembangkit Energi', 'S1 Pendidikan Teknik Elektro',
+                'S1 Teknik Elektro', 'S1 Pendidikan Teknik Informatika', 'S1 Teknik Informatika',
+                'S2 Teknik Elektro', 'S3 Teknik Elektro dan Informatika'
+            ] // Update Disini bila ada Prodi baru yang tidak muncul
+            //console.log(prodi)
+            series = prodi.filter(item => ValidProdi.includes(item.nama_jenjang + ' ' + item.nama_prodi)).map(
+                p => {
+                    const tempData = []
+                    Object.keys(groupedYearS).map(item => {
+                        const ps = groupedYearS[item].find(g => g.kode_prodi === p.kode_prodi && g
+                            .jenjang === p.id_jenjang)
+                        //console.log(ps)
+                        if (ps) {
+                            tempData.push(Number(ps.avg).toFixed(0))
+                        } else {
+                            tempData.push(0)
+                        }
+                    })
+                    return {
+                        name: p.nama_jenjang + ' ' + p.nama_prodi,
+                        data: tempData
                     }
                 })
-                return {
-                    name: p.nama_jenjang + ' ' + p.nama_prodi,
-                    data: tempData
-                }
-            })
-            console.log(series)
+            //console.log(groupedYearS)
             var barOptions = {
                 series: series,
                 chart: {
@@ -204,7 +211,7 @@ async function generateMonev() {
             };
             var bar = new ApexCharts(document.querySelector("#bar"), barOptions);
             bar.render()
-            console.log(data, prodi)
+            //console.log(data, prodi)
         })
 }
 generateGauge()

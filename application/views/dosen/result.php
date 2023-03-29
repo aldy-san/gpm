@@ -21,18 +21,36 @@
                 <input class="form-control" name="dates" type="text">
             </div>
             <?php if (!in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna'])): ?>
-            <div class="btn-group dropdown me-2 mt-auto">
-                <button type="button" class="btn btn-outline-primary">Periode</button>
-                <button id="period-title" type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split"
-                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
-                    <span class="sr-only"></span>
-                </button>
-                <div class="dropdown-menu mt-2 shadow-sm">
-                    <!--<button class="dropdown-item" onclick="executeGraphic(0,1,'tes',true)">tes</button>-->
-                    <?php foreach($period as $p): ?>
-                    <button class="dropdown-item"
-                        onclick="executeGraphic(<?= $p['period_from'].','.$p['period_to'].',\''.$p['name'].'\''; ?>,true)"><?= $p['name']; ?></button>
-                    <?php endforeach; ?>
+            <div class="d-flex flex-column ms-auto me-2">
+                <div class="btn-group dropdown">
+                    <button type="button" class="btn btn-outline-primary">Periode</button>
+                    <button id="period-title" type="button"
+                        class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                        <span class="sr-only"></span>
+                    </button>
+                    <div class="dropdown-menu mt-2 shadow-sm">
+                        <!--<button class="dropdown-item" onclick="executeGraphic(0,1,'tes',true)">tes</button>-->
+                        <?php foreach($period as $p): ?>
+                        <button class="dropdown-item"
+                            onclick="executeGraphic(<?= $p['period_from'].','.$p['period_to'].',\''.$p['name'].'\''; ?>,true)"><?= $p['name']; ?></button>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="btn-group dropdown ms-auto mt-2">
+                    <button type="button" class="btn btn-outline-info">Prodi</button>
+                    <button id="prodi-title" type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                        <span class="sr-only">Semua</span>
+                    </button>
+                    <div class="dropdown-menu mt-2 shadow-sm">
+                        <button class="dropdown-item"
+                            onclick="executeGraphic(0,0,'-',true,'','','Semua', true)">Semua</button>
+                        <?php foreach($prodi as $p): ?>
+                        <button class="dropdown-item"
+                            onclick="executeGraphic(<?= '0,0,\'-\''; ?>,true,<?= $p['id_jenjang'].',',$p['kode_prodi'].',\''.$p['nama_jenjang'].' '.$p['nama_prodi'].'\''; ?>)"><?= $p['nama_jenjang'].' '.$p['nama_prodi']; ?></button>
+                        <?php endforeach; ?>
+                    </div>
                 </div>
             </div>
             <?php endif; ?>
@@ -130,7 +148,7 @@ $('input[name="dates"]').daterangepicker({
 }, (start, end, label) => {
     const s = new Date(start).getTime() / 1000
     const e = new Date(end).getTime() / 1000
-    executeGraphic(s, e, '', true)
+    executeGraphic(s, e, 'Kustom', true)
 });
 var selectedExport = {
     dataPopulation: [],
@@ -143,6 +161,11 @@ var period = <?= json_encode($period); ?>;
 var role = '<?= $this->uri->segment(2); ?>'
 var id_category = '<?= $this->uri->segment(3); ?>'
 var allExportData = []
+
+// state
+var fromState = 0
+var toState = 0
+var nameState = "-"
 dataPopulation.forEach((item, index) => {
     selectedExport.dataPopulation.push('#result-population-' + index);
 })
@@ -194,15 +217,28 @@ function checkExport() {
     }
 }
 
-function executeGraphic(from, to, name, isUpdate = false) {
-    let filter = (from) ? '?from=' + from : ''
-    filter += (to) ? '&to=' + to : ''
+function executeGraphic(from, to, name, isUpdate = false, jenjang = false, prodi = false, jp = false, allProdi =
+    false) {
+    if (!jenjang && !prodi) {
+        if (!allProdi) {
+            fromState = from
+            toState = to
+            nameState = name
+        }
+        $("#prodi-title > span").text("Semua")
+    } else {
+        $("#prodi-title > span").text(jp)
+    }
+    let filter = (fromState) ? '?from=' + fromState : ''
+    filter += (toState) ? '&to=' + toState : ''
     filter += '&role=<?= $this->uri->segment(2); ?>'
+    filter += (jenjang) ? '&jenjang=' + jenjang : ''
+    filter += (prodi) ? '&prodi=' + prodi : ''
     $.get('<?=base_url('api/getTotalData/')?>' + id_category + filter, (res) => {
         var temp = JSON.parse(res)
         $("#total").text(`Responden: ${temp[0].total} orang`)
     })
-    $("#period-title > span").text(name)
+    $("#period-title > span").text(nameState)
     // console.log(id_category)
     dataPopulation.forEach((item, index) => {
         $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item + (id_category ? `/${id_category}` : '') +
@@ -390,7 +426,8 @@ function executeGraphic(from, to, name, isUpdate = false) {
                             colors: undefined,
                             series: [{
                                 data: barSeries
-                            }]
+                            }],
+                            labels: selections
                         }
                     }
                 }
@@ -490,7 +527,6 @@ async function exportHandler() {
     getDataUri(selectedExport.dataPopulation.concat(selectedExport.dataSurvei))
 }
 //executeGraphic('0', '1', 'tes')
-
 //console.log(period[0])
 const noPeriod = ['mitra', 'alumni', 'pengguna']
 if (noPeriod.includes(role)) {
