@@ -90,6 +90,7 @@
                         <th class="text-capitalize"><?= $this->uri->segment(4) ?></th>
                         <th>Status</th>
                         <th>Terakhir Diperbarui</th>
+                        <th>Catatan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -110,6 +111,7 @@
                             <?php endif;?>
                         </td>
                         <td><?= gmdate("d F Y", $item['updated_at']+25200); ?></td>
+                        <td><?= $item['note']; ?></td>
                         <td>
                             <?php if($item['status'] === 'draft' || $item['status'] === 'revised' ): ?>
                             <button type="button" class="ms-1 btn btn-warning" data-bs-toggle="modal"

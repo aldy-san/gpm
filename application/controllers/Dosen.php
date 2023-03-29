@@ -104,6 +104,7 @@ class Dosen extends CI_Controller {
         }
         if ($this->input->post('status') === 'revised'){
             $form['status'] = $this->input->post('status');
+            $form['note'] = $this->input->post('note');
             $this->db->where(['id' => $this->input->post('id')])->update('analisis', $form);
             $this->db->where(['id' => $slug])->update('period', ['status' => $this->input->post('status')]);
             $this->session->set_flashdata('alertForm', 'Data berhasil direvisi');

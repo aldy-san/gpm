@@ -28,6 +28,7 @@
                         <th class="text-capitalize"><?= $this->uri->segment(4) ?></th>
                         <th>Status</th>
                         <th>Terakhir Diperbarui</th>
+                        <th>Catatan</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
@@ -48,11 +49,11 @@
                             <?php endif;?>
                         </td>
                         <td><?= gmdate("d F Y", $item['updated_at']+25200); ?></td>
+                        <td><?= $item['note']; ?></td>
                         <td>
                             <?php if($item['status'] === 'submitted'): ?>
                             <button type="button" class="ms-1 btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#editModal"
-                                onclick="openEdit('<?= $item['id']; ?>', '<?= $item['description']; ?>')">
+                                data-bs-target="#editModal" onclick="openEdit('<?= $item['id']; ?>')">
                                 Revisi
                             </button>
                             <?php endif; ?>
@@ -100,6 +101,13 @@
                         <input type="hidden" name="status" value="revised">
                         <input type="hidden" name="type" value="<?= $this->uri->segment(4); ?>">
                         <div class="modal-body">
+                            <div class="row">
+                                <div class="form-group col-12">
+                                    <label class="mb-2" for="note">Catatan</label>
+                                    <textarea class="form-control" name="note" rows="5"
+                                        placeholder="Masukkan catatan..." style='resize:none'></textarea>
+                                </div>
+                            </div>
                             <div class="row">
                                 <p>Apakah anda yakin merevisi data ini?</p>
                             </div>
@@ -150,8 +158,7 @@
 </div>
 
 <script type="text/javascript">
-function openEdit(id, val) {
+function openEdit(id) {
     $('#form-edit #input-id').attr('value', id);
-    $('#form-edit textarea').val(val);
 }
 </script>
