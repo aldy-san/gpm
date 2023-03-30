@@ -16,28 +16,13 @@
             </div>
         </div>
         <div class="d-flex">
-            <div class="form-group me-2 mb-0">
+            <div class="form-group me-2 mb-0 mt-auto">
                 <label for="question">Tanggal</label>
                 <input class="form-control" name="dates" type="text">
             </div>
             <?php if (!in_array($this->uri->segment(2),['alumni', 'mitra', 'pengguna'])): ?>
             <div class="d-flex flex-column ms-auto me-2">
-                <div class="btn-group dropdown">
-                    <button type="button" class="btn btn-outline-primary">Periode</button>
-                    <button id="period-title" type="button"
-                        class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
-                        aria-haspopup="true" aria-expanded="false" data-reference="parent">
-                        <span class="sr-only"></span>
-                    </button>
-                    <div class="dropdown-menu mt-2 shadow-sm">
-                        <!--<button class="dropdown-item" onclick="executeGraphic(0,1,'tes',true)">tes</button>-->
-                        <?php foreach($period as $p): ?>
-                        <button class="dropdown-item"
-                            onclick="executeGraphic(<?= $p['period_from'].','.$p['period_to'].',\''.$p['name'].'\''; ?>,true)"><?= $p['name']; ?></button>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
-                <div class="btn-group dropdown ms-auto mt-2">
+                <div class="btn-group dropdown ms-auto ">
                     <button type="button" class="btn btn-outline-info">Prodi</button>
                     <button id="prodi-title" type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-reference="parent">
@@ -49,6 +34,21 @@
                         <?php foreach($prodi as $p): ?>
                         <button class="dropdown-item"
                             onclick="executeGraphic(<?= '0,0,\'-\''; ?>,true,<?= $p['id_jenjang'].',',$p['kode_prodi'].',\''.$p['nama_jenjang'].' '.$p['nama_prodi'].'\''; ?>)"><?= $p['nama_jenjang'].' '.$p['nama_prodi']; ?></button>
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+                <div class="btn-group dropdown mt-2">
+                    <button type="button" class="btn btn-outline-primary">Periode</button>
+                    <button id="period-title" type="button"
+                        class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false" data-reference="parent">
+                        <span class="sr-only"></span>
+                    </button>
+                    <div class="dropdown-menu mt-2 shadow-sm">
+                        <!--<button class="dropdown-item" onclick="executeGraphic(0,1,'tes',true)">tes</button>-->
+                        <?php foreach($period as $p): ?>
+                        <button class="dropdown-item"
+                            onclick="executeGraphic(<?= $p['period_from'].','.$p['period_to'].',\''.$p['name'].'\''; ?>,true)"><?= $p['name']; ?></button>
                         <?php endforeach; ?>
                     </div>
                 </div>
@@ -266,7 +266,9 @@ function executeGraphic(from, to, name, isUpdate = false, jenjang = false, prodi
                 var totals = []
                 $.get('<?=base_url('api/getTable/')?>' + dataLabels[index], (res2) => {
                     var temp2 = JSON.parse(res2)
+                    temp2 = temp2.filter(item2 => item2.kode_prodi !== '1')
                     temp2.forEach(item2 => {
+                        //console.log(item2.kode_prodi)
                         let check = temp.filter(item3 => {
                             return item3.grouped === item2[Object.keys(item2)[
                                 0]]

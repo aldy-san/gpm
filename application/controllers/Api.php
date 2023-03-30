@@ -120,6 +120,7 @@ class Api extends CI_Controller {
         if (in_array($role, ['alumni', 'mitra', 'pengguna'])){
             $this->db->join($role, $role.'.id = answer.id_user', 'right');
         } else {
+            //$this->db->where(['user.kode_prodi !=' => 1]);
             $this->db->join('db_master.user', 'user.username = answer.id_user', 'left');
         }
         $this->db->join('survei', 'survei.id=id_survei', 'left');
@@ -167,7 +168,7 @@ class Api extends CI_Controller {
 
         $db_master->select('user.kode_prodi, nama_prodi, id_jenjang, nama_jenjang');
         $db_master->from('user');
-        $db_master->where(['level' => 1]);
+        $db_master->where(['level' => 1, 'prodi.kode_prodi !=' => 1]);
         $db_master->join('prodi', 'user.kode_prodi=prodi.kode_prodi', 'left');
         $db_master->join('jenjang', 'user.jenjang=jenjang.id_jenjang', 'left');
         // BY TABLE 

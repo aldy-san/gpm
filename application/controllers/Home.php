@@ -223,7 +223,7 @@ class Home extends CI_Controller {
             $data['titles'] = ['Tahun Berdiri', 'Tingkat'];
         }
 
-        $tempProdi = $this->db_master->select('user.kode_prodi, nama_prodi, id_jenjang, nama_jenjang')->from('user')->where(['level' => 1])->join('prodi', 'user.kode_prodi=prodi.kode_prodi', 'left')->join('jenjang', 'user.jenjang=jenjang.id_jenjang', 'left')->group_by('user.kode_prodi')->group_by('jenjang')->get()->result_array();
+        $tempProdi = $this->db_master->select('user.kode_prodi, nama_prodi, id_jenjang, nama_jenjang')->from('user')->where(['level' => 1, 'prodi.kode_prodi !=' => 1])->join('prodi', 'user.kode_prodi=prodi.kode_prodi', 'left')->join('jenjang', 'user.jenjang=jenjang.id_jenjang', 'left')->group_by('user.kode_prodi')->group_by('jenjang')->get()->result_array();
         $data['prodi'] = [];
         $validProdi = ['D4 Teknologi Rekayasa Sistem Elektronika',
             'D4 Teknologi Rekayasa Pembangkit Energi', 'S1 Pendidikan Teknik Elektro',
