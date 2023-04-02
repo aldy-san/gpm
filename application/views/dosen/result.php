@@ -54,14 +54,18 @@
                 </div>
             </div>
             <?php endif; ?>
-            <button id="btn-export" onclick="exportHandler()" class="btn btn-success d-flex align-items-center mt-auto">
-                <i class="bi bi-save me-2"></i>
-                <div class="spinner-border spinner-border-sm me-2 d-none" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-                <b>Exports</b>
-            </button>
-            <small id="loadExport" class="ms-2 my-auto"></small>
+            <div class="d-flex flex-column">
+                <small id="loadExport" class="ms-2 mt-auto"></small>
+                <button id="btn-export" onclick="exportHandler()"
+                    class="btn btn-success d-flex align-items-center mt-auto">
+                    <i class="bi bi-save me-2"></i>
+                    <div class="spinner-border spinner-border-sm me-2 d-none" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                    <b>Exports</b>
+                </button>
+            </div>
+
         </div>
     </div>
     <?php if (count($population) > 0): ?>
@@ -107,8 +111,10 @@
                         <h6 class="<?= $s['type'] === 'selection' ? 'text-white': ''?>">
                             Rata-rata: <b id="avg-<?=$s['id']; ?>"></b>
                         </h6>
-                        <h6 class="<?= $s['type'] === 'selection' ? 'text-white': ''?>">Kesimpulan: <b
-                                id="sum-<?=$s['id']; ?>"></b></h6>
+                        <h6 class="<?= $s['type'] === 'selection' ? 'text-white': ''?>">
+                            Kesimpulan:
+                            <b id="sum-<?=$s['id']; ?>"></b>
+                        </h6>
                     </div>
                     <?php else: ?>
                     <table class="table table-striped">
