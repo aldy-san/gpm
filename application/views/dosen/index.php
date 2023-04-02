@@ -6,7 +6,7 @@
         <div class="col-12 col-lg-4">
             <div class="card" style="height:100%;">
                 <div class="card-header">
-                    <h4>Capaian Pembelajaran</h4>
+                    <h3>Capaian Pembelajaran</h3>
                 </div>
                 <div class="card-body">
                     <div id="gauge"></div>
@@ -16,13 +16,26 @@
         <div class="col-12 col-lg-8">
             <div class="card" style="height:100%">
                 <div class="card-header">
-                    <h4>Capaian Pembelajaran Program Studi <small class="text-muted">/periode</small></h4>
+                    <h3>Capaian Pembelajaran Program Studi <small class="text-muted">/periode</small></h3>
                 </div>
                 <div class="card-body">
                     <div id="bar"></div>
                 </div>
             </div>
         </div>
+        <?php foreach ($category as $key => $value) : ?>
+        <div class="col-12 col-lg-6 p-4 pb-0">
+            <div class="card" style="height:100%">
+                <div class="card-header">
+                    <h4><?= $value['name']; ?></h4>
+                    <h6 class="text-capitalize">Survei <?= $value['role']; ?></h6>
+                </div>
+                <div class="card-body">
+                    <div id="category-<?= $value['id']; ?>"></div>
+                </div>
+            </div>
+        </div>
+        <?php endforeach ?>
     </section>
 </div>
 <script src="<?= base_url('assets/vendors/apexcharts/apexcharts.js') ?>"></script>
@@ -214,6 +227,33 @@ async function generateMonev() {
             //console.log(data, prodi)
         })
 }
+var categories = <?= json_encode($category); ?>;
+
+function generateCategory() {
+    var lineOptions = {}
+    categories.forEach(item => {
+        $.get('<?=base_url('api/getMonevPerPeriod?category=')?>' + item.id, (res) => {
+            var periods = JSON.parse(res)
+            console.log(periods.map(period => period.avg))
+            lineOptions = {
+                chart: {
+                    type: "line",
+                },
+                series: [{
+                    name: "Capaian",
+                    data: ['0'].concat(periods.map(period => Number(period.avg).toFixed(
+                        0))),
+                }, ],
+                xaxis: {
+                    categories: [''].concat(periods.map(period => period.name.substr(0, 10))),
+                },
+            };
+            var line = new ApexCharts(document.querySelector("#category-" + item.id), lineOptions);
+            line.render();
+        }).always(() => {})
+    });
+}
 generateGauge()
 generateMonev()
+generateCategory()
 </script>

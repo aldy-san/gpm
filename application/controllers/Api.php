@@ -162,6 +162,21 @@ class Api extends CI_Controller {
         $result = $this->db->get()->result();
         echo json_encode($result);
     }
+    public function getMonevPerPeriod()
+    {
+        $category = $this->input->get('category');
+        //$category=2;
+        $this->db->select('period.id, period.name, AVG(detail) as avg');
+        $this->db->from('period');
+        $this->db->where(['survei.type' => 'bar', 'category.id' => $category]);
+        $this->db->join('category', 'category.id=period.category');
+        $this->db->join('survei', 'survei.category=period.category');
+        $this->db->join('answer', 'answer.id_survei=survei.id');
+        $this->db->group_by('period.id');
+        $this->db->order_by('period.id');
+        $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
     public function getProdi()
     {
         $db_master = $this->load->database('db_master', TRUE);

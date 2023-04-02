@@ -31,7 +31,7 @@ class M_survei extends CI_Model {
         if ($withPeriod){
             $this->db->join('period','category.id = period.category', 'left');
         }
-        return $this->db->get()->result_array();
+        return $this->db->order_by('id','DESC')->get()->result_array();
     }
     public function getCategoryAnswered($role, $id)
     {

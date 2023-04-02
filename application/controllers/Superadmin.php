@@ -27,6 +27,7 @@ class Superadmin extends CI_Controller {
     public function index()
 	{
         $data = $this->globalData;
+        $data['category'] = $this->db->order_by('id', 'DESC')->get_where('category')->result_array();
 		customView('dosen/index', $data);
 	}
     // Constitution ===========================================================================================

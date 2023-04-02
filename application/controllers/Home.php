@@ -204,7 +204,7 @@ class Home extends CI_Controller {
             $data['survei'] = $this->db->get_where('survei', ['role' => $role])->result_array();
         }
 
-        $data['period'] = $this->db->order_by("period_from", "desc")->get_where('period', ['category' => $category])->result_array();
+        $data['period'] = $this->db->order_by("id", "desc")->get_where('period', ['category' => $category],9)->result_array();
 
         $data['population'] = [];
         $data['labels'] = [];
