@@ -120,7 +120,6 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Nama</th>
                                 <th>Jawaban</th>
                             </tr>
                         </thead>
@@ -457,7 +456,6 @@ function executeGraphic(from, to, name, isUpdate = false, jenjang = false, prodi
                 //console.log(temp)
                 temp.forEach(item2 => {
                     inner += '<tr>'
-                    inner += '<td>' + item2.username + '</td>'
                     inner += '<td>' + item2.answer + '</td>'
                     inner += '</tr>'
                 })

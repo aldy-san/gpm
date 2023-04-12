@@ -12,16 +12,12 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Nama</th>
                         <th>Jawaban</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach($data_info as $index => $item): ?>
                     <tr>
-                        <td><?= $index+1; ?></td>
-                        <td><?= $item['nama_lengkap']; ?></td>
                         <td><?= $item['answer']; ?></td>
                     </tr>
                     <?php endforeach; ?>
