@@ -407,8 +407,8 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = '/survei/'.$slug.'/detail/';
         $data['delete_url'] = '/survei/'.$slug.'/delete/';
         if (is_numeric($data['slug'])){
-            $data['column_table'] = ['question', 'type','klasifikasi', 'analisis', 'chart', 'category', 'is_active'];
-            $data['column_alias'] = ['pertanyaan', 'tipe','klasifikasi', 'analisis', 'grafik', 'kategori', 'aktif'];
+            $data['column_table'] = ['id', 'question', 'type','klasifikasi', 'analisis', 'chart', 'category', 'is_active'];
+            $data['column_alias'] = ['id', 'pertanyaan', 'tipe','klasifikasi', 'analisis', 'grafik', 'kategori', 'aktif'];
             $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
             $data['data_table'] = [];
             foreach ($temp as $value) {
