@@ -204,7 +204,7 @@ class Home extends CI_Controller {
             $data['survei'] = $this->db->get_where('survei', ['role' => $role])->result_array();
         }
 
-        $data['period'] = $this->db->order_by("id", "desc")->get_where('period', ['category' => $category],9)->result_array();
+        $data['period'] = $this->db->order_by("period_from", "desc")->get_where('period', ['category' => $category],9)->result_array();
 
         $data['population'] = [];
         $data['labels'] = [];
@@ -241,6 +241,8 @@ class Home extends CI_Controller {
 	public function detail($id)
 	{
         // get slug
+        $from = $this->input->get('from');
+        $to = $this->input->get('to');
         $data = $this->globalData;
         $data['withNavbar'] = false;
         $data['withSidebar'] = true;
@@ -248,14 +250,14 @@ class Home extends CI_Controller {
         $data['sub_slug'] = false;
         // Config Pagination
 		$config['base_url'] = base_url('/detail/'.$id.'/');
-		$config['total_rows'] = $this->M_survei->getDetailResultSurvei($id)->num_rows();
+		$config['total_rows'] = $this->M_survei->getDetailResultSurvei($id, $from, $to)->num_rows();
 		$config['per_page'] = 10;
 		$config['start'] = $this->uri->segment(4);
         $config['page_query_string'] = TRUE;
         $config['use_page_numbers'] = TRUE;
 		$this->pagination->initialize($config);
         $offset =  $this->input->get('per_page') ?  ($this->input->get('per_page')-1)*$config['per_page'] : 0;
-        $data['data_table'] = $this->M_survei->getDetailResultSurvei($id, $config['per_page'], $offset)->result_array();
+        $data['data_table'] = $this->M_survei->getDetailResultSurvei($id, $from, $to, $config['per_page'], $offset)->result_array();
         $data['survei'] = $this->db->get_where('survei', ['id' => $id])->row_array();
         // Config Template Table Page
         $data['title'] = 'Detail - '.$data['survei']['question'];
@@ -342,6 +344,7 @@ class Home extends CI_Controller {
         $data['withNavbar'] = false;
         $data['withSidebar'] = true;
         $data['list_dosen'] = $this->db_master->order_by("username", "asc")->get_where('user', ['level' => 11])->result_array();
+        $data['list_tendik'] = $this->db_master->order_by("username", "asc")->get_where('user', 'level >= 2 AND level <= 7')->result_array();
         customView('pages/survei_dosen_result', $data);
     }
 }

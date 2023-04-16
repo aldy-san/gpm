@@ -162,18 +162,22 @@ class Api extends CI_Controller {
         $result = $this->db->get()->result();
         echo json_encode($result);
     }
-    public function getMonevPerPeriod()
-    {
+    public function getPeriod(){
         $category = $this->input->get('category');
-        //$category=2;
-        $this->db->select('period.id, period.name, AVG(detail) as avg');
+        $this->db->select('*');
         $this->db->from('period');
-        $this->db->where(['survei.type' => 'bar', 'category.id' => $category]);
-        $this->db->join('category', 'category.id=period.category');
-        $this->db->join('survei', 'survei.category=period.category');
-        $this->db->join('answer', 'answer.id_survei=survei.id');
-        $this->db->group_by('period.id');
-        $this->db->order_by('period.id');
+        $this->db->where(['category' => $category]);
+        $this->db->order_by('period_from ASC');
+        $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
+    public function getAvgPerPeriod()
+    {
+        $from = $this->input->get('from');
+        $to = $this->input->get('to');
+        $this->db->select('avg(detail) as avg');
+        $this->db->from('answer');
+        $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
         $result = $this->db->get()->result();
         echo json_encode($result);
     }
@@ -232,6 +236,31 @@ class Api extends CI_Controller {
             $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
         }
         $this->db->join('db_master.user', 'user.username = survei_dosen_answer.id_dosen', 'left');
+        $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
+    public function getTotalDataTendik(){
+        $from = $this->input->get('from');
+        $to = $this->input->get('to');
+
+        $this->db->select('count(id_user) as total');
+        $this->db->from('survei_tendik_answer');
+        if($from && $to){
+            $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
+        $result = $this->db->get()->result();
+        echo json_encode($result);
+    }
+    public function getDataTendik(){
+        $from = $this->input->get('from');
+        $to = $this->input->get('to');
+
+        $this->db->select('id_tendik, id_user');
+        $this->db->from('survei_tendik_answer');
+        if($from && $to){
+            $this->db->where(['created_at >=' => $from, 'created_at <=' => $to]);
+        }
+        $this->db->join('db_master.user', 'user.username = survei_tendik_answer.id_tendik', 'left');
         $result = $this->db->get()->result();
         echo json_encode($result);
     }

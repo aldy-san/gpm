@@ -8,7 +8,7 @@
         <div class="col-12 col-lg-6">
             <div class="card">
                 <div class="card-header ">
-                    <h5>Survei Dosen Terbaik</h5>
+                    <h5>Survei Dosen & Tendik Terbaik</h5>
                 </div>
                 <div class="card-body">
 

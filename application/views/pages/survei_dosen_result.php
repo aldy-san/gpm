@@ -32,6 +32,17 @@
                 </div>
             </div>
         </div>
+        <h4>Hasil Survei Tendik Terbaik</h4>
+        <div id="result-tendik" class="col-12">
+            <div class="card">
+                <div class="card-header d-flex">
+                    <!--<h4 class="text-capitalize"><?= $titles[$index]; ?></h4>-->
+                </div>
+                <div class="card-body">
+                    <div id="chart-tendik"></div>
+                </div>
+            </div>
+        </div>
     </section>
 </div>
 
@@ -50,6 +61,7 @@ $('input[name="dates"]').daterangepicker({
     console.log('hai')
 });
 var list_dosen = <?= json_encode($list_dosen); ?>;
+var list_tendik = <?= json_encode($list_tendik); ?>;
 
 function executeGraphic(from, to, isUpdate = false) {
     let filter = (from) ? '?from=' + from : ''
@@ -130,6 +142,78 @@ function executeGraphic(from, to, isUpdate = false) {
                 false, true);
         } else {
             var el = document.querySelector("#chart-dosen")
+            var chart = new ApexCharts(el, options);
+            chart.render();
+        }
+    })
+    $.get('<?=base_url('api/getDataTendik/')?>' + filter, (res) => {
+        var temp = JSON.parse(res)
+        console.log(temp)
+        var options = {
+            series: [1],
+            labels: ['No Data'],
+            colors: ['#000'],
+            chart: {
+                height: 500,
+                type: "pie",
+            },
+            stroke: {
+                width: 0
+            },
+            dataLabels: {
+                enable: false
+            }
+        };
+        options.chart.id = "chart-tendik"
+        var labels = list_tendik.map(item => item.nama_lengkap)
+        var colors = []
+        var series = []
+        for (let i = 0; i < list_tendik.length; i++) {
+            colors.push('#' + Math.floor(Math.random() * 16777215).toString(16).padStart(6, '0'))
+            series.push(0)
+        }
+        temp.forEach(item => {
+            const find = list_tendik.find(tendik => tendik.username === item.id_tendik)
+            const index = list_tendik.indexOf(find)
+            series[index]++;
+        });
+        if (temp.length > 0) {
+            options = {
+                series: series,
+                chart: {
+                    height: 500,
+                    type: "pie",
+                },
+                colors: colors,
+                stroke: {
+                    width: 2
+                },
+                labels: labels,
+                responsive: [{
+                    breakpoint: 480,
+                    options: {
+                        chart: {
+                            width: 200,
+                        },
+                        legend: {
+                            position: "bottom",
+                        },
+                    },
+                }, ],
+                toolbar: {
+                    show: true,
+                },
+            };
+        }
+        console.log(options)
+        options.chart.id = "chart-tendik"
+        if (isUpdate) {
+            //console.log('update', options, temp)
+            console.log('hai')
+            ApexCharts.exec("chart-tendik", 'updateOptions', options,
+                false, true);
+        } else {
+            var el = document.querySelector("#chart-tendik")
             var chart = new ApexCharts(el, options);
             chart.render();
         }

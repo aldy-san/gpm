@@ -16,19 +16,38 @@
             </div>
             <?php endif ?>
             <div class="page-heading text-center">
-                <h2 class="text-capitalize">Survei Dosen Terbaik</h2>
+                <h2 class="text-capitalize">Survei Dosen & Tendik Terbaik</h2>
             </div>
             <div class="page-content">
                 <section class="bootstrap-select">
                     <form action="<?= base_url('/mahasiswa/survei_dosen') ?>" method="POST">
-                        <?php foreach ($list_dosen as $value) :
-                        # code...
-                     ?>
+                        <h3>Pilih Dosen</h3>
+                        <?php foreach ($list_dosen as $value) :?>
                         <div class="card row my-3 p-5" data-aos="fade-up" data-aos-duration="1500">
                             <div class="ms-2 my-2 form-check">
                                 <input class="form-check-input" type="radio" name="answer"
                                     id="dosen-<?=  $value['username']; ?>" value="<?= $value['username'];; ?>">
                                 <label class="form-check-label text-dark" for="dosen-<?=  $value['username']; ?>">
+                                    <h5><?= $value['nama_lengkap']; ?></h5>
+                                </label>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <img src="<?= base_url('assets/images/dosen/'.$value['username'].'.jpg'); ?>"
+                                    width="200" alt="">
+                                <img src="<?= base_url('assets/images/dosen/'.$value['username'].'.png'); ?>"
+                                    width="200" alt="">
+                                <img src="<?= base_url('assets/images/dosen/'.$value['username'].'.jpeg'); ?>"
+                                    width="200" alt="">
+                            </div>
+                        </div>
+                        <?php endforeach ?>
+                        <h3 class="mt-5">Pilih Tendik</h3>
+                        <?php foreach ($list_tendik as $value) :?>
+                        <div class="card row my-3 p-5" data-aos="fade-up" data-aos-duration="1500">
+                            <div class="ms-2 my-2 form-check">
+                                <input class="form-check-input" type="radio" name="answer2"
+                                    id="tendik-<?=  $value['username']; ?>" value="<?= $value['username'];; ?>">
+                                <label class="form-check-label text-dark" for="tendik-<?=  $value['username']; ?>">
                                     <h5><?= $value['nama_lengkap']; ?></h5>
                                 </label>
                             </div>

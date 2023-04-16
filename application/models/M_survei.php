@@ -5,11 +5,11 @@ class M_survei extends CI_Model {
 		parent::__construct();
 	}
 
-    public function getDetailResultSurvei($id, $limit = false, $offset = false)
+    public function getDetailResultSurvei($id, $from=0, $to=9999999999, $limit = false, $offset = false)
     {
         $this->db->select('user.nama_lengkap, answer.answer');
         $this->db->from('answer');
-        $this->db->where(['id_survei' => $id]);
+        $this->db->where(['id_survei' => $id, 'created_at >=' => $from, 'created_at <=' => $to]);
         if ($limit){
             $this->db->limit($limit, $offset);
         }

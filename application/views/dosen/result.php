@@ -109,10 +109,9 @@
                     <div id="chart-<?=$s['id']; ?>"></div>
                     <div class="d-flex flex-column" style="color:white;">
                         <h6 class="<?= $s['type'] === 'selection' ? 'text-white': ''?>">
-                            Rata-rata: <b id="avg-<?=$s['id']; ?>"></b>
+                            <b id="avg-<?=$s['id']; ?>"></b>
                         </h6>
                         <h6 class="<?= $s['type'] === 'selection' ? 'text-white': ''?>">
-                            Kesimpulan:
                             <b id="sum-<?=$s['id']; ?>"></b>
                         </h6>
                     </div>
@@ -125,7 +124,8 @@
                         </thead>
                         <tbody id="tbody-<?= $s['id']; ?>"></tbody>
                     </table>
-                    <a href="<?= base_url('detail/'.$s['id']); ?>" class="d-block ms-auto text-end mb-2">Lihat
+                    <a id="links-table" href="<?= base_url('detail/'.$s['id']); ?>"
+                        class="d-block ms-auto text-end mb-2">Lihat
                         Lebih Lengkap</a>
                     <?php endif; ?>
                 </div>
@@ -245,6 +245,11 @@ function executeGraphic(from, to, name, isUpdate = false, jenjang = false, prodi
     })
     $("#period-title > span").text(nameState)
     // console.log(id_category)
+    var links = document.querySelectorAll('#links-table')
+    links.forEach(element => {
+        element.href = updateQueryStringParameter(element.href, 'from', fromState)
+        element.href = updateQueryStringParameter(element.href, 'to', toState)
+    });
     dataPopulation.forEach((item, index) => {
         $.get('<?=base_url('api/getChartDataByGroupBy/')?>' + item + (id_category ? `/${id_category}` : '') +
             filter, async (
@@ -354,25 +359,27 @@ function executeGraphic(from, to, name, isUpdate = false, jenjang = false, prodi
                 })
                 //console.log('avg:', sum / total)
                 //console.log(sum, total)
-                var avg = (sum / total).toFixed(1)
+                var avg = (sum / total).toFixed(2)
+                avg = isNaN(avg) ? 'Rata-rata: 0' : 'Rata-rata: ' + avg
                 var summary = ''
                 //console.log(temp)
                 if (temp.length) {
                     $(`#avg-${item.id}`).text(avg)
+                    var klas = temp[0].klasifikasi ? temp[0].klasifikasi : 'Baik'
                     if (avg >= 0 && avg < 25) {
-                        summary = 'Tidak ' + temp[0].klasifikasi
+                        summary = 'Tidak ' + klas
                     } else if (avg >= 25 && avg < 50) {
-                        summary = 'Kurang ' + temp[0].klasifikasi
+                        summary = 'Kurang ' + klas
                     } else if (avg >= 50 && avg < 75) {
-                        summary = '' + temp[0].klasifikasi
+                        summary = '' + klas
                     } else {
-                        summary = 'Sangat ' + temp[0].klasifikasi
+                        summary = 'Sangat ' + klas
                     }
                 } else {
                     summary = 'Belum ada data'
-                    $(`#avg-${item.id}`).text('Belum ada data')
+                    $(`#avg-${item.id}`).text(summary)
                 }
-                $(`#sum-${item.id}`).text(summary)
+                $(`#sum-${item.id}`).text('Kesimpulan: ' + summary)
                 var options = {
                     series: [1],
                     labels: ['No Data'],
@@ -539,5 +546,15 @@ if (noPeriod.includes(role)) {
     executeGraphic(1, null, role)
 } else {
     executeGraphic(period[0]['period_from'], period[0]['period_to'], period[0]['name'])
+}
+
+function updateQueryStringParameter(uri, key, value) {
+    var re = new RegExp("([?&])" + key + "=.*?(&|$)", "i");
+    var separator = uri.indexOf('?') !== -1 ? "&" : "?";
+    if (uri.match(re)) {
+        return uri.replace(re, '$1' + key + "=" + value + '$2');
+    } else {
+        return uri + separator + key + "=" + value;
+    }
 }
 </script>

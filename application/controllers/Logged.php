@@ -333,11 +333,17 @@ class Logged extends CI_Controller {
         $data['withNavbar'] = false;
         $data['withSidebar'] = false;
         $data['list_dosen'] = $this->db_master->get_where('user', ['level' => 11])->result_array();
+        $data['list_tendik'] = $this->db_master->get_where('user', 'level >= 2 AND level <= 7')->result_array();
 
         if ($this->input->post()){
             $this->db->insert('survei_dosen_answer', [
                 'id_user' => $this->session->userdata('user')['username'],
                 'id_dosen' => $this->input->post('answer'),
+                'created_at' => time()
+            ]);
+            $this->db->insert('survei_tendik_answer', [
+                'id_user' => $this->session->userdata('user')['username'],
+                'id_tendik' => $this->input->post('answer2'),
                 'created_at' => time()
             ]);
             redirect('dashboard');

@@ -179,13 +179,13 @@ class Superadmin extends CI_Controller {
 		$config['per_page'] = 10;
 		$config['start'] = $this->uri->segment(2);
 		$this->pagination->initialize($config);
-        $temp = $this->db->order_by('id DESC')->get($table, $config['per_page'], $config['start'])->result_array();
+        $temp = $this->db->order_by('period_from DESC')->get($table, $config['per_page'], $config['start'])->result_array();
         $data['data_table'] = [];
         $category = $this->db->get('category')->result_array();
         foreach ($temp as $value) {
             $value['category'] = findObjectBy('id', $value['category'], $category)['name'];
-            $value['period_from'] = gmdate("d-m-Y", $value['period_from']+25200);
-            $value['period_to'] = gmdate("d-m-Y", $value['period_to']+25200);
+            $value['period_from'] = gmdate("d M, Y", $value['period_from']+25200);
+            $value['period_to'] = gmdate("d M, Y", $value['period_to']+25200);
             array_push($data['data_table'],$value);
         }
         customView('template/table_page', $data);
@@ -470,7 +470,7 @@ class Superadmin extends CI_Controller {
             $data['category'] = $this->db->get('category')->result_array();
             $data['title'] = 'Survei '.findObjectBy('id', $data['slug'], $data['category'])['name'];
         } else if($slug === 'dosen-terbaik'){
-            $data['title'] = 'Survei Dosen Terbaik';
+            $data['title'] = 'Survei Dosen & Tendik Terbaik';
         } else{
             $data['title'] = 'Survei '.$data['slug'];
         }

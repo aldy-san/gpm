@@ -24,7 +24,7 @@
             </div>
         </div>
         <?php foreach ($category as $key => $value) : ?>
-        <div class="col-12 col-lg-6 p-4 pb-0">
+        <div id="graph-<?= $value['id']; ?>" class="col-12 col-lg-6 p-4 pb-0">
             <div class="card" style="height:100%">
                 <div class="card-header">
                     <h4><?= $value['name']; ?></h4>
@@ -229,29 +229,55 @@ async function generateMonev() {
 }
 var categories = <?= json_encode($category); ?>;
 
-function generateCategory() {
+async function generateCategory() {
     var lineOptions = {}
-    categories.forEach(item => {
-        $.get('<?=base_url('api/getMonevPerPeriod?category=')?>' + item.id, (res) => {
-            var periods = JSON.parse(res)
-            console.log(periods.map(period => period.avg))
-            lineOptions = {
-                chart: {
-                    type: "line",
-                },
-                series: [{
-                    name: "Capaian",
-                    data: ['0'].concat(periods.map(period => Number(period.avg).toFixed(
-                        0))),
-                }, ],
-                xaxis: {
-                    categories: [''].concat(periods.map(period => period.name.substr(0, 10))),
-                },
-            };
-            var line = new ApexCharts(document.querySelector("#category-" + item.id), lineOptions);
-            line.render();
-        }).always(() => {})
+    var dataAVG = {}
+    var getCategories = {}
+    var getAVG = []
+    categories.forEach((item, idx) => {
+        //console.log(item)
+        getCategories[item.id] = []
+        getCategories[item.id].push($.get('<?=base_url('api/getPeriod?category=')?>' + item.id))
     });
+    for (const category in getCategories) {
+        await Promise.all(getCategories[category]).then(async res => {
+            var periods = JSON.parse(res)
+            getAVG = []
+            periods.forEach(period => {
+                getAVG.push($.get('<?=base_url('api/getAvgPerPeriod?')?>' + 'from=' +
+                    period
+                    .period_from + '&to=' + period.period_to))
+            });
+            await Promise.all(getAVG).then(res2 => {
+                var avgs = []
+                if (!res2.length) {
+                    $('#graph-' + category).hide()
+                }
+                res2.forEach(item2 => {
+                    var avg = JSON.parse(item2)
+                    avgs.push(Number(avg[0].avg).toFixed(0))
+                });
+                console.log(periods)
+                //console.log(getCategories[category], temp)
+                lineOptions = {
+                    chart: {
+                        type: "line",
+                    },
+                    series: [{
+                        name: "Capaian",
+                        data: ['0'].concat(avgs),
+                    }, ],
+                    xaxis: {
+                        categories: [''].concat(periods.map(period => period
+                            .name.substr(0, 10))),
+                    },
+                };
+                var line = new ApexCharts(document.querySelector("#category-" + category),
+                    lineOptions);
+                line.render();
+            })
+        })
+    }
 }
 generateGauge()
 generateMonev()
