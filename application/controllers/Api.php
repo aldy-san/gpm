@@ -213,6 +213,14 @@ class Api extends CI_Controller {
         $this->db->where('name', $name);
         $this->db->update('survei_activation');
     }
+    public function updateSettings()
+    {
+        $id = $this->input->post('id');
+        $value = $this->input->post('value');
+        $this->db->set('is_active', $value);
+        $this->db->where('id', $id);
+        $this->db->update('settings');
+    }
 
     public function getTotalDataDosen(){
         $from = $this->input->get('from');

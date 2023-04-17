@@ -85,6 +85,7 @@ $route['constitution'] = 'Home/constitution';
 
 # -------------------------------SUPERADMIN--------------------------------
 $route['dashboard'] = 'Superadmin/index';
+$route['settings'] = 'Superadmin/settings';
 
 // Survei
 $route['survei/(:any)'] = 'Superadmin/survei/$1';

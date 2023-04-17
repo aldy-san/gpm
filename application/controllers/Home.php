@@ -207,21 +207,33 @@ class Home extends CI_Controller {
         $data['period'] = $this->db->order_by("period_from", "desc")->get_where('period', ['category' => $category],9)->result_array();
 
         $data['population'] = [];
+        $data['titles'] = [];
         $data['labels'] = [];
-        if ($role === 'mahasiswa') {
-            $data['population'] = ['jenis_kelamin', 'jenjang', 'kode_prodi', 'tahun_masuk'];
-            $data['titles'] = ['Jenis Kelamin', 'Jenjang', 'Prodi', 'Tahun Masuk'];
-            $data['labels'] = [false, 'jenjang', 'prodi', false];
-        } else if ($role === 'alumni'){
-            $data['population'] = ['year_to', 'year_from', 'prodi', 'activity'];
-            $data['titles'] = ['Tahun Masuk', 'Tahun Lulus', 'Prodi', 'Aktifitas Setelah Lulus'];
-        } else if ($role === 'mitra'){
-            $data['population'] = ['position', 'agency', 'scale', 'year_since', 'year_coop'];
-            $data['titles'] = ['Position', 'Instansi', 'Skala', 'Tahun Berdiri', 'Tahun Kerjasama'];
-        }   else if ($role === 'pengguna'){
-            $data['population'] = ['year_since', 'scale'];
-            $data['titles'] = ['Tahun Berdiri', 'Tingkat'];
+        $false = false;
+        $getSettingPopulation = $this->db->get_where('settings', ['type' => 'population_graphic_'.$role, 'is_active' => 1])->result_array();
+        foreach ($getSettingPopulation as $key => $value) {
+            array_push($data['population'], $value['data'], );
+            array_push($data['titles'],$value['title']);
+            if ($value['label'] == ''){
+                array_push( $data['labels'], $false);
+            } else {
+                array_push($data['labels'],$value['label']);
+            }
         }
+        //if ($role === 'mahasiswa') {
+        //    $data['population'] = ['jenis_kelamin', 'jenjang', 'kode_prodi', 'tahun_masuk'];
+        //    $data['titles'] = ['Jenis Kelamin', 'Jenjang', 'Prodi', 'Tahun Masuk'];
+        //    $data['labels'] = [false, 'jenjang', 'prodi', false];
+        //} else if ($role === 'alumni'){
+        //    $data['population'] = ['year_to', 'year_from', 'prodi', 'activity'];
+        //    $data['titles'] = ['Tahun Masuk', 'Tahun Lulus', 'Prodi', 'Aktifitas Setelah Lulus'];
+        //} else if ($role === 'mitra'){
+        //    $data['population'] = ['position', 'agency', 'scale', 'year_since', 'year_coop'];
+        //    $data['titles'] = ['Position', 'Instansi', 'Skala', 'Tahun Berdiri', 'Tahun Kerjasama'];
+        //}   else if ($role === 'pengguna'){
+        //    $data['population'] = ['year_since', 'scale'];
+        //    $data['titles'] = ['Tahun Berdiri', 'Tingkat'];
+        //}
 
         $tempProdi = $this->db_master->select('user.kode_prodi, nama_prodi, id_jenjang, nama_jenjang')->from('user')->where(['level' => 1, 'prodi.kode_prodi !=' => 1])->join('prodi', 'user.kode_prodi=prodi.kode_prodi', 'left')->join('jenjang', 'user.jenjang=jenjang.id_jenjang', 'left')->group_by('user.kode_prodi')->group_by('jenjang')->get()->result_array();
         $data['prodi'] = [];

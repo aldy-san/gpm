@@ -146,33 +146,31 @@
         <div class="card">
             <div class="card-body overflow-auto">
                 <table class="table table-striped">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Survei</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1. </td>
-                                <td>Dosen Terbaik</td>
-                                <td>
-                                    <div class="form-check">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox"
-                                                class="form-check-input form-check-primary form-check-glow"
-                                                name="customCheck" id="survei-activation-dosen"
-                                                <?= $is_survei_dosen_active['is_active'] ? 'checked': ''; ?>>
-                                            <label class="form-check-label" for="survei-activation-dosen">Aktivasi
-                                                Survei</label>
-                                        </div>
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Survei</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1. </td>
+                            <td>Dosen Terbaik</td>
+                            <td>
+                                <div class="form-check">
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox"
+                                            class="form-check-input form-check-primary form-check-glow"
+                                            name="customCheck" id="survei-activation-dosen"
+                                            <?= $is_survei_dosen_active['is_active'] ? 'checked': ''; ?>>
+                                        <label class="form-check-label" for="survei-activation-dosen">Aktivasi
+                                            Survei</label>
                                     </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
             </div>
         </div>

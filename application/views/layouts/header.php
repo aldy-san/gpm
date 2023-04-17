@@ -111,6 +111,12 @@
                             <?php endif ?>
 
                             <?php  if (isset($this_user) && getRole($this_user['level']) === 'superadmin') :?>
+                            <li class="sidebar-item <?= $this->uri->segment(1) === 'settings' ? 'active' : ''; ?>">
+                                <a href="<?= base_url('settings'); ?>" class='sidebar-link'>
+                                    <i class="bi bi-gear"></i>
+                                    <span>Pengaturan</span>
+                                </a>
+                            </li>
                             <li
                                 class="sidebar-item <?= $this->uri->segment(1) === 'manage-constitution' ? 'active' : ''; ?>">
                                 <a href="<?= base_url('manage-constitution'); ?>" class='sidebar-link'>

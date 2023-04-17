@@ -608,4 +608,17 @@ class Superadmin extends CI_Controller {
 		$this->session->set_flashdata('alertType', 'success');
         redirect('/manage-period/analisis/'.$slug.'/'.$this->input->post('type'));
     }
+
+    public function settings()
+    {
+        //config
+        $data = $this->globalData;
+        $data['population_graph'] = [
+            'Mahasiswa/Dosen/Tendik' => $this->db->get_where('settings', ['type' => 'population_graphic_mahasiswa'])->result_array(),
+            'Mitra' => $this->db->get_where('settings', ['type' => 'population_graphic_mitra'])->result_array(),
+            'Alumni' => $this->db->get_where('settings', ['type' => 'population_graphic_alumni'])->result_array(),
+            'Pengguna' => $this->db->get_where('settings', ['type' => 'population_graphic_pengguna'])->result_array()
+        ];
+        customView('superadmin/settings', $data);
+    }
 }
