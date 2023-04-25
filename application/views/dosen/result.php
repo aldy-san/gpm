@@ -404,7 +404,8 @@ function executeGraphic(from, to, name, isUpdate = false, jenjang = false, prodi
                             colors: ['#1abc9c', '#3498db', '#2ecc71', '#9b59b6', '#f1c40f',
                                 '#e67e22', '#bdc3c7', '#e74c3c', '#34495e'
                             ],
-                            labels: selections,
+                            labels: selections.map(item => item.length <= 20 ? item : (item.slice(0,
+                                20) + '... ')),
                             responsive: [{
                                 breakpoint: 480,
                                 options: {

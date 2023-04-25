@@ -375,6 +375,10 @@ class Superadmin extends CI_Controller {
     public function survei($slug)
     {
         //get slug
+        //var_dump($this->uri->segment(3));die;
+        if ($this->uri->segment(3) == NULL){
+            redirect(current_url().'/0');
+        }
         $data = $this->globalData;
         $data['slug'] = $slug;
         //$data['sub_slug'] = count(explode('-', $slug)) > 1 ? explode('-', $slug)[1] : false;
@@ -407,8 +411,8 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = '/survei/'.$slug.'/detail/';
         $data['delete_url'] = '/survei/'.$slug.'/delete/';
         if (is_numeric($data['slug'])){
-            $data['column_table'] = ['id', 'question', 'type','klasifikasi', 'analisis', 'chart', 'category', 'is_active'];
-            $data['column_alias'] = ['id', 'pertanyaan', 'tipe','klasifikasi', 'analisis', 'grafik', 'kategori', 'aktif'];
+            $data['column_table'] = ['id', 'question', 'type', 'chart', 'klasifikasi', 'analisis', 'is_active'];
+            $data['column_alias'] = ['id', 'pertanyaan', 'tipe', 'grafik', 'klasifikasi', 'analisis', 'aktif'];
             $temp = $this->db->get_where($table, $where, $config['per_page'], $config['start'])->result_array();
             $data['data_table'] = [];
             foreach ($temp as $value) {
