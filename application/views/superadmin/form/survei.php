@@ -11,7 +11,7 @@
             <div class="card-body">
                 <form
                     action="<?= $data_slug ? base_url('/survei/'.$slug.($sub_slug ? '-'.$sub_slug : '').'/edit/'.$this->uri->segment(4)) : base_url('/survei/'.$slug.($sub_slug ? '-'.$sub_slug : '').'/create'); ?>"
-                    method="POST">
+                    method="POST" onkeydown="return event.key != 'Enter';">
                     <div class="row">
                         <div class="form-group col-12">
                             <label for="question">Pertanyaan</label>
@@ -176,8 +176,36 @@
                         </div>-->
                     </div>
                     <?php if($is_edit) :?>
-                    <button type="submit" class="btn btn-primary ">Simpan</button>
-                    <?php endif; ?>
+                    <button type="button" class="ms-1 btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#confirmModal">
+                        Simpan
+                    </button>
+                    <div class="modal fade text-left" id="confirmModal" tabindex="-1" role="dialog"
+                        aria-labelledby="myModalLabel1" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="myModalLabel1">Hapus Data</h5>
+                                    <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                        <i data-feather="x"></i>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        Apakah anda yakin ingin menyimpan data?
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn" data-bs-dismiss="modal">
+                                        <i class="bx bx-x d-block d-sm-none"></i>
+                                        <span class="d-none d-sm-block">Close</span>
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Simpan</button>
+                                </div>
+                            </div>
+                        </div>
+                        <?php endif; ?>
                 </form>
             </div>
         </div>

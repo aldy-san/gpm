@@ -78,7 +78,36 @@
                             </div>
                         </div>
                         <?php endforeach; ?>
-                        <button class=" btn btn-primary m-auto">Kirim</button>
+                        <button type="button" class="btn btn-primary m-auto" data-bs-toggle="modal"
+                            data-bs-target="#confirmModal">
+                            Kirim
+                        </button>
+                        <div class="modal fade text-left" id="confirmModal" tabindex="-1" role="dialog"
+                            aria-labelledby="myModalLabel1" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="myModalLabel1">Hapus Data</h5>
+                                        <button type="button" class="close rounded-pill" data-bs-dismiss="modal"
+                                            aria-label="Close">
+                                            <i data-feather="x"></i>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                            Apakah anda yakin ingin dengan jawaban anda?
+                                        </p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn" data-bs-dismiss="modal">
+                                            <i class="bx bx-x d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block">Close</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Simpan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                 </section>
             </div>

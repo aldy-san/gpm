@@ -44,8 +44,8 @@ class Superadmin extends CI_Controller {
         $data['detail_url'] = $root_url.'detail/';
         $data['delete_url'] = $root_url.'delete/';
         //$data['download_url'] = '/sertifikat/';
-        $data['column_table'] = ['id','name'];
-        $data['column_alias'] = ['id','nama'];
+        $data['column_table'] = ['id','name', 'type'];
+        $data['column_alias'] = ['id','nama', 'tipe'];
 
         // Config Pagination
         $config['base_url'] = base_url($root_url);
