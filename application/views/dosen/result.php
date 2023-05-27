@@ -360,17 +360,19 @@ function executeGraphic(from, to, name, isUpdate = false, jenjang = false, prodi
                 //console.log('avg:', sum / total)
                 //console.log(sum, total)
                 var avg = (sum / total).toFixed(2)
+                var avgNum = avg
                 avg = isNaN(avg) ? 'Rata-rata: 0' : 'Rata-rata: ' + avg
                 var summary = ''
                 //console.log(temp)
                 if (temp.length) {
                     $(`#avg-${item.id}`).text(avg)
                     var klas = temp[0].klasifikasi ? temp[0].klasifikasi : 'Baik'
-                    if (avg >= 0 && avg < 25) {
+                    console.log(avg)
+                    if (avgNum >= 0 && avgNum < 25) {
                         summary = 'Tidak ' + klas
-                    } else if (avg >= 25 && avg < 50) {
+                    } else if (avgNum >= 25 && avgNum < 50) {
                         summary = 'Kurang ' + klas
-                    } else if (avg >= 50 && avg < 75) {
+                    } else if (avgNum >= 50 && avgNum < 75) {
                         summary = '' + klas
                     } else {
                         summary = 'Sangat ' + klas

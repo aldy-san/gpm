@@ -212,7 +212,7 @@ class Home extends CI_Controller {
         $false = false;
         $getSettingPopulation = $this->db->get_where('settings', ['type' => 'population_graphic_'.$role, 'is_active' => 1])->result_array();
         foreach ($getSettingPopulation as $key => $value) {
-            array_push($data['population'], $value['data'], );
+            array_push($data['population'], $value['data']);
             array_push($data['titles'],$value['title']);
             if ($value['label'] == ''){
                 array_push( $data['labels'], $false);
