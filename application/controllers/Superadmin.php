@@ -457,6 +457,7 @@ class Superadmin extends CI_Controller {
                     'klasifikasi' => $this->input->post('klasifikasi'),
                     'analisis' => $this->input->post('analisis'),
                     'is_active' => $this->input->post('is_active'),
+                    'description' => $this->input->post('description'),
                 ];
                 //var_dump($form);die;
             if (is_numeric($data['slug'])){
@@ -523,6 +524,7 @@ class Superadmin extends CI_Controller {
                         'klasifikasi' => $this->input->post('klasifikasi'),
                         'analisis' => $this->input->post('analisis'),
                         'is_active' => $this->input->post('is_active'),
+                        'description' => $this->input->post('description'),
                     ];
                     $this->db->where(['id' => $id])->update('survei', $form);
                 $this->session->set_flashdata('alertForm', 'Data berhasil disimpan');

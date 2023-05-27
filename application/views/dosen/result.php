@@ -102,7 +102,10 @@
                             name="result-<?= $index; ?>" id="survei-activation" checked
                             onclick="checkHandler('dataSurvei','#result-<?= $index; ?>')">
                     </div>
-                    <h4><?= $s['question']; ?> </h4>
+                    <div class="d-flex flex-column">
+                        <h4><?= $s['question']; ?> </h4>
+                        <h6 class="text-secondary"><?= $s['description']; ?> </h6>
+                    </div>
                 </div>
                 <div class="card-body">
                     <?php if ($s['type'] !== 'description'): ?>

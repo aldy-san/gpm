@@ -154,6 +154,16 @@
                                 </select>
                             </fieldset>
                         </div>
+                        <div class="form-group col-8 selection-type">
+                            <label for="description">Deskripsi</label>
+                            <input type="text" class="form-control <?= form_error('description') ? 'is-invalid': ''; ?>"
+                                name="description" id="description" placeholder="Deskripsi" autocomplete="off"
+                                value="<?= $data_slug ?  (set_value('description') ?  set_value('description') : $data_slug['description']) : set_value('description'); ?>"
+                                <?= $is_edit  ? '' : 'disabled'; ?>>
+                            <div class="invalid-feedback">
+                                <?= form_error('description'); ?>
+                            </div>
+                        </div>
                         <!--<div class="form-group col-4">
                             <label for="bar_length">Bar Length</label>
                             <input type="text" class="form-control <?= form_error('bar_length') ? 'is-invalid': ''; ?>"
