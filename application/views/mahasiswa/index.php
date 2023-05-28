@@ -42,7 +42,8 @@
             </div>
         </div>
         <?php endforeach; ?>
-        <?php else: ?>
+        <?php endif; ?>
+        <?php if ((count($category_mahasiswa_avail) == 0) && !$is_survei_dosen_active['is_active']): ?>
         <div class="d-flex flex-column align-items-center w-full mt-4">
             <object data="<?= base_url('assets/svg/no-data.svg'); ?>" width="250" height="250"> </object>
             <h4 class="mt-4 text-center">Tidak Ada Survei</h4>
